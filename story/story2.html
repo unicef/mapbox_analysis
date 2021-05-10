@@ -1,116 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset='utf-8' />
-    <title>Unicef Giga Kazakhstan</title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css' rel='stylesheet' />
-    <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
-    <script src="https://unpkg.com/scrollama"></script>
-    <style>
-        body {
-            margin:0;
-            padding:0;
-            font-family: sans-serif;
-        }
-        a, a:hover, a:visited {
-            color: #0071bc;
-        }
-        #map {
-            top:0;
-            height: 100vh;
-            width:100vw;
-            position: fixed;
-            z-index: -5;
-        }
-        #header {
-            margin: auto;
-            width: 100vw;
-        }
-        #header h1, #header h2 {
-            margin: 0;
-            padding: 2vh 2vw;
-            text-align: center;
-        }
-        #footer {
-            width: 100%;
-            min-height: 5vh;
-            padding-top: 2vh;
-            padding-bottom: 2vh;
-            text-align: center;
-            line-height: 25px;
-            font-size: 13px;
-        }
-        #features {
-            padding-top: 10vh;
-            padding-bottom: 10vh;
-            z-index: 100;
-        }
-        .hidden {
-            visibility: hidden;
-        }
-        .centered {
-            width: 50vw;
-            margin: 0 auto;
-        }
-        .lefty {
-            width: 33vw;
-            margin-left: 5vw;
-        }
-        .righty {
-            width: 33vw;
-            margin-left: 62vw;
-        }
-        .fully {
-            width: 100%;
-            margin: auto;
-        }
-        .light {
-            color: #444;
-            background-color: #fafafa;
-        }
-        .dark {
-            color: #fafafa;
-            background-color: #444;
-        }
-        .step {
-            padding-bottom: 50vh;
-            /* margin-bottom: 10vh; */
-            opacity: 0.25;
-        }
-        .step.active {
-            opacity: 0.9;
-        }
-
-        .step div {
-            padding:  25px 50px;
-            line-height: 25px;
-            font-size: 13px;
-        }
-
-        .step img {
-            width: 100%;
-        }
-
-        @media (max-width: 750px) {
-            .centered, .lefty, .righty, .fully {
-                width: 90vw;
-                margin: 0 auto;
-            }
-        }
-
-        /* Fix issue on mobile browser where scroll breaks  */
-        .mapboxgl-canvas-container.mapboxgl-touch-zoom-rotate.mapboxgl-touch-drag-pan,
-        .mapboxgl-canvas-container.mapboxgl-touch-zoom-rotate.mapboxgl-touch-drag-pan .mapboxgl-canvas {
-            touch-action: unset;
-        }
-
-        </style>
+<meta charset='utf-8' />
+<title>Unicef Giga Kazakhstan</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css' rel='stylesheet' />
+<script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
+<script src="https://unpkg.com/scrollama"></script>
+<link href='./css/story.css' rel='stylesheet' />
 </head>
 <body>
-
 <div id="map"></div>
+<div id="loader"></div>
 <div id="story"></div>
 <script src="./config-story2.js"></script>
 <script>
@@ -130,6 +32,13 @@ var alignments = {
     'right': 'righty',
     'full': 'fully'
 }
+
+var countryBounds = [
+  [45.615234375,40.713955826286046],
+  [89.912109375,56.36525013685606]
+];
+
+var initLoad = true;
 
 function getLayerPaintType(layer) {
     var layerType = map.getLayer(layer).type;
@@ -154,11 +63,15 @@ var features = document.createElement('div');
 features.setAttribute('id', 'features');
 
 var header = document.createElement('div');
+var banner = document.createElement('span');
+banner.innerHTML = '<img src="./img/giga.svg"><img src="./img/unicef.svg"><img src="./img/itu.svg">'
 
 if (config.title) {
     var titleText = document.createElement('h1');
     titleText.innerText = config.title;
+    header.appendChild(banner);
     header.appendChild(titleText);
+    
 }
 
 if (config.subtitle) {
@@ -264,6 +177,7 @@ if (config.showMarkers) {
 var scroller = scrollama();
 
 map.on("load", function() {
+    console.log('loaded');
     if (config.use3dTerrain) {
         map.addSource('mapbox-dem', {
             'type': 'raster-dem',
@@ -294,9 +208,21 @@ map.on("load", function() {
         progress: true
     })
     .onStepEnter(response => {
+        // console.log('stepenter', response.callback);
         var chapter = config.chapters.find(chap => chap.id === response.element.id);
+        // console.log('chapter', chapter);
+
+
+        customizeChapters(chapter.id);
+
         response.element.classList.add('active');
-        map[chapter.mapAnimation || 'flyTo'](chapter.location);
+        if (chapter.id === 'kazakhstan-schools' || chapter.id === 'schools-connectivity' || chapter.id === 'schools-population' || chapter.id === 'economic' || chapter.id === 'explore') {
+            map.fitBounds(countryBounds, {
+                padding: {top: 0, bottom: 0, left: 100, right: 0}
+            });
+        } else {
+            map[chapter.mapAnimation || 'flyTo'](chapter.location);
+        }
         if (config.showMarkers) {
             marker.setLngLat(chapter.location.center);
         }
@@ -310,7 +236,7 @@ map.on("load", function() {
             map.once('moveend', function() {
                 const rotateNumber = map.getBearing();
                 map.rotateTo(rotateNumber + 90, {
-                    duration: 24000, easing: function (t) {
+                    duration: 100000, easing: function (t) {
                         return t;
                     }
                 });
@@ -340,6 +266,90 @@ function disableFreetime() {
     map.removeControl(nav);
   }
 }
+
+function customizeChapters(chap) {
+    if (chap === 'intro') {
+        map.on('rotatestart', removeLoader);
+    } else if (chap === 'quschoqy') {
+        // Add a data source containing one point feature.
+        if (initLoad) {
+            initLoad = false;
+            map.addSource('point', {
+                'type': 'geojson',
+                'data': {
+                    'type': 'FeatureCollection',
+                    'features': [
+                        {
+                        'type': 'Feature',
+                        'geometry': {
+                            'type': 'Point',
+                            'coordinates': [73.400586,50.230690]
+                            }
+                        }
+                    ]
+                }
+            });
+            
+            // Add a layer to use the image to represent the data.
+            map.addLayer({
+                'id': 'points',
+                'type': 'symbol',
+                'source': 'point', // reference the data source
+                'layout': {
+                    'text-field': 'Single school',
+                    // 'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
+                    // 'text-radial-offset': 0.5,
+                    'text-justify': 'auto',
+                    'text-anchor': 'left',
+                    'text-size': 20
+                    // 'icon-image': ['concat', ['get', 'icon'], '-15']
+                // 'icon-image': 'cat', // reference the image
+                // 'icon-size': 0.25
+                },
+                'paint': {
+                    'text-halo-color': '#fff',
+                    'text-halo-width': 1,
+                    'text-halo-blur': 1,
+                    'text-translate': [5,10],
+                    'text-opacity': [
+                        'interpolate', ['linear'], ['zoom'],
+                        // zoom is 5 (or less) -> circle radius will be 1px
+                        15.5, 0,
+                        // zoom is 10 (or greater) -> circle radius will be 5px
+                        16, 1
+                    ]
+                }
+            });
+        }
+    } else {
+        map.off('rotatestart', removeLoader);
+        // addLoader();
+    }
+}
+
+function removeLoader() {
+    // map.on('rotatestart', function() {
+    // console.log('map is moving now');
+    document.getElementById('loader').style.opacity = 0;
+    // });
+}
+
+// function addLoader() {
+//     document.getElementById('loader').style.opacity = 1;
+// }
+
+// function fitCountry() {
+//     map.fitBounds(countryBounds);
+// }
+
+
+window.onload = function() {
+ setTimeout (function () {
+  scrollTo(0,0);
+//   console.log('reset top');
+ }, 100); //100ms for example
+}
+
 </script>
 
 </body>
