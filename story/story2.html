@@ -216,7 +216,13 @@ map.on("load", function() {
         customizeChapters(chapter.id);
 
         response.element.classList.add('active');
-        map[chapter.mapAnimation || 'flyTo'](chapter.location);
+        if (chapter.id === 'kazakhstan-schools' || chapter.id === 'schools-connectivity' || chapter.id === 'schools-population' || chapter.id === 'economic' || chapter.id === 'explore') {
+            map.fitBounds(countryBounds, {
+                padding: {top: 0, bottom: 0, left: 100, right: 0}
+            });
+        } else {
+            map[chapter.mapAnimation || 'flyTo'](chapter.location);
+        }
         if (config.showMarkers) {
             marker.setLngLat(chapter.location.center);
         }
@@ -315,9 +321,6 @@ function customizeChapters(chap) {
                 }
             });
         }
-    } else if (chap === 'schools-connectivity') {
-
-        // map.fitBounds(countryBounds);
     } else {
         map.off('rotatestart', removeLoader);
         // addLoader();

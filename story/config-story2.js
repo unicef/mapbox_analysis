@@ -308,6 +308,7 @@ var config = {
                 bearing: -26,
                 duration: 8000
             },
+            callback: 'disableFreetime',
             onChapterEnter: [
               {
                 layer: 'kazakhstan-merged',
