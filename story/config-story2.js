@@ -1,26 +1,92 @@
 var config = {
-    style: 'mapbox://styles/mikelmaron/ckiis912v087219qqo3hf2nuz/',
+    // style: 'mapbox://styles/mikelmaron/ckiis912v087219qqo3hf2nuz/',
+    style: 'mapbox://styles/mikelmaron/ckohmfez83t2v18pnbvvktn2j',
     accessToken: 'pk.eyJ1IjoibWlrZWxtYXJvbiIsImEiOiJjaWZlY25lZGQ2cTJjc2trbmdiZDdjYjllIn0.Wx1n0X7aeCQyDTnK6_mrGw',
     showMarkers: false,
-    theme: 'dark',
+    theme: 'light',
     title: 'Unicef Giga: Kazakhstan',
     subtitle: 'Accessibility analysis of connected schools',
     byline: '',
     footer: 'Source: ',
-    use3dTerrain: true,
+    use3dTerrain: false,
+    rotateAnimation: true,
     chapters: [
+          {
+            id: 'intro',
+            alignment: 'left',
+            title: 'Unicef Giga: Kazakhstan',
+            description: 'Accessibility analysis of connected schools.',
+            location: {
+                center: [ 62.3099, 49.1577],
+                zoom: 4,
+                pitch: 30,
+                bearing: 35
+            },
+            rotateAnimation: true,
+            onChapterEnter: [
+                {
+                  layer: 'kz30-high',
+                  opacity: .8
+                  // duration: 1000
+                },
+                {
+                  layer: 'kz30-med',
+                  opacity: .8,
+                  // duration: 1000
+                },
+                {
+                  layer: 'kz30-low',
+                  opacity: .8,
+                  // duration: 1000
+                },
+                {
+                  layer: 'mask',
+                  opacity:0.9,
+                },
+                {
+                  layer: 'schools-dots',
+                  opacity: 1
+                }
+            ],
+            onChapterExit: []
+        },
         {
             id: 'quschoqy',
             alignment: 'left',
-            title: 'Kazakhstan',
+            title: '',
             description: 'This school serves Quschoqy, Kazakhstan.',
             location: {
-                center: [73.401571,50.230271],
+                center: [73.40021,50.23046],
                 zoom: 16.5,
                 pitch: 0,
-                bearing: 0.00
+                bearing: 0.00,
+                duration: 3000
             },
             onChapterEnter: [
+              {
+                layer: 'kz30-high',
+                opacity: 0,
+                duration: 1000
+              },
+              {
+                layer: 'kz30-med',
+                opacity: 0,
+                duration: 1000
+              },
+              {
+                layer: 'kz30-low',
+                opacity: 0,
+                duration: 1000
+              },
+              {
+                layer: 'mask',
+                opacity:0,
+                duration: 1000
+              },
+              {
+                layer: 'place-label (3) copy',
+                opacity:1
+              },
               {
                 layer: 'schools-dots',
                 opacity: 1
@@ -31,21 +97,35 @@ var config = {
         {
             id: 'kazakhstan-schools',
             alignment: 'left',
-            title: 'Schools',
-            description: 'There at 7,410 schools in Kazakhstan',
+            title: '',
+            description: 'There are <b>7,410 schools</b> in Kazakhstan',
             location: {
-                center: [73.41872,50.23002],
-                zoom: 4.5,
+                center: [65.121,48.391],
+                zoom: 4,
                 pitch: 0,
                 bearing: 0.00,
-                duration: 8000
+                duration: 6000
             },
-            mapAnimation: 'easeTo',
+            // callback: 'fitCountry',
+            mapAnimation: 'flyTo',
             onChapterEnter: [
-                          {
-                            layer: 'schools-glow',
-                            opacity: 0
-                          }
+                {
+                  layer: 'mask',
+                  opacity:0.9
+                },
+                {
+                  layer: 'place-label (3) copy',
+                  opacity:0
+                },
+                {
+                  layer: 'schools-glow',
+                  opacity: 0,
+                  duration: 1000
+                }
+                // {
+                //   layer: 'schools-glow',
+                //   opacity: 0
+                // }
             ],
             onChapterExit: []
         },
@@ -54,18 +134,18 @@ var config = {
             alignment: 'left',
             title: 'School Connectivity',
             image: '',
-            description: 'Internet access at each school varies. The yellow schools have good connections, the purple have little or none, and the orange are somewhere in between.',
+            description: 'Internet access at each school varies. The green schools have good connections, the red have little or none, and the yellow are somewhere in between.' + '<div id="textLegend"><span style="background:#8bd432">> 5 mb/s</span><span style="background:#ffc83d">< 5 mb/s</span><span style="background:#ff605b">Limited</span></div>',
             location: {
                 center: [65.12,48.39],
-                zoom: 4.5,
-                pitch: 4.00,
+                zoom: 4,
+                pitch: 0,
                 bearing: 0.00,
                 duration: 8000
             },
             onChapterEnter: [
               {
                 layer: 'schools-glow',
-                opacity: .75,
+                opacity: .95,
                 duration: 1000
               },
               {
@@ -80,6 +160,10 @@ var config = {
                 layer: 'kz30-low',
                 opacity: 0
               },
+              {
+                layer: 'mask',
+                opacity: 0.6,
+              }
             ],
             onChapterExit: []
         },
@@ -111,6 +195,10 @@ var config = {
                 layer: 'kz30-low',
                 opacity: .8,
                 duration: 1000
+              },
+              {
+                layer: 'place-label (3) copy',
+                opacity:1
               },
               {
                 layer: 'schools-glow',
@@ -224,6 +312,21 @@ var config = {
               {
                 layer: 'kazakhstan-merged',
                 opacity: .75
+              },
+              {
+                layer: 'kz30-high',
+                opacity: .2,
+                duration: 1000
+              },
+              {
+                layer: 'kz30-med',
+                opacity: .2,
+                duration: 1000
+              },
+              {
+                layer: 'kz30-low',
+                opacity: .2,
+                duration: 1000
               }
             ],
             onChapterExit: [
