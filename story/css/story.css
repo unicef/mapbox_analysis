@@ -87,11 +87,11 @@ a, a:hover, a:visited {
     box-shadow: 4px 4px 8px #333;
 }
 
-#schools-connectivity #textLegend {
+#schools-connectivity .textLegend, #economic .textLegend {
     padding:0;
     margin-top:25px;
 }
-#schools-connectivity #textLegend span{
+#schools-connectivity .textLegend span, #economic .textLegend span{
     width:33%;
     display: inline-block;
     height: 25px;
