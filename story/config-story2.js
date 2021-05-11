@@ -121,20 +121,29 @@ var config = {
                   layer: 'schools-glow',
                   opacity: 0,
                   duration: 1000
+                },
+                {
+                  layer: 'mapbox-satellite',
+                  opacity: 0
                 }
                 // {
                 //   layer: 'schools-glow',
                 //   opacity: 0
                 // }
             ],
-            onChapterExit: []
+            onChapterExit: [
+              {
+                layer: 'mapbox-satellite',
+                opacity: 1
+              }
+            ]
         },
         {
             id: 'schools-connectivity',
             alignment: 'left',
             title: 'School Connectivity',
             image: '',
-            description: 'Internet access at each school varies. The green schools have good connections, the red have little or none, and the yellow are somewhere in between.' + '<div id="textLegend"><span style="background:#8bd432">> 5 mb/s</span><span style="background:#ffc83d">< 5 mb/s</span><span style="background:#ff605b">Limited</span></div>',
+            description: 'Internet access at each school varies. The green schools have good connections, the red have little or none, and the yellow are somewhere in between.' + '<div class="textLegend"><span style="background:#8bd432">> 5 mb/s</span><span style="background:#ffc83d">< 5 mb/s</span><span style="background:#ff605b">Limited</span></div>',
             location: {
                 center: [65.12,48.39],
                 zoom: 4,
@@ -178,7 +187,7 @@ var config = {
                 zoom: 8,
                 pitch: 28,
                 bearing: 20,
-                duration: 8000
+                duration: 5000
             },
             onChapterEnter: [
               {
@@ -251,6 +260,10 @@ var config = {
                 /* these labels make it hard to read */
                 layer: 'place-label (3) copy',
                 opacity: .6,
+              },
+              {
+                layer: 'kz-relative-wealth-index',
+                opacity: 0
               }
             ],
             onChapterExit: [
@@ -262,21 +275,6 @@ var config = {
                 /* these labels make it hard to read, and shouldn't be under the isochrones */
                 layer: 'place-label (3) copy',
                 opacity: 0.9,
-              },
-              {
-                layer: 'kz30-high',
-                opacity: .8,
-                duration: 1000
-              },
-              {
-                layer: 'kz30-med',
-                opacity: .8,
-                duration: 1000
-              },
-              {
-                layer: 'kz30-low',
-                opacity: .8,
-                duration: 1000
               }
             ]
         },
@@ -285,14 +283,39 @@ var config = {
             alignment: 'left',
             title: 'Economic',
             image: '',
-            description: 'We can also overlay this with other data to see how connectivity interacts with important socioeconomic indicators.',
+            description: 'We can also overlay this with other data to see how connectivity interacts with important socioeconomic indicators.' + '<div class="textLegend"><span style="background:#c51b7d;color:#fff">Low Wealth</span><span style="background:#998ec3">Medium Wealth</span><span style="background:#542788;color:#fff">High Wealth</span></div>',
             location: {
               center: [65.12,48.39],
               zoom: 4.5,
               pitch: 4.00,
               bearing: 0.00
             },
-            onChapterEnter: [],
+            rotateAnimation: true,
+            onChapterEnter: [
+              {
+                layer: 'kazakhstan-merged',
+                opacity: 0
+              },
+              {
+                layer: 'kz-relative-wealth-index',
+                opacity: .9
+              },
+              {
+                layer: 'kz30-high',
+                opacity: 0.2,
+                duration: 1000
+              },
+              {
+                layer: 'kz30-med',
+                opacity: 0.2,
+                duration: 1000
+              },
+              {
+                layer: 'kz30-low',
+                opacity: 0.2,
+                duration: 1000
+              }
+            ],
             onChapterExit: []
         },
         {
@@ -313,6 +336,10 @@ var config = {
               {
                 layer: 'kazakhstan-merged',
                 opacity: .75
+              },
+              {
+                layer: 'kz-relative-wealth-index',
+                opacity: 0
               },
               {
                 layer: 'kz30-high',

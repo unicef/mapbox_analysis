@@ -220,6 +220,11 @@ map.on("load", function() {
             map.fitBounds(countryBounds, {
                 padding: {top: 0, bottom: 0, left: 100, right: 0}
             });
+            if (chapter.id === 'kazakhstan-schools') {
+                map.setPaintProperty('background', 'background-color', '#000');
+            } else if (chapter.id === 'schools-connectivity' || chapter.id === 'quschoqy') {
+                map.setPaintProperty('background', 'background-color', '#fff');
+            }
         } else {
             map[chapter.mapAnimation || 'flyTo'](chapter.location);
         }
