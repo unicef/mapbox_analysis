@@ -389,6 +389,10 @@ var config = {
               {
                 layer: 'kz30-high',
                 opacity: .75
+              },
+              {
+                layer: 'kz-relative-wealth-index',
+                opacity: .75
               }
             ],
             onChapterExit: [
