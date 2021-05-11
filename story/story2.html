@@ -279,52 +279,52 @@ function customizeChapters(chap) {
         // Add a data source containing one point feature.
         if (initLoad) {
             initLoad = false;
-            map.addSource('point', {
-                'type': 'geojson',
-                'data': {
-                    'type': 'FeatureCollection',
-                    'features': [
-                        {
-                        'type': 'Feature',
-                        'geometry': {
-                            'type': 'Point',
-                            'coordinates': [73.400586,50.230690]
-                            }
-                        }
-                    ]
-                }
-            });
+            // map.addSource('point', {
+            //     'type': 'geojson',
+            //     'data': {
+            //         'type': 'FeatureCollection',
+            //         'features': [
+            //             {
+            //             'type': 'Feature',
+            //             'geometry': {
+            //                 'type': 'Point',
+            //                 'coordinates': [73.400586,50.230690]
+            //                 }
+            //             }
+            //         ]
+            //     }
+            // });
             
-            // Add a layer to use the image to represent the data.
-            map.addLayer({
-                'id': 'points',
-                'type': 'symbol',
-                'source': 'point', // reference the data source
-                'layout': {
-                    'text-field': 'Single school',
-                    // 'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
-                    // 'text-radial-offset': 0.5,
-                    'text-justify': 'auto',
-                    'text-anchor': 'left',
-                    'text-size': 20
-                    // 'icon-image': ['concat', ['get', 'icon'], '-15']
-                // 'icon-image': 'cat', // reference the image
-                // 'icon-size': 0.25
-                },
-                'paint': {
-                    'text-halo-color': '#fff',
-                    'text-halo-width': 1,
-                    'text-halo-blur': 1,
-                    'text-translate': [5,10],
-                    'text-opacity': [
-                        'interpolate', ['linear'], ['zoom'],
-                        // zoom is 5 (or less) -> circle radius will be 1px
-                        15.5, 0,
-                        // zoom is 10 (or greater) -> circle radius will be 5px
-                        16, 1
-                    ]
-                }
-            });
+            // // Add a layer to use the image to represent the data.
+            // map.addLayer({
+            //     'id': 'points',
+            //     'type': 'symbol',
+            //     'source': 'point', // reference the data source
+            //     'layout': {
+            //         'text-field': 'Single school',
+            //         // 'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
+            //         // 'text-radial-offset': 0.5,
+            //         'text-justify': 'auto',
+            //         'text-anchor': 'left',
+            //         'text-size': 20
+            //         // 'icon-image': ['concat', ['get', 'icon'], '-15']
+            //     // 'icon-image': 'cat', // reference the image
+            //     // 'icon-size': 0.25
+            //     },
+            //     'paint': {
+            //         'text-halo-color': '#fff',
+            //         'text-halo-width': 1,
+            //         'text-halo-blur': 1,
+            //         'text-translate': [5,10],
+            //         'text-opacity': [
+            //             'interpolate', ['linear'], ['zoom'],
+            //             // zoom is 5 (or less) -> circle radius will be 1px
+            //             15.5, 0,
+            //             // zoom is 10 (or greater) -> circle radius will be 5px
+            //             16, 1
+            //         ]
+            //     }
+            // });
         }
     } else {
         map.off('rotatestart', removeLoader);
