@@ -12,7 +12,13 @@
 </head>
 <body>
 <div id="map"></div>
-<div id="loader"></div>
+<div id="loader">
+    <div id="loaderSpin"></div>
+    <div id="infographicHold">
+        <img id="infographicImgOne" src="./images/infographic_1.png">
+        <img id="infographicImgTwo" src="./images/infographic_2.png">
+    </div>
+</div>
 <div id="story"></div>
 <script src="./config-story2.js"></script>
 <script>
@@ -37,6 +43,11 @@ var countryBounds = [
   [45.615234375,40.713955826286046],
   [89.912109375,56.36525013685606]
 ];
+
+var popBounds = [
+    [66.533203125, 40.29628651711716],
+    [80.13427734374999,44.84029065139799]
+]
 
 var initLoad = true;
 
@@ -216,15 +227,40 @@ map.on("load", function() {
         customizeChapters(chapter.id);
 
         response.element.classList.add('active');
-        if (chapter.id === 'kazakhstan-schools' || chapter.id === 'schools-connectivity' || chapter.id === 'schools-population' || chapter.id === 'economic' || chapter.id === 'explore') {
+        if (chapter.id === 'kazakhstan-schools' || chapter.id === 'schools-connectivity' || chapter.id === 'explore') {
             map.fitBounds(countryBounds, {
                 padding: {top: 0, bottom: 0, left: 100, right: 0}
             });
+            document.getElementById('loader').style.opacity = 0;
             if (chapter.id === 'kazakhstan-schools') {
                 map.setPaintProperty('background', 'background-color', '#000');
             } else if (chapter.id === 'schools-connectivity' || chapter.id === 'quschoqy') {
-                map.setPaintProperty('background', 'background-color', '#fff');
+                map.setPaintProperty('background', 'background-color', '#000');
             }
+        } else if (chapter.id === 'schools-population' || chapter.id === 'economic') {
+            map.fitBounds(popBounds, {
+                duration: 3000,
+                pitch:0
+            });
+        } else if (chapter.id === 'schools-infographic_1') {
+            document.getElementById('loader').style.opacity = 1;
+            document.getElementById('infographicHold').style.opacity = 1;
+            document.getElementById('infographicImgOne').style.opacity = 1;
+            document.getElementById('infographicImgTwo').style.opacity = 0;
+            map.fitBounds(countryBounds, {
+                padding: {top: 0, bottom: 0, left: 100, right: 0}
+            });
+        } else if (chapter.id === 'schools-infographic_2') {
+            document.getElementById('loader').style.opacity = 1;
+            document.getElementById('infographicHold').style.opacity = 1;
+            document.getElementById('infographicImgOne').style.opacity = 0;
+            document.getElementById('infographicImgTwo').style.opacity = 1;
+            map.fitBounds(countryBounds, {
+                padding: {top: 0, bottom: 0, left: 100, right: 0}
+            });
+        } else if (chapter.id === 'schools-accessibility') {
+            document.getElementById('loader').style.opacity = 0;
+            map[chapter.mapAnimation || 'flyTo'](chapter.location);
         } else {
             map[chapter.mapAnimation || 'flyTo'](chapter.location);
         }
@@ -238,14 +274,14 @@ map.on("load", function() {
             window[chapter.callback]();
         }
         if (chapter.rotateAnimation) {
-            map.once('moveend', function() {
-                const rotateNumber = map.getBearing();
-                map.rotateTo(rotateNumber + 90, {
-                    duration: 100000, easing: function (t) {
-                        return t;
-                    }
-                });
-            });
+            // map.once('moveend', function() {
+            //     const rotateNumber = map.getBearing();
+            //     map.rotateTo(rotateNumber + 90, {
+            //         duration: 100000, easing: function (t) {
+            //             return t;
+            //         }
+            //     });
+            // });
         }
     })
     .onStepExit(response => {
@@ -274,7 +310,7 @@ function disableFreetime() {
 
 function customizeChapters(chap) {
     if (chap === 'intro') {
-        map.on('rotatestart', removeLoader);
+        map.on('render', removeLoader);
     } else if (chap === 'quschoqy') {
         // Add a data source containing one point feature.
         if (initLoad) {
@@ -327,7 +363,7 @@ function customizeChapters(chap) {
             // });
         }
     } else {
-        map.off('rotatestart', removeLoader);
+        map.off('render', removeLoader);
         // addLoader();
     }
 }
@@ -336,6 +372,7 @@ function removeLoader() {
     // map.on('rotatestart', function() {
     // console.log('map is moving now');
     document.getElementById('loader').style.opacity = 0;
+    document.getElementById('loaderSpin').style.opacity = 0;
     // });
 }
 
