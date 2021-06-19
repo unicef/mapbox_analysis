@@ -14,16 +14,50 @@ a, a:hover, a:visited {
     width:100vw;
     max-width:100%;
     position: fixed;
-    z-index: -5;
+    z-index: -1;
 }
 #loader {
     top:0;
     height: 100vh;
     width:100vw;
     position: fixed;
-    z-index: -4;
+    z-index: 0;
     background: #000;
-    transition: opacity 5s ease-out; 
+    transition: opacity 1s ease-out;
+    pointer-events: none;
+}
+#loaderSpin {
+    border: 5px solid #333;
+    border-top: 5px solid #d3d3d3;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: loadSpin 2s linear infinite;
+    transition: opacity 0.5s ease-out; 
+    position: relative;
+    top: 41%;
+    margin: auto;
+}
+  
+@keyframes loadSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+#infographicHold {
+    width: 50%;
+    /* height: 300px; */
+    /* animation: loadSpin 2s linear infinite; */
+    transition: opacity 0.5s ease-in-out;
+    position: absolute;
+    top: 300px;
+    right: 5%;
+    /* margin: auto; */
+    opacity: 0;
+}
+#infographicHold img {
+    width:100%;
+    position: absolute;
+    transition: opacity 0.5s ease-in;
 }
 #story {
     /* background:rgba(0,0,0,.9); */
@@ -87,15 +121,18 @@ a, a:hover, a:visited {
     box-shadow: 4px 4px 8px #333;
 }
 
-#schools-connectivity .textLegend, #economic .textLegend {
+#schools-connectivity .textLegend, #economic .textLegend, #schools-population .textLegend {
     padding:0;
     margin-top:25px;
 }
-#schools-connectivity .textLegend span, #economic .textLegend span{
+#schools-connectivity .textLegend span, #economic .textLegend span, #schools-population .textLegend span {
     width:33%;
     display: inline-block;
     height: 25px;
     text-align: center;
+    font-weight: bold;
+    font-size:12px;
+    color: 'rgba(0,0,0,0.85)';
 }
 .hidden {
     visibility: hidden;
