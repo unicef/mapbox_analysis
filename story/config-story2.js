@@ -41,7 +41,7 @@ var config = {
                 },
                 {
                   layer: 'mask',
-                  opacity:0.9,
+                  opacity:0.75,
                 },
                 {
                   layer: 'schools-dots',
