@@ -20,6 +20,7 @@
         <img id="infographicImgTwo" src="./images/infographic_2.png">
     </div>
 </div>
+<div id="freeExplore">Enable Scroll Zoom</div>
 <div id="story"></div>
 <script src="./config-story2.js"></script>
 <script>
@@ -56,6 +57,8 @@ var maxBounds = [
 ]
 
 var initLoad = true;
+
+document.getElementById("freeExplore").addEventListener("click", enableFreeExplore);
 
 function getLayerPaintType(layer) {
     var layerType = map.getLayer(layer).type;
@@ -286,12 +289,14 @@ map.on("load", function() {
             document.getElementById('infographicImgOne').style.opacity = 0;
             document.getElementById('infographicImgTwo').style.opacity = 1;
             document.getElementById('mapInset').style.opacity = 0;
+            document.getElementById('freeExplore').style.display = 'none';
             map.fitBounds(countryBounds, {
                 padding: {top: 0, bottom: 0, left: 100, right: 0}
             });
         } else if (chapter.id === 'schools-accessibility') {
             document.getElementById('loader').style.opacity = 0;
             document.getElementById('mapInset').style.opacity = 1;
+            document.getElementById('freeExplore').style.display = 'block';
             map[chapter.mapAnimation || 'flyTo'](chapter.location);
         } else if (chapter.id === 'explore') {
             map.fitBounds(countryBounds, {
@@ -640,6 +645,22 @@ function buildMenu() {
             var layers = document.getElementById('menu');
             layers.appendChild(link);
         }
+    }
+}
+
+
+function enableFreeExplore() {
+    console.log('this', this);
+    if (this.classList.contains("active")) {
+        // console.log('is active');
+        this.classList.remove("active");
+        this.innerHTML = "Enable Scroll Wheel";
+        map.scrollZoom.disable();
+    } else {
+        // console.log('is not active');
+        this.classList.add("active");
+        this.innerHTML = "Disable Scroll Wheel";
+        map.scrollZoom.enable();
     }
 }
 

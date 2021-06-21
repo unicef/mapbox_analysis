@@ -53,9 +53,46 @@ a, a:hover, a:visited {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+#freeExplore {
+    /* background: #fff; */
+    margin-top:20px;
+    position: fixed;
+    z-index: 1;
+    top: 10px;
+    right: 10px;
+    border-radius: 3px;
+    /* width: 100%; */
+    /* border: 1px solid rgba(0, 0, 0, 0.4); */
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    text-align: center;
+    background-color: #d3d3d3;
+    color: rgba(0,0,0,0.25);
+    font-size: 13px;
+    /* color: #404040; */
+    display: none;
+    margin: 0;
+    padding: 0;
+    padding: 10px;
+    transition: 0.1s;
+}
+#freeExplore:hover {
+    background-color: #cccccc;
+    color: #404040;
+    cursor: pointer;
+}
+
+#freeExplore.active {
+    background-color: #fff;
+    color: #404040;
+}
+.mapboxgl-ctrl-top-right {
+    top: 45px;
+}
 #menu {
     background: #fff;
-    position: relative;
+    margin-top:20px;
+    position: inherit;
     z-index: 1;
     top: 10px;
     right: 10px;
