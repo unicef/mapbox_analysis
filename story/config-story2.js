@@ -41,7 +41,7 @@ var config = {
                 },
                 {
                   layer: 'mask',
-                  opacity:0.9,
+                  opacity:0.75,
                 },
                 {
                   layer: 'schools-dots',
@@ -150,7 +150,7 @@ var config = {
             alignment: 'left',
             title: 'School Connectivity',
             image: '',
-            description: 'Internet access at each school varies. The green schools have good connections, the red have little or none, and the yellow are somewhere in between.' + '<div class="textLegend"><span style="background:#8bd432">> 5 mb/s</span><span style="background:#ffc83d">< 5 mb/s</span><span style="background:#ff605b">Limited</span></div>',
+            description: 'Internet access at each school varies. The green schools have good connections, the red have little or none, and the yellow are somewhere in between.' + '<div class="textLegend"><span style="background:#ff605b">Limited</span><span style="background:#ffc83d">< 5 mb/s</span><span style="background:#8bd432">> 5 mb/s</span></div>',
             location: {
               center: [65.121,48.391],
               zoom: 4,
@@ -472,7 +472,15 @@ var config = {
               },
               {
                 layer: 'kz-relative-wealth-index',
-                opacity: 0
+                opacity: 0,
+              },
+              {
+                layer: 'heatmap',
+                opacity: 0,
+              },
+              {
+                layer: 'schools-glow',
+                opacity: 0,
               },
               {
                 layer: 'kz30-high',
@@ -503,7 +511,7 @@ var config = {
             alignment: 'left',
             title: 'Explore',
             image: '',
-            description: 'Go ahead, explore if you like! Just drag and zoom to go where you want.',
+            description: 'Go ahead, explore if you like! Just drag and zoom to go where you want.' + '<nav id="menu"></nav>',
             location: {
               center: [65.12,48.39],
               zoom: 4.5,
@@ -526,7 +534,7 @@ var config = {
               },
               {
                 layer: 'kz-relative-wealth-index',
-                opacity: .75
+                opacity: 0
               }
             ],
             onChapterExit: [

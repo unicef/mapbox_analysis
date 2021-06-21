@@ -11,6 +11,7 @@
 <link href='./css/story.css' rel='stylesheet' />
 </head>
 <body>
+<div id="mapInset"></div>
 <div id="map"></div>
 <div id="loader">
     <div id="loaderSpin"></div>
@@ -47,6 +48,11 @@ var countryBounds = [
 var popBounds = [
     [66.533203125, 40.29628651711716],
     [80.13427734374999,44.84029065139799]
+]
+
+var maxBounds = [
+    [24.345703125,21.94304553343818],
+    [105.029296875,63.15435519659187]
 ]
 
 var initLoad = true;
@@ -176,7 +182,20 @@ var map = new mapboxgl.Map({
     bearing: config.chapters[0].location.bearing,
     pitch: config.chapters[0].location.pitch,
     scrollZoom: false,
-    transformRequest: transformRequest
+    transformRequest: transformRequest,
+    maxBounds: maxBounds
+});
+
+var mapInset = new mapboxgl.Map({
+    container: 'mapInset',
+    style: 'mapbox://styles/mikelmaron/ckq6sqbpy3h7h17ns51p46jvq',
+    center: [66.884765625,46.619261036171515],
+    interactive: false,
+    zoom:1.2,
+    maxZoom: 3,
+    minZoom:1
+    // transformRequest: transformRequest,
+    // maxBounds: maxBounds
 });
 
 if (config.showMarkers) {
@@ -211,6 +230,11 @@ map.on("load", function() {
         });
     };
 
+    map.on('move', getInsetBounds);
+    // map.on('move', getInsetBounds);
+
+    buildMenu();
+
     // setup the instance, pass callback functions
     scroller
     .setup({
@@ -227,16 +251,21 @@ map.on("load", function() {
         customizeChapters(chapter.id);
 
         response.element.classList.add('active');
-        if (chapter.id === 'kazakhstan-schools' || chapter.id === 'schools-connectivity' || chapter.id === 'explore') {
+        if (chapter.id === 'kazakhstan-schools' || chapter.id === 'schools-connectivity') {
             map.fitBounds(countryBounds, {
-                padding: {top: 0, bottom: 0, left: 100, right: 0}
+                padding: {top: 0, bottom: 0, left: 100, right: 0},
+                pitch: 0
             });
             document.getElementById('loader').style.opacity = 0;
             if (chapter.id === 'kazakhstan-schools') {
                 map.setPaintProperty('background', 'background-color', '#000');
+                document.getElementById('mapInset').style.opacity = 1;
             } else if (chapter.id === 'schools-connectivity' || chapter.id === 'quschoqy') {
                 map.setPaintProperty('background', 'background-color', '#000');
             }
+        } else if (chapter.id === 'quschoqy') {
+            document.getElementById('mapInset').style.opacity = 0;
+            map[chapter.mapAnimation || 'flyTo'](chapter.location);
         } else if (chapter.id === 'schools-population' || chapter.id === 'economic') {
             map.fitBounds(popBounds, {
                 duration: 3000,
@@ -247,6 +276,7 @@ map.on("load", function() {
             document.getElementById('infographicHold').style.opacity = 1;
             document.getElementById('infographicImgOne').style.opacity = 1;
             document.getElementById('infographicImgTwo').style.opacity = 0;
+            document.getElementById('mapInset').style.opacity = 0;
             map.fitBounds(countryBounds, {
                 padding: {top: 0, bottom: 0, left: 100, right: 0}
             });
@@ -255,15 +285,27 @@ map.on("load", function() {
             document.getElementById('infographicHold').style.opacity = 1;
             document.getElementById('infographicImgOne').style.opacity = 0;
             document.getElementById('infographicImgTwo').style.opacity = 1;
+            document.getElementById('mapInset').style.opacity = 0;
             map.fitBounds(countryBounds, {
                 padding: {top: 0, bottom: 0, left: 100, right: 0}
             });
         } else if (chapter.id === 'schools-accessibility') {
             document.getElementById('loader').style.opacity = 0;
+            document.getElementById('mapInset').style.opacity = 1;
             map[chapter.mapAnimation || 'flyTo'](chapter.location);
+        } else if (chapter.id === 'explore') {
+            map.fitBounds(countryBounds, {
+                padding: {top: 0, bottom: 0, left: 100, right: 0},
+                pitch: 0
+            });
+            document.getElementById('heatmap').classList = '';
+            document.getElementById('kz-relative-wealth-index').classList = '';
+            document.getElementById('schools-glow').classList = '';
+            document.getElementById('isochrones').classList = 'active';
         } else {
             map[chapter.mapAnimation || 'flyTo'](chapter.location);
         }
+
         if (config.showMarkers) {
             marker.setLngLat(chapter.location.center);
         }
@@ -314,7 +356,7 @@ function customizeChapters(chap) {
     } else if (chap === 'quschoqy') {
         // Add a data source containing one point feature.
         if (initLoad) {
-            initLoad = false;
+            
             // map.addSource('point', {
             //     'type': 'geojson',
             //     'data': {
@@ -374,6 +416,231 @@ function removeLoader() {
     document.getElementById('loader').style.opacity = 0;
     document.getElementById('loaderSpin').style.opacity = 0;
     // });
+}
+
+function getInsetBounds() {
+    let bounds = map.getBounds();
+    // console.log('bounds sw', bounds._sw.lng);
+    // console.log('bounds ne', bounds._ne.lng);
+
+    let boundsJson = {
+        "type": "FeatureCollection",
+        "features": [
+            {
+            "type": "Feature",
+            "properties": {},
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                [
+                    [
+                    bounds._sw.lng,
+                    bounds._sw.lat
+                    ],
+                    [
+                    bounds._ne.lng,
+                    bounds._sw.lat
+                    ],
+                    [
+                    bounds._ne.lng,
+                    bounds._ne.lat
+                    ],
+                    [
+                    bounds._sw.lng,
+                    bounds._ne.lat
+                    ],
+                    [
+                    bounds._sw.lng,
+                    bounds._sw.lat
+                    ]
+                ]
+                ]
+            }
+            }
+        ]
+    }
+
+    var bbox = [[bounds._sw.lng,bounds._sw.lat], [bounds._ne.lng,bounds._ne.lat]];
+
+    // map.on('moveend', function() {
+        mapInset.fitBounds(bbox, {
+            padding: {top: 30, bottom:30, left: 30, right: 30},
+            duration:0
+        });
+    // });
+
+
+    if (initLoad) {
+        addInsetLayer(boundsJson);
+        initLoad = false;
+    } else {
+        updateInsetLayer(boundsJson);
+    }
+
+}
+
+function addInsetLayer(bounds) {
+    // console.log('added layer', bounds);
+
+    mapInset.addSource('boundsSource', {
+        'type': 'geojson',
+        'data': bounds
+    });
+
+    mapInset.addLayer({
+        'id': 'boundsLayer',
+        'type': 'fill',
+        'source': 'boundsSource', // reference the data source
+        'layout': {},
+        'paint': {
+            'fill-color': '#fff', // blue color fill
+            'fill-opacity': 0.2
+        }
+    });
+    // // Add a black outline around the polygon.
+    mapInset.addLayer({
+        'id': 'outlineLayer',
+        'type': 'line',
+        'source': 'boundsSource',
+        'layout': {},
+        'paint': {
+            'line-color': '#000',
+            'line-width': 1
+        }
+    });
+}
+
+function updateInsetLayer(bounds) {
+    // console.log('updated layer', bounds);
+    mapInset.getSource('boundsSource').setData(bounds);
+}
+
+function buildMenu() {
+    const toggleableLayerIds = ['heatmap', 'kz-relative-wealth-index', 'schools-glow', 'isochrones'];
+    // Set up the corresponding toggle button for each layer.
+    for (let i = 0; i < toggleableLayerIds.length; i++) {
+        let id = toggleableLayerIds[i];
+        if (!document.getElementById(id)) {
+            // Create a link.
+            const link = document.createElement('a');
+            link.id = id;
+            link.href = '#';
+
+            if (id === 'heatmap') {
+                link.textContent = 'Population Density';
+                link.className = '';
+            } else if (id === 'kz-relative-wealth-index') {
+                link.textContent = 'Relative Wealth Index';
+                link.className = '';
+            } else if (id === 'schools-glow') {
+                link.textContent = 'Schools by Connectivity';
+                link.className = '';
+            } else if (id === 'isochrones') {
+                link.textContent = 'Isochrones';
+                link.className = 'active';
+            }
+            
+            // Show or hide layer when the toggle is clicked.
+            link.onclick = function (e) {
+                const clickedLayer = this.id;
+                console.log('clickedLayer', clickedLayer);
+                e.preventDefault();
+                e.stopPropagation();
+                let visibility;
+                // console.log('id', id);
+                if (id === 'isochrones') {
+                    // console.log('id', id);
+                    visibility = map.getPaintProperty(
+                        'kz30-high',
+                        'fill-opacity'
+                    );
+                    // console.log('visibility', visibility);
+                } else if (id === 'heatmap') {
+                    visibility = map.getPaintProperty(
+                        clickedLayer,
+                        'heatmap-opacity'
+                    );
+                } else if (id === 'kz-relative-wealth-index' || id === 'schools-glow') {
+                    visibility = map.getPaintProperty(
+                        clickedLayer,
+                        'circle-opacity',
+                        0
+                    );
+                }
+
+                // Toggle layer visibility by changing the layout object's visibility property.
+                if (visibility > 0.1) {
+                    console.log('is visible');
+                    if (id === 'isochrones') {
+                        map.setPaintProperty(
+                            'kz30-high',
+                            'fill-opacity',
+                            0
+                        );
+                        map.setPaintProperty(
+                            'kz30-med',
+                            'fill-opacity',
+                            0
+                        );
+                        map.setPaintProperty(
+                            'kz30-low',
+                            'fill-opacity',
+                            0
+                        );
+                    } else if (id === 'heatmap') {
+                        map.setPaintProperty(
+                            clickedLayer,
+                            'heatmap-opacity',
+                            0
+                        );      
+                    } else if (id === 'kz-relative-wealth-index' || id === 'schools-glow') {
+                        map.setPaintProperty(
+                            clickedLayer,
+                            'circle-opacity',
+                            0
+                        );
+                    }
+                    this.className = '';
+
+                } else {                    
+                    console.log('is not visible');
+                    if (id === 'heatmap') {
+                        map.setPaintProperty(
+                            clickedLayer,
+                            'heatmap-opacity',
+                            1
+                        );
+                    } else if (id === 'kz-relative-wealth-index' || id === 'schools-glow') {
+                        map.setPaintProperty(
+                            clickedLayer,
+                            'circle-opacity',
+                            1
+                        );
+                    } else if (id === 'isochrones') {
+                        map.setPaintProperty(
+                            'kz30-high',
+                            'fill-opacity',
+                            1
+                        );
+                        map.setPaintProperty(
+                            'kz30-med',
+                            'fill-opacity',
+                            1
+                        );
+                        map.setPaintProperty(
+                            'kz30-low',
+                            'fill-opacity',
+                            1
+                        );
+                    }
+                    this.className = 'active';
+                }
+            };
+            
+            var layers = document.getElementById('menu');
+            layers.appendChild(link);
+        }
+    }
 }
 
 // function addLoader() {
