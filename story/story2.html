@@ -49,6 +49,11 @@ var popBounds = [
     [80.13427734374999,44.84029065139799]
 ]
 
+var maxBounds = [
+    [24.345703125,21.94304553343818],
+    [105.029296875,63.15435519659187]
+]
+
 var initLoad = true;
 
 function getLayerPaintType(layer) {
@@ -176,7 +181,8 @@ var map = new mapboxgl.Map({
     bearing: config.chapters[0].location.bearing,
     pitch: config.chapters[0].location.pitch,
     scrollZoom: false,
-    transformRequest: transformRequest
+    transformRequest: transformRequest,
+    maxBounds: maxBounds
 });
 
 if (config.showMarkers) {
