@@ -211,6 +211,8 @@ map.on("load", function() {
         });
     };
 
+    buildMenu();
+
     // setup the instance, pass callback functions
     scroller
     .setup({
@@ -227,9 +229,10 @@ map.on("load", function() {
         customizeChapters(chapter.id);
 
         response.element.classList.add('active');
-        if (chapter.id === 'kazakhstan-schools' || chapter.id === 'schools-connectivity' || chapter.id === 'explore') {
+        if (chapter.id === 'kazakhstan-schools' || chapter.id === 'schools-connectivity') {
             map.fitBounds(countryBounds, {
-                padding: {top: 0, bottom: 0, left: 100, right: 0}
+                padding: {top: 0, bottom: 0, left: 100, right: 0},
+                pitch: 0
             });
             document.getElementById('loader').style.opacity = 0;
             if (chapter.id === 'kazakhstan-schools') {
@@ -261,9 +264,19 @@ map.on("load", function() {
         } else if (chapter.id === 'schools-accessibility') {
             document.getElementById('loader').style.opacity = 0;
             map[chapter.mapAnimation || 'flyTo'](chapter.location);
+        } else if (chapter.id === 'explore') {
+            map.fitBounds(countryBounds, {
+                padding: {top: 0, bottom: 0, left: 100, right: 0},
+                pitch: 0
+            });
+            document.getElementById('heatmap').classList = '';
+            document.getElementById('kz-relative-wealth-index').classList = '';
+            document.getElementById('schools-glow').classList = '';
+            document.getElementById('isochrones').classList = 'active';
         } else {
             map[chapter.mapAnimation || 'flyTo'](chapter.location);
         }
+
         if (config.showMarkers) {
             marker.setLngLat(chapter.location.center);
         }
@@ -374,6 +387,134 @@ function removeLoader() {
     document.getElementById('loader').style.opacity = 0;
     document.getElementById('loaderSpin').style.opacity = 0;
     // });
+}
+
+function buildMenu() {
+    const toggleableLayerIds = ['heatmap', 'kz-relative-wealth-index', 'schools-glow', 'isochrones'];
+    // Set up the corresponding toggle button for each layer.
+    for (let i = 0; i < toggleableLayerIds.length; i++) {
+        let id = toggleableLayerIds[i];
+        if (!document.getElementById(id)) {
+            // Create a link.
+            const link = document.createElement('a');
+            link.id = id;
+            link.href = '#';
+
+            if (id === 'heatmap') {
+                link.textContent = 'Population Density';
+                link.className = '';
+            } else if (id === 'kz-relative-wealth-index') {
+                link.textContent = 'Relative Wealth Index';
+                link.className = '';
+            } else if (id === 'schools-glow') {
+                link.textContent = 'Schools by Connectivity';
+                link.className = '';
+            } else if (id === 'isochrones') {
+                link.textContent = 'Isochrones';
+                link.className = 'active';
+            }
+            
+            // Show or hide layer when the toggle is clicked.
+            link.onclick = function (e) {
+                const clickedLayer = this.id;
+                console.log('clickedLayer', clickedLayer);
+                e.preventDefault();
+                e.stopPropagation();
+                let visibility;
+                // console.log('id', id);
+                if (id === 'isochrones') {
+                    // console.log('id', id);
+                    visibility = map.getPaintProperty(
+                        'kz30-high',
+                        'fill-opacity'
+                    );
+                    // console.log('visibility', visibility);
+                } else if (id === 'heatmap') {
+                    visibility = map.getPaintProperty(
+                        clickedLayer,
+                        'heatmap-opacity'
+                    );
+                } else if (id === 'kz-relative-wealth-index' || id === 'schools-glow') {
+                    visibility = map.getPaintProperty(
+                        clickedLayer,
+                        'circle-opacity',
+                        0
+                    );
+                }
+
+                // Toggle layer visibility by changing the layout object's visibility property.
+                if (visibility > 0.1) {
+                    console.log('is visible');
+                    if (id === 'isochrones') {
+                        map.setPaintProperty(
+                            'kz30-high',
+                            'fill-opacity',
+                            0
+                        );
+                        map.setPaintProperty(
+                            'kz30-med',
+                            'fill-opacity',
+                            0
+                        );
+                        map.setPaintProperty(
+                            'kz30-low',
+                            'fill-opacity',
+                            0
+                        );
+                    } else if (id === 'heatmap') {
+                        map.setPaintProperty(
+                            clickedLayer,
+                            'heatmap-opacity',
+                            0
+                        );      
+                    } else if (id === 'kz-relative-wealth-index' || id === 'schools-glow') {
+                        map.setPaintProperty(
+                            clickedLayer,
+                            'circle-opacity',
+                            0
+                        );
+                    }
+                    this.className = '';
+
+                } else {                    
+                    console.log('is not visible');
+                    if (id === 'heatmap') {
+                        map.setPaintProperty(
+                            clickedLayer,
+                            'heatmap-opacity',
+                            1
+                        );
+                    } else if (id === 'kz-relative-wealth-index' || id === 'schools-glow') {
+                        map.setPaintProperty(
+                            clickedLayer,
+                            'circle-opacity',
+                            1
+                        );
+                    } else if (id === 'isochrones') {
+                        map.setPaintProperty(
+                            'kz30-high',
+                            'fill-opacity',
+                            1
+                        );
+                        map.setPaintProperty(
+                            'kz30-med',
+                            'fill-opacity',
+                            1
+                        );
+                        map.setPaintProperty(
+                            'kz30-low',
+                            'fill-opacity',
+                            1
+                        );
+                    }
+                    this.className = 'active';
+                }
+            };
+            
+            var layers = document.getElementById('menu');
+            layers.appendChild(link);
+        }
+    }
 }
 
 // function addLoader() {
