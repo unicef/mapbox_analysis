@@ -20,7 +20,6 @@
         <img id="infographicImgTwo" src="./images/infographic_2.png">
     </div>
 </div>
-<div id="freeExplore">Enable Scroll Zoom</div>
 <div id="story"></div>
 <script src="./config-story2.js"></script>
 <script>
@@ -57,8 +56,6 @@ var maxBounds = [
 ]
 
 var initLoad = true;
-
-document.getElementById("freeExplore").addEventListener("click", enableFreeExplore);
 
 function getLayerPaintType(layer) {
     var layerType = map.getLayer(layer).type;
@@ -196,7 +193,8 @@ var mapInset = new mapboxgl.Map({
     interactive: false,
     zoom:1.2,
     maxZoom: 3,
-    minZoom:1
+    minZoom:1,
+    attributionControl: false
     // transformRequest: transformRequest,
     // maxBounds: maxBounds
 });
@@ -211,6 +209,7 @@ var scroller = scrollama();
 
 map.on("load", function() {
     console.log('loaded');
+    document.getElementById("freeExplore").addEventListener("click", enableFreeExplore);
     if (config.use3dTerrain) {
         map.addSource('mapbox-dem', {
             'type': 'raster-dem',
@@ -303,6 +302,10 @@ map.on("load", function() {
                 padding: {top: 0, bottom: 0, left: 100, right: 0},
                 pitch: 0
             });
+            map.on('moveend', enableFreeExplore);
+            // map.on('moveend', function() {
+            //     console.log('move ended');
+            // });
             document.getElementById('heatmap').classList = '';
             document.getElementById('kz-relative-wealth-index').classList = '';
             document.getElementById('schools-glow').classList = '';
@@ -468,10 +471,10 @@ function getInsetBounds() {
     var bbox = [[bounds._sw.lng,bounds._sw.lat], [bounds._ne.lng,bounds._ne.lat]];
 
     // map.on('moveend', function() {
-        mapInset.fitBounds(bbox, {
-            padding: {top: 30, bottom:30, left: 30, right: 30},
-            duration:0
-        });
+        // mapInset.fitBounds(bbox, {
+        //     padding: {top: 30, bottom:30, left: 30, right: 30},
+        //     duration:0
+        // });
     // });
 
 
@@ -650,18 +653,21 @@ function buildMenu() {
 
 
 function enableFreeExplore() {
-    console.log('this', this);
-    if (this.classList.contains("active")) {
+    let exploreActive = document.getElementById('freeExplore')
+    // console.log('this', this);
+    // console.log('exploreActive', exploreActive);
+    if (exploreActive.classList.contains("active")) {
         // console.log('is active');
-        this.classList.remove("active");
-        this.innerHTML = "Enable Scroll Wheel";
+        exploreActive.classList.remove("active");
+        exploreActive.innerHTML = "Free explore";
         map.scrollZoom.disable();
     } else {
         // console.log('is not active');
-        this.classList.add("active");
-        this.innerHTML = "Disable Scroll Wheel";
+        exploreActive.classList.add("active");
+        exploreActive.innerHTML = "Back to story";
         map.scrollZoom.enable();
     }
+    map.off('moveend', enableFreeExplore);
 }
 
 // function addLoader() {

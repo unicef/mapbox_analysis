@@ -511,7 +511,7 @@ var config = {
             alignment: 'left',
             title: 'Explore',
             image: '',
-            description: 'Go ahead, explore if you like! Just drag and zoom to go where you want.' + '<nav id="menu"></nav>',
+            description: '<div id="freeExplore">Back to story ↑</div>' + 'Go ahead, explore if you like! Just drag and zoom to go where you want.' + '<nav id="menu"></nav>',
             location: {
               center: [65.12,48.39],
               zoom: 4.5,

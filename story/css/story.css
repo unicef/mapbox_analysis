@@ -9,14 +9,18 @@ a, a:hover, a:visited {
 }
 #mapInset {
     bottom:50px;
-    right:50px;
-    height: 150px;
-    width:200px;
+    right:30px;
+    height: 180px;
+    width:250px;
     max-width:100%;
     position: fixed;
     z-index: 1;
     opacity:0;
     transition: opacity 0.5s ease-in-out;
+    pointer-events: none;
+}
+#mapInset .mapboxgl-ctrl-bottom-left{
+    display: none;
 }
 #map {
     top:0;
@@ -55,13 +59,13 @@ a, a:hover, a:visited {
 }
 #freeExplore {
     /* background: #fff; */
-    margin-top:20px;
-    position: fixed;
-    z-index: 1;
-    top: 10px;
-    right: 10px;
-    border-radius: 3px;
-    /* width: 100%; */
+    /* margin-top:20px; */
+    position: absolute;
+    z-index: -1;
+    top: -45px;
+    right: 0;
+    border-radius: 10px;
+    width: 170px;
     /* border: 1px solid rgba(0, 0, 0, 0.4); */
     font-family: 'Open Sans', sans-serif;
     font-weight: bold;
@@ -71,9 +75,9 @@ a, a:hover, a:visited {
     font-size: 13px;
     /* color: #404040; */
     display: none;
-    margin: 0;
-    padding: 0;
-    padding: 10px;
+    /* margin: 0; */
+    /* padding: 0; */
+    padding: 10px 10px 30px 10px;
     transition: 0.1s;
 }
 #freeExplore:hover {
@@ -270,6 +274,7 @@ a, a:hover, a:visited {
 
 #features #explore .light {
     pointer-events: auto;
+    position: relative;
 }
 
 @media (max-width: 750px) {
