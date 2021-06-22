@@ -90,9 +90,6 @@ a, a:hover, a:visited {
     background-color: #fff;
     color: #404040;
 }
-.mapboxgl-ctrl-top-right {
-    top: 45px;
-}
 #menu {
     background: #fff;
     margin-top:20px;
