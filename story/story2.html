@@ -193,7 +193,8 @@ var mapInset = new mapboxgl.Map({
     interactive: false,
     zoom:1.2,
     maxZoom: 3,
-    minZoom:1
+    minZoom:1,
+    attributionControl: false
     // transformRequest: transformRequest,
     // maxBounds: maxBounds
 });
@@ -208,6 +209,7 @@ var scroller = scrollama();
 
 map.on("load", function() {
     console.log('loaded');
+    document.getElementById("freeExplore").addEventListener("click", enableFreeExplore);
     if (config.use3dTerrain) {
         map.addSource('mapbox-dem', {
             'type': 'raster-dem',
@@ -286,18 +288,24 @@ map.on("load", function() {
             document.getElementById('infographicImgOne').style.opacity = 0;
             document.getElementById('infographicImgTwo').style.opacity = 1;
             document.getElementById('mapInset').style.opacity = 0;
+            document.getElementById('freeExplore').style.display = 'none';
             map.fitBounds(countryBounds, {
                 padding: {top: 0, bottom: 0, left: 100, right: 0}
             });
         } else if (chapter.id === 'schools-accessibility') {
             document.getElementById('loader').style.opacity = 0;
             document.getElementById('mapInset').style.opacity = 1;
+            document.getElementById('freeExplore').style.display = 'block';
             map[chapter.mapAnimation || 'flyTo'](chapter.location);
         } else if (chapter.id === 'explore') {
             map.fitBounds(countryBounds, {
                 padding: {top: 0, bottom: 0, left: 100, right: 0},
                 pitch: 0
             });
+            map.on('moveend', enableFreeExplore);
+            // map.on('moveend', function() {
+            //     console.log('move ended');
+            // });
             document.getElementById('heatmap').classList = '';
             document.getElementById('kz-relative-wealth-index').classList = '';
             document.getElementById('schools-glow').classList = '';
@@ -463,10 +471,10 @@ function getInsetBounds() {
     var bbox = [[bounds._sw.lng,bounds._sw.lat], [bounds._ne.lng,bounds._ne.lat]];
 
     // map.on('moveend', function() {
-        mapInset.fitBounds(bbox, {
-            padding: {top: 30, bottom:30, left: 30, right: 30},
-            duration:0
-        });
+        // mapInset.fitBounds(bbox, {
+        //     padding: {top: 30, bottom:30, left: 30, right: 30},
+        //     duration:0
+        // });
     // });
 
 
@@ -641,6 +649,25 @@ function buildMenu() {
             layers.appendChild(link);
         }
     }
+}
+
+
+function enableFreeExplore() {
+    let exploreActive = document.getElementById('freeExplore')
+    // console.log('this', this);
+    // console.log('exploreActive', exploreActive);
+    if (exploreActive.classList.contains("active")) {
+        // console.log('is active');
+        exploreActive.classList.remove("active");
+        exploreActive.innerHTML = "Free explore";
+        map.scrollZoom.disable();
+    } else {
+        // console.log('is not active');
+        exploreActive.classList.add("active");
+        exploreActive.innerHTML = "Back to story";
+        map.scrollZoom.enable();
+    }
+    map.off('moveend', enableFreeExplore);
 }
 
 // function addLoader() {
