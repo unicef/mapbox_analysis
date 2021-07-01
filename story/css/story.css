@@ -30,6 +30,21 @@ a, a:hover, a:visited {
     max-width:100%;
     position: fixed;
     z-index: -1;
+    transition: width 2s;
+    /* overflow: none; */
+}
+
+#mapCompare {
+    pointer-events: none;
+    top:0;
+    right:-50vw;
+    height: 100vh;
+    width:50vw;
+    /* overflow: none; */
+    /* max-width:100%; */
+    position: fixed;
+    transition: right 2s;
+    /* z-index: -1; */
 }
 #loader {
     top:0;
@@ -142,7 +157,10 @@ a, a:hover, a:visited {
 #infographicHold img {
     width:100%;
     position: absolute;
-    transition: opacity 0.5s ease-in;
+    transition: opacity 1s ease-in;
+}
+#infographicImgTwo {
+    opacity: 0;
 }
 #story {
     /* background:rgba(0,0,0,.9); */
@@ -151,7 +169,7 @@ a, a:hover, a:visited {
     margin: auto;
     padding:10px 0;
     width: 100vw;
-    background-color: rgba(0,0,0,.75);
+    background-color: rgba(0,0,0,.95);
 }
 #header h1, #header h2 {
     margin: 0;
@@ -193,7 +211,7 @@ a, a:hover, a:visited {
 #features #intro p {
     font-size:20px;
     line-height: 35px;
-    color: #9a9a9a;
+    color: #d3d3d3;
     margin-top: -30px;
     text-shadow: 2px 2px 8px #000;
 }
@@ -206,19 +224,93 @@ a, a:hover, a:visited {
     box-shadow: 4px 4px 8px #333;
 }
 
-#schools-connectivity .textLegend, #economic .textLegend, #schools-population .textLegend {
+#features .light .legendHold {
+    margin: 15px 0 0 0;
+    /* height:50px; */
     padding:0;
-    margin-top:25px;
+    display: block;
+    /* box-sizing: border-box; */
 }
-#schools-connectivity .textLegend span, #economic .textLegend span, #schools-population .textLegend span {
+
+#schools-connectivity .textLegend {
+    padding:0;
+    margin-top:15px;
+    position: relative;
+}
+
+#schools-connectivity .textLegend span {
     width:33%;
     display: inline-block;
     height: 25px;
+    text-align: center;
+}
+
+#economic .textLegend, #schools-population .textLegend, #high-economic .textLegend {
+    display: inline-block;
+    padding: 0 15px 0 0;
+    width: 60%;
+    /* position: relative; */
+    box-sizing: border-box;
+}
+
+#economic .heightLegend, #schools-population .heightLegend, #high-economic .heightLegend {
+    display: inline-block;
+    padding: 0 0 0 10px;
+    width: 40%;
+    position: relative;
+    box-sizing: border-box;
+}
+
+#economic .textLegend span, #schools-population .textLegend span, #high-economic .textLegend span {
+    width:20%;
+    display: inline-block;
+    height: 20px;
     text-align: center;
     font-weight: bold;
     font-size:12px;
     color: 'rgba(0,0,0,0.85)';
 }
+/* 
+#schools-connectivity .textLegend, #economic .textLegend, #schools-population .textLegend {
+
+} */
+
+#schools-connectivity .textLegend label.highLabel, #economic .textLegend label.highLabel, #schools-population .textLegend label.highLabel, #high-economic .textLegend label.highLabel {
+    /* position: absolute; */
+    /* right: 15px; */
+    /* top:0; */
+    font-size:0.8em;
+    float:right;
+    margin-top: 3px;
+    color:#555;
+}
+
+#schools-connectivity .textLegend label.lowLabel, #economic .textLegend label.lowLabel, #schools-population .textLegend label.lowLabel, #high-economic .textLegend label.lowLabel {
+    /* position: absolute; */
+    /* left: 0; */
+    /* top:0; */
+    font-size:0.8em;
+    color:#555;
+}
+
+#schools-connectivity .heightLegend label.popLabel, #economic .heightLegend label.popLabel, #schools-population .heightLegend label.popLabel, #high-economic .heightLegend label.popLabel {
+    /* position: absolute;
+    /* top:0; */
+    font-size: 0.8em;
+    color:#555;
+}
+
+/* #schools-connectivity .textLegend .heightLegend, #economic .textLegend .heightLegend, #schools-population .textLegend .heightLegend {
+    display: inline-block;
+    width:30%;
+    margin-left:10%;
+    padding: 0
+}
+
+#schools-connectivity .textLegend .heightLegend img, #economic .textLegend .heightLegend img, #schools-population .textLegend .heightLegend img {
+    margin-bottom: -10px;
+} */
+
 .hidden {
     visibility: hidden;
 }
@@ -270,14 +362,45 @@ a, a:hover, a:visited {
 }
 
 #features #explore .light {
-    pointer-events: auto;
+    /* pointer-events: auto; */
     position: relative;
+}
+
+#features #explore .light #menu, #features #explore .light #freeExplore {
+    pointer-events: auto;
+    /* position: relative; */
+}
+
+/* @media (max-width: 1325px) {
+    #economic .textLegend, #schools-population .textLegend, #high-economic .textLegend, #economic .heightLegend, #schools-population .heightLegend, #high-economic .heightLegend {
+        width:50%;
+        display: inline-block;
+    }
+} */
+
+@media (max-width: 1325px) {
+    #economic .textLegend, #schools-population .textLegend, #high-economic .textLegend, #economic .heightLegend, #schools-population .heightLegend, #high-economic .heightLegend {
+        width:100%;
+        display: block;
+    }
 }
 
 @media (max-width: 750px) {
     .centered, .lefty, .righty, .fully {
         width: 90vw;
         margin: 0 auto;
+    }
+
+    #economic .textLegend, #schools-population .textLegend, #high-economic .textLegend, #economic .heightLegend, #schools-population .heightLegend, #high-economic .heightLegend {
+        width:50%;
+        display: inline-block;
+    }
+}
+
+@media (max-width: 1150px) {
+    #economic .textLegend, #schools-population .textLegend, #high-economic .textLegend, #economic .heightLegend, #schools-population .heightLegend, #high-economic .heightLegend {
+        width:100%;
+        display: block;
     }
 }
 

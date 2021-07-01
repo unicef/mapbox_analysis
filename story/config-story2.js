@@ -99,7 +99,7 @@ var config = {
             id: 'kazakhstan-schools',
             alignment: 'left',
             title: '',
-            description: 'There are <b>7,410 schools</b> in Kazakhstan.<br><span style="font-size:12px">*Schools are sized by student population.</span>',
+            description: 'There are <b>7,410 schools</b> in Kazakhstan.<br><span style="font-size:0.8em;color:#555;">*Schools are sized by student population.</span>',
             location: {
                 center: [65.121,48.391],
                 zoom: 4,
@@ -150,7 +150,7 @@ var config = {
             alignment: 'left',
             title: 'School Connectivity',
             image: '',
-            description: 'Internet access at each school varies. The green schools have good connections, the red have little or none, and the yellow are somewhere in between.' + '<div class="textLegend"><span style="background:#ff605b">Limited</span><span style="background:#ffc83d">< 5 mb/s</span><span style="background:#8bd432">> 5 mb/s</span></div>',
+            description: 'Internet access at each school varies. The green schools have good connections, the red have little or none, and the yellow are somewhere in between.' + '<div class="textLegend"><span style="background:#ff605b">Limited</span><span style="background:#ffc83d">< 5 mb/s</span><span style="background:#8bd432">> 5 mb/s</span></div><br><span style="font-size:0.8em;color:#555;">*Schools are sized by student population.</span>',
             location: {
               center: [65.121,48.391],
               zoom: 4,
@@ -189,7 +189,7 @@ var config = {
             onChapterExit: []
         },
         {
-          id: 'schools-infographic_1',
+          id: 'schools-infographic-1',
           alignment: 'left',
           title: 'Placeholder',
           image: '',
@@ -239,7 +239,7 @@ var config = {
           onChapterExit: []
         },
         {
-          id: 'schools-infographic_2',
+          id: 'schools-infographic-2',
           alignment: 'left',
           title: 'Placeholder',
           image: '',
@@ -278,12 +278,12 @@ var config = {
               layer: 'schools-glow',
               opacity: 0,
               duration: 1000
-            },
-            { /* not sure this adds much at this zoom level*/
-              layer: 'heatmap',
-              opacity: 0,
-              duration: 0
             }
+            // { /* not sure this adds much at this zoom level*/
+            //   layer: 'heatmap',
+            //   opacity: 0,
+            //   duration: 0
+            // }
           ],
           onChapterExit: []
         },
@@ -326,10 +326,15 @@ var config = {
                 opacity: 0,
                 duration: 1000
               },
-              { /* not sure this adds much at this zoom level*/
-                layer: 'heatmap',
+              // { /* not sure this adds much at this zoom level*/
+              //   layer: 'heatmap',
+              //   opacity: 0,
+              //   duration: 0
+              // },
+              {
+                layer: '3D-extrusions',
                 opacity: 0,
-                duration: 0
+                duration:0
               }
             ],
             onChapterExit: []
@@ -339,13 +344,13 @@ var config = {
             alignment: 'left',
             title: 'Population by Connectivity',
             image: '',
-            description: 'Then we can overlay this map with population data and start to see how many people have access to this level of connectivity. Remember, that we’re defining access as being within a 30 minute drive of a connected school. We found: <b>14.78 million people with high connectivity, 932k with only medium, and 40.5k with only low connectivity school access</b> leaving ~3m people without connectivity as defined by a 30 minute drive.' + '<div class="textLegend"><span style="background:#c51b7d;color:#fff">Low Density</span><span style="background:#998ec3">Medium Density</span><span style="background:#542788;color:#fff">High Density</span></div>',
+            description: 'Then we can overlay this map with population data and start to see how many people have access to this level of connectivity. Remember, that we’re defining access as being within a 30 minute drive of a connected school. We found: <b>14.78 million people with high connectivity, 932k with only medium, and 40.5k with only low connectivity school access</b> leaving ~3m people without connectivity as defined by a 30 minute drive.' + '<div class="legendHold"><div class="textLegend"><span style="background:#d7191c;"></span><span style="background:#fdae61"></span><span style="background:#ffffbf"></span><span style="background:#a6d96a"></span><span style="background:#1a9641"></span><label class="lowLabel">← Lower connectivity</label><label class="highLabel">Higher connectivity →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div>',
             location: {
-              center: [72.5,42.5],
-              zoom: 6.5,
-              pitch: 0,
-              bearing: -26,
-              duration: 4000
+              center: [68.32591470259335, 40.77472359994684],
+              zoom: 9,
+              pitch: 28,
+              bearing: 0,
+              duration: 5000
           },
             // callback: 'enableFreetime',
             onChapterEnter: [
@@ -359,11 +364,17 @@ var config = {
               //   opacity: 1,
               //   duration: 1000
               // },
-              { /* not sure this adds much at this zoom level*/
-                layer: 'heatmap',
+              /* not sure this adds much at this zoom level*/
+              {
+                layer: '3D-extrusions',
                 opacity: 1,
-                duration: 1000
+                duration:1000
               },
+              // {
+              //   layer: 'heatmap',
+              //   opacity: 1,
+              //   duration: 1000
+              // },
               {
                 layer: 'schools-glow',
                 opacity: 0,
@@ -389,10 +400,10 @@ var config = {
                 layer: 'place-label (3) copy',
                 opacity: .6,
               },
-              {
-                layer: 'kz-relative-wealth-index',
-                opacity: 0
-              }
+              // {
+              //   layer: 'kz-relative-wealth-index',
+              //   opacity: 0
+              // }
             ],
             onChapterExit: [
               {
@@ -411,28 +422,34 @@ var config = {
             alignment: 'left',
             title: 'Economic',
             image: '',
-            description: 'We can also overlay this with other data to see how connectivity interacts with important socioeconomic indicators.' + '<div class="textLegend"><span style="background:#c51b7d;color:#fff">Low Wealth</span><span style="background:#998ec3">Medium Wealth</span><span style="background:#542788;color:#fff">High Wealth</span></div>',
+            description: 'We can also overlay this with other data to see how connectivity interacts with important socioeconomic indicators.' + '<div class="legendHold"><div class="textLegend"><span style="background:#e66101;"></span><span style="background:#fdb863"></span><span style="background:#f7f7f7;"></span><span style="background:#b2abd2;"></span><span style="background:#5e3c99;"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div>',
             location: {
-              // center: [69.007,43.112],
-              // zoom: 8,
-              pitch: 0
-              // bearing: 20
+              center: [68.32591470259335, 40.77472359994684],
+              zoom: 9,
+              pitch: 28,
+              bearing: 0,
+              duration: 5000
             },
             rotateAnimation: true,
             callback: 'enableFreetime',
             onChapterEnter: [
-              { /* not sure this adds much at this zoom level*/
-                layer: 'heatmap',
-                opacity: 0
+              {
+                layer: '3D-extrusions',
+                opacity: 1,
+                duration:1000
               },
+              // { /* not sure this adds much at this zoom level*/
+              //   layer: 'heatmap',
+              //   opacity: 0
+              // },
               {
                 layer: 'kazakhstan-merged',
                 opacity: 0
               },
-              {
-                layer: 'kz-relative-wealth-index',
-                opacity: .9
-              },
+              // {
+              //   layer: 'kz-relative-wealth-index',
+              //   opacity: .9
+              // },
               {
                 layer: 'kz30-high',
                 opacity: 0.2,
@@ -452,6 +469,57 @@ var config = {
             onChapterExit: []
         },
         {
+          id: 'high-economic',
+          alignment: 'left',
+          title: 'Low connectivity in wealthy regions',
+          image: '',
+          description: 'Lorem Ipsum' + '<div class="legendHold"><div class="textLegend"><span style="background:#e66101;"></span><span style="background:#fdb863"></span><span style="background:#f7f7f7;"></span><span style="background:#b2abd2;"></span><span style="background:#5e3c99;"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div>',
+          location: {
+            center: [57.19104067072559, 50.28485206328431],
+            zoom: 8,
+            pitch: 28,
+            bearing: 0,
+            duration: 5000
+          },
+          rotateAnimation: true,
+          callback: 'enableFreetime',
+          onChapterEnter: [
+            {
+              layer: '3D-extrusions',
+              opacity: 1,
+              duration:1000
+            },
+            // { /* not sure this adds much at this zoom level*/
+            //   layer: 'heatmap',
+            //   opacity: 0
+            // },
+            {
+              layer: 'kazakhstan-merged',
+              opacity: 0
+            },
+            // {
+            //   layer: 'kz-relative-wealth-index',
+            //   opacity: .9
+            // },
+            {
+              layer: 'kz30-high',
+              opacity: 0.2,
+              duration: 1000
+            },
+            {
+              layer: 'kz30-med',
+              opacity: 0.2,
+              duration: 1000
+            },
+            {
+              layer: 'kz30-low',
+              opacity: 0.2,
+              duration: 1000
+            }
+          ],
+          onChapterExit: []
+      },
+        {
             id: 'other-facilities',
             alignment: 'left',
             title: 'Other facilities',
@@ -467,13 +535,18 @@ var config = {
             callback: 'disableFreetime',
             onChapterEnter: [
               {
+                layer: '3D-extrusions',
+                opacity: 0,
+                duration:0
+              },
+              {
                 layer: 'kazakhstan-merged',
                 opacity: .75
               },
-              {
-                layer: 'kz-relative-wealth-index',
-                opacity: 0,
-              },
+              // {
+              //   layer: 'kz-relative-wealth-index',
+              //   opacity: 0,
+              // },
               {
                 layer: 'heatmap',
                 opacity: 0,
@@ -532,10 +605,10 @@ var config = {
                 layer: 'kz30-high',
                 opacity: .75
               },
-              {
-                layer: 'kz-relative-wealth-index',
-                opacity: 0
-              }
+              // {
+              //   layer: 'kz-relative-wealth-index',
+              //   opacity: 0
+              // }
             ],
             onChapterExit: [
             ]
