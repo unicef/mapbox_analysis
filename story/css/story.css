@@ -105,7 +105,7 @@ a, a:hover, a:visited {
     background-color: #fff;
     color: #404040;
 }
-#menu {
+#menu, #menuSm {
     background: #fff;
     margin-top:20px;
     position: inherit;
@@ -117,7 +117,7 @@ a, a:hover, a:visited {
     /* border: 1px solid rgba(0, 0, 0, 0.4); */
     font-family: 'Open Sans', sans-serif;
 }
-#menu a {
+#menu a, #menuSm a {
     font-size: 13px;
     color: #404040;
     display: block;
@@ -129,18 +129,18 @@ a, a:hover, a:visited {
     text-align: center;
     background-color: #efefef;
 }
-#menu a:last-child {
+#menu a:last-child, #menuSm a:last-child {
     border: none;
 }
-#menu a:hover {
+#menu a:hover, #menuSm a:hover {
     background-color: #d3d3d3;
     color: #404040;
 }
-#menu a.active {
+#menu a.active, #menuSm a.active{
     background-color: #3887be;
     color: #ffffff;
 }
-#menu a.active:hover {
+#menu a.active:hover, #menuSm a.active:hover {
     background: #3074a4;
 }
 #infographicHold {
@@ -195,6 +195,7 @@ a, a:hover, a:visited {
     text-align: center;
     line-height: 25px;
     font-size: 13px;
+    display: none;
 }
 #features {
     padding-top: 10vh;
@@ -366,7 +367,7 @@ a, a:hover, a:visited {
     position: relative;
 }
 
-#features #explore .light #menu, #features #explore .light #freeExplore {
+#features #explore .light #menu, #features #explore .light #freeExplore, #features #high-economic .light #menuSm {
     pointer-events: auto;
     /* position: relative; */
 }
@@ -378,30 +379,41 @@ a, a:hover, a:visited {
     }
 } */
 
-@media (max-width: 1325px) {
+@media (max-width: 1530px) {
     #economic .textLegend, #schools-population .textLegend, #high-economic .textLegend, #economic .heightLegend, #schools-population .heightLegend, #high-economic .heightLegend {
         width:100%;
         display: block;
     }
 }
 
-@media (max-width: 750px) {
+@media (max-width: 1020px) {
     .centered, .lefty, .righty, .fully {
         width: 90vw;
         margin: 0 auto;
     }
 
-    #economic .textLegend, #schools-population .textLegend, #high-economic .textLegend, #economic .heightLegend, #schools-population .heightLegend, #high-economic .heightLegend {
+    #mapInset {
+        display: none;
+    }
+
+    #header span {
+        text-align: center;
+    }
+
+    #features #intro h3 {
+        font-size: 35px;
+        line-height: 42px;
+    }
+
+    #features #intro p {
+        font-size: 20px;
+        line-height: 30px;
+    }
+
+    /* #economic .textLegend, #schools-population .textLegend, #high-economic .textLegend, #economic .heightLegend, #schools-population .heightLegend, #high-economic .heightLegend {
         width:50%;
         display: inline-block;
-    }
-}
-
-@media (max-width: 1150px) {
-    #economic .textLegend, #schools-population .textLegend, #high-economic .textLegend, #economic .heightLegend, #schools-population .heightLegend, #high-economic .heightLegend {
-        width:100%;
-        display: block;
-    }
+    } */
 }
 
 /* Fix issue on mobile browser where scroll breaks  */
