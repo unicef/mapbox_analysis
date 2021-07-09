@@ -21,7 +21,7 @@
     </div>
 </div>
 <div id="story"></div>
-<script src="./config-story2.js"></script>
+<script src="./config-story.js"></script>
 <script>
 var layerTypes = {
     'fill': ['fill-opacity'],
@@ -182,8 +182,8 @@ var map = new mapboxgl.Map({
     bearing: config.chapters[0].location.bearing,
     pitch: config.chapters[0].location.pitch,
     scrollZoom: false,
-    transformRequest: transformRequest,
-    maxBounds: maxBounds
+    transformRequest: transformRequest
+    // maxBounds: maxBounds
 });
 
 var mapInset = new mapboxgl.Map({
@@ -251,13 +251,10 @@ map.on("load", function() {
 
 
         customizeChapters(chapter.id);
+        customizeZooms(chapter);
 
         response.element.classList.add('active');
         if (chapter.id === 'kazakhstan-schools' || chapter.id === 'schools-connectivity') {
-            map.fitBounds(countryBounds, {
-                padding: {top: 0, bottom: 0, left: 100, right: 0},
-                pitch: 0
-            });
             document.getElementById('loader').style.opacity = 0;
             if (chapter.id === 'kazakhstan-schools') {
                 map.setPaintProperty('background', 'background-color', '#000');
@@ -267,23 +264,22 @@ map.on("load", function() {
             }
         } else if (chapter.id === 'quschoqy') {
             document.getElementById('mapInset').style.opacity = 0;
-            map[chapter.mapAnimation || 'flyTo'](chapter.location);
         } else if (chapter.id === 'schools-population') {
-            // map.fitBounds(popBounds, {
-            //     duration: 3000,
-            //     pitch:40
-            // });
-            map[chapter.mapAnimation || 'flyTo'](chapter.location);
             map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', ["step",["get","connectivity_speed"],"#d7191c",4.1,"#fdae61",7.1,"#ffffbf",8.1,"#a6d96a",10.1,"#1a9641"]);
+            // map.setPaintProperty('3D-extrusions', 'fill-extrusion-opacity', ["match",["get","hex7"],["8720a5491ffffff"],1,0]);
+            map.setFilter('3D-extrusions', ['match',['get', 'hex7'],["8720a5491ffffff", "8720a549cffffff", "8720a5498ffffff"],true,false]);
+        } else if (chapter.id === 'high-economic') {
+            map.setFilter('3D-extrusions');
+            document.getElementById('3D-extrusions-connectivity').classList = '';
+            document.getElementById('3D-extrusions-wealth').classList = 'active';
+            document.getElementById('legendSm').innerHTML = '<div class="textLegend"><span style="background:#d7191c;"></span><span style="background:#fdae61"></span><span style="background:#ffffbf"></span><span style="background:#a6d96a"></span><span style="background:#1a9641"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div>';
+            map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', ["step",["get", "rwi"],"#d7191c",0.67,"#fdae61",0.88,"#ffffbf",1.01,"#a6d96a",1.21,"#1a9641"]);
         } else if (chapter.id === 'schools-infographic-1') {
             document.getElementById('loader').style.opacity = 1;
             document.getElementById('infographicHold').style.opacity = 1;
             document.getElementById('infographicImgOne').style.opacity = 1;
             document.getElementById('infographicImgTwo').style.opacity = 0;
             document.getElementById('mapInset').style.opacity = 0;
-            map.fitBounds(countryBounds, {
-                padding: {top: 0, bottom: 0, left: 100, right: 0}
-            });
         } else if (chapter.id === 'schools-infographic-2') {
             document.getElementById('loader').style.opacity = 1;
             document.getElementById('infographicHold').style.opacity = 1;
@@ -291,30 +287,15 @@ map.on("load", function() {
             document.getElementById('infographicImgTwo').style.opacity = 1;
             document.getElementById('mapInset').style.opacity = 0;
             document.getElementById('freeExplore').style.display = 'none';
-            map.fitBounds(countryBounds, {
-                padding: {top: 0, bottom: 0, left: 100, right: 0}
-            });
         } else if (chapter.id === 'schools-accessibility') {
             document.getElementById('loader').style.opacity = 0;
             document.getElementById('mapInset').style.opacity = 1;
             document.getElementById('freeExplore').style.display = 'block';
-            // map[chapter.mapAnimation || 'flyTo'](chapter.location);
-            map.fitBounds(popBounds, {
-                duration: 3000,
-                pitch:40
-            });
             
         } else if (chapter.id === 'economic') {
-            // map.fitBounds(popBounds, {
-            //     duration: 3000,
-            //     pitch:40
-            // });
-            map[chapter.mapAnimation || 'flyTo'](chapter.location);
-            map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', ["step",["get", "rwi"],"#e66101",0.67,"#fdb863",0.88,"#f7f7f7",1.01,"#b2abd2",1.21,"#5e3c99"]);
+            map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', ["step",["get", "rwi"],"#d7191c",0.67,"#fdae61",0.88,"#ffffbf",1.01,"#a6d96a",1.21,"#1a9641"]);
+            map.setFilter('3D-extrusions', ['match',['get', 'hex7'],["8720a5491ffffff", "8720a549cffffff", "8720a5498ffffff"],true,false]);
         } else if (chapter.id === 'explore') {
-            map.fitBounds(popBounds, {
-                padding: {top: 0, bottom: 0, left: 100, right: 0}
-            });
             map.on('moveend', enableFreeExplore);
             // map.on('moveend', function() {
             //     console.log('move ended');
@@ -323,8 +304,6 @@ map.on("load", function() {
             document.getElementById('3D-extrusions-wealth').classList = '';
             document.getElementById('schools-glow').classList = '';
             document.getElementById('isochrones').classList = 'active';
-        } else {
-            map[chapter.mapAnimation || 'flyTo'](chapter.location);
         }
 
         if (config.showMarkers) {
@@ -361,73 +340,57 @@ window.addEventListener('resize', scroller.resize);
 
 var nav = new mapboxgl.NavigationControl({visualizePitch: true});
 function enableFreetime() {
-  document.getElementById('map').style['z-index'] = 0;
-  map.addControl(nav, 'top-right');
+  let windowWidth = window.innerWidth;
+  if (windowWidth >= 1020) {
+    document.getElementById('map').style['z-index'] = 0;
+    map.addControl(nav, 'top-right');
+  }
 }
 function disableFreetime() {
-  document.getElementById('map').style['z-index'] = -5;
-  if (map.hasControl(nav)) {
-    map.removeControl(nav);
+  let windowWidth = window.innerWidth;
+  if (windowWidth >= 1020) {
+    document.getElementById('map').style['z-index'] = -5;
+    if (map.hasControl(nav)) {
+        map.removeControl(nav);
+    }
   }
+}
+
+function customizeZooms(chap) {
+    let windowWidth = window.innerWidth;
+    let leftPadding;
+
+    if (windowWidth >= 1020) {
+        leftPadding = 100;
+    } else {
+        leftPadding = 0;
+    }
+
+    if (chap.id === 'kazakhstan-schools' || chap.id === 'schools-connectivity' || chap.id === 'schools-infographic-1' || chap.id === 'schools-infographic-2') {
+        map.fitBounds(countryBounds, {
+            padding: {top: 0, bottom: 0, left: leftPadding, right: 0},
+            pitch: 0
+        });
+    } else if (chap.id === 'schools-accessibility') {
+        map.fitBounds(popBounds, {
+            duration: 3000,
+            pitch:40
+        });
+    } else if (chap.id === 'explore') {
+        map.fitBounds(popBounds, {
+            padding: {top: 0, bottom: 0, left: leftPadding, right: 0}
+        });
+    } else {
+        map[chap.mapAnimation || 'flyTo'](chap.location);
+    }
+
 }
 
 function customizeChapters(chap) {
     if (chap === 'intro') {
         map.on('render', removeLoader);
-    } else if (chap === 'quschoqy') {
-        // Add a data source containing one point feature.
-        if (initLoad) {
-            
-            // map.addSource('point', {
-            //     'type': 'geojson',
-            //     'data': {
-            //         'type': 'FeatureCollection',
-            //         'features': [
-            //             {
-            //             'type': 'Feature',
-            //             'geometry': {
-            //                 'type': 'Point',
-            //                 'coordinates': [73.400586,50.230690]
-            //                 }
-            //             }
-            //         ]
-            //     }
-            // });
-            
-            // // Add a layer to use the image to represent the data.
-            // map.addLayer({
-            //     'id': 'points',
-            //     'type': 'symbol',
-            //     'source': 'point', // reference the data source
-            //     'layout': {
-            //         'text-field': 'Single school',
-            //         // 'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
-            //         // 'text-radial-offset': 0.5,
-            //         'text-justify': 'auto',
-            //         'text-anchor': 'left',
-            //         'text-size': 20
-            //         // 'icon-image': ['concat', ['get', 'icon'], '-15']
-            //     // 'icon-image': 'cat', // reference the image
-            //     // 'icon-size': 0.25
-            //     },
-            //     'paint': {
-            //         'text-halo-color': '#fff',
-            //         'text-halo-width': 1,
-            //         'text-halo-blur': 1,
-            //         'text-translate': [5,10],
-            //         'text-opacity': [
-            //             'interpolate', ['linear'], ['zoom'],
-            //             // zoom is 5 (or less) -> circle radius will be 1px
-            //             15.5, 0,
-            //             // zoom is 10 (or greater) -> circle radius will be 5px
-            //             16, 1
-            //         ]
-            //     }
-            // });
-        }
     } else {
         map.off('render', removeLoader);
-        // addLoader();
     }
 }
 
@@ -625,6 +588,7 @@ function buildMenu() {
                                     1
                                 );
                                 map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', ["step",["get","connectivity_speed"],"#d7191c",4.1,"#fdae61",7.1,"#ffffbf",8.1,"#a6d96a",10.1,"#1a9641"]);
+                                document.getElementById('legendSm').innerHTML = '<div class="textLegend"><span style="background:#d7191c;"></span><span style="background:#fdae61"></span><span style="background:#ffffbf"></span><span style="background:#a6d96a"></span><span style="background:#1a9641"></span><label class="lowLabel">← Lower connectivity</label><label class="highLabel">Higher connectivity →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div>';
                                 this.className = 'active';
                                 document.getElementById('3D-extrusions-wealth').className = '';
                             } else {
@@ -643,7 +607,9 @@ function buildMenu() {
                                     'fill-extrusion-opacity',
                                     1
                                 );
-                                map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', ["step",["get", "rwi"],"#e66101",0.67,"#fdb863",0.88,"#f7f7f7",1.01,"#b2abd2",1.21,"#5e3c99"]);
+                                // map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', ["step",["get", "rwi"],"#e66101",0.67,"#fdb863",0.88,"#f7f7f7",1.01,"#b2abd2",1.21,"#5e3c99"]);
+                                map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', ["step",["get", "rwi"],"#d7191c",0.67,"#fdae61",0.88,"#ffffbf",1.01,"#a6d96a",1.21,"#1a9641"]);
+                                document.getElementById('legendSm').innerHTML = '<div class="textLegend"><span style="background:#d7191c;"></span><span style="background:#fdae61"></span><span style="background:#ffffbf"></span><span style="background:#a6d96a"></span><span style="background:#1a9641"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div>';
                                 this.className = 'active';
                                 document.getElementById('3D-extrusions-connectivity').className = '';
                             } else {
@@ -675,8 +641,10 @@ function buildMenu() {
                         );
                         if (id === '3D-extrusions-connectivity') {
                             map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', ["step",["get","connectivity_speed"],"#d7191c",4.1,"#fdae61",7.1,"#ffffbf",8.1,"#a6d96a",10.1,"#1a9641"]);
+                            
                         } else {
-                            map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', ["step",["get", "rwi"],"#e66101",0.67,"#fdb863",0.88,"#f7f7f7",1.01,"#b2abd2",1.21,"#5e3c99"]);
+                            map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', ["step",["get", "rwi"],"#d7191c",0.67,"#fdae61",0.88,"#ffffbf",1.01,"#a6d96a",1.21,"#1a9641"]);
+                            
                         }
                     } else if (id === 'schools-glow') {
                         map.setPaintProperty(
@@ -706,7 +674,13 @@ function buildMenu() {
             };
             
             var layers = document.getElementById('menu');
-            layers.appendChild(link);
+            var layersSm = document.getElementById('menuSm');
+            
+            if (id === '3D-extrusions-connectivity' || id === '3D-extrusions-wealth') {    
+                layersSm.appendChild(link);
+            } else {
+                layers.appendChild(link);
+            }
         }
     }
 }

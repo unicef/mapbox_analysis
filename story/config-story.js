@@ -25,6 +25,11 @@ var config = {
             // rotateAnimation: true,
             onChapterEnter: [
                 {
+                  layer: 'school-outline',
+                  opacity: 0,
+                  duration: 500
+                },
+                {
                   layer: 'kz30-high',
                   opacity: .8
                   // duration: 1000
@@ -56,13 +61,18 @@ var config = {
             title: '',
             description: 'This school serves Quschoqy, Kazakhstan.',
             location: {
-                center: [73.40021,50.23046],
+                center: [73.40055406093597,50.2306759908996],
                 zoom: 17,
                 pitch: 0,
                 bearing: 0.00,
                 duration: 3000
             },
             onChapterEnter: [
+              {
+                layer: 'school-outline',
+                opacity: 1,
+                duration: 3000
+              },
               {
                 layer: 'kz30-high',
                 opacity: 0,
@@ -80,7 +90,7 @@ var config = {
               },
               {
                 layer: 'mask',
-                opacity:0,
+                opacity: 0.2,
                 duration: 1000
               },
               {
@@ -109,6 +119,11 @@ var config = {
             },
             mapAnimation: 'flyTo',
             onChapterEnter: [
+                {
+                  layer: 'school-outline',
+                  opacity: 0,
+                  duration: 500
+                },
                 {
                   layer: 'mask',
                   opacity:0.9,
@@ -422,7 +437,7 @@ var config = {
             alignment: 'left',
             title: 'Economic',
             image: '',
-            description: 'We can also overlay this with other data to see how connectivity interacts with important socioeconomic indicators.' + '<div class="legendHold"><div class="textLegend"><span style="background:#e66101;"></span><span style="background:#fdb863"></span><span style="background:#f7f7f7;"></span><span style="background:#b2abd2;"></span><span style="background:#5e3c99;"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div>',
+            description: 'We can also overlay this with other data to see how connectivity interacts with important socioeconomic indicators.' + '<div class="legendHold"><div class="textLegend"><span style="background:#d7191c;"></span><span style="background:#fdae61"></span><span style="background:#ffffbf"></span><span style="background:#a6d96a"></span><span style="background:#1a9641"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div>',
             location: {
               center: [68.32591470259335, 40.77472359994684],
               zoom: 9,
@@ -473,7 +488,7 @@ var config = {
           alignment: 'left',
           title: 'Low connectivity in wealthy regions',
           image: '',
-          description: 'Lorem Ipsum' + '<div class="legendHold"><div class="textLegend"><span style="background:#e66101;"></span><span style="background:#fdb863"></span><span style="background:#f7f7f7;"></span><span style="background:#b2abd2;"></span><span style="background:#5e3c99;"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div>',
+          description: 'Lorem Ipsum' + '<div class="legendHold" id="legendSm"><div class="textLegend"><span style="background:#e66101;"></span><span style="background:#fdb863"></span><span style="background:#f7f7f7;"></span><span style="background:#b2abd2;"></span><span style="background:#5e3c99;"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div>' + '<nav id="menuSm"></nav>',
           location: {
             center: [57.19104067072559, 50.28485206328431],
             zoom: 8,
