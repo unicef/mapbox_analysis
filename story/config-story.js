@@ -3,11 +3,11 @@ var config = {
     style: 'mapbox://styles/mikelmaron/ckohmfez83t2v18pnbvvktn2j',
     accessToken: 'pk.eyJ1IjoibWlrZWxtYXJvbiIsImEiOiJjaWZlY25lZGQ2cTJjc2trbmdiZDdjYjllIn0.Wx1n0X7aeCQyDTnK6_mrGw',
     showMarkers: false,
-    theme: 'light',
+    theme: 'dark',
     title: 'Unicef Giga: Kazakhstan',
     subtitle: 'Accessibility analysis of connected schools',
     byline: '',
-    footer: 'Source: ',
+    footer: 'Note: ',
     use3dTerrain: false,
     rotateAnimation: true,
     chapters: [
@@ -22,7 +22,8 @@ var config = {
                 pitch: 30,
                 bearing: 45
             },
-            // rotateAnimation: true,
+            rotateAnimation: true,
+            callback: 'disableFreetime',
             onChapterEnter: [
                 {
                   layer: 'school-outline',
@@ -47,6 +48,10 @@ var config = {
                 {
                   layer: 'mask',
                   opacity:0.75,
+                },
+                {
+                  layer: 'place-label (3) copy',
+                  opacity:0
                 },
                 {
                   layer: 'schools-dots',
@@ -109,7 +114,7 @@ var config = {
             id: 'kazakhstan-schools',
             alignment: 'left',
             title: '',
-            description: 'There are <b>7,410 schools</b> in Kazakhstan.<br><span style="font-size:0.8em;color:#555;">*Schools are sized by student population.</span>',
+            description: 'There are <b>7,410 schools</b> in Kazakhstan.<br><span style="font-size:0.8em;color:#9a9a9a;">*Schools are sized by student population.</span>',
             location: {
                 center: [65.121,48.391],
                 zoom: 4,
@@ -165,7 +170,7 @@ var config = {
             alignment: 'left',
             title: 'School Connectivity',
             image: '',
-            description: 'Internet access at each school varies. The green schools have good connections, the red have little or none, and the yellow are somewhere in between.' + '<div class="textLegend"><span style="background:#ff605b">Limited</span><span style="background:#ffc83d">< 5 mb/s</span><span style="background:#8bd432">> 5 mb/s</span></div><br><span style="font-size:0.8em;color:#555;">*Schools are sized by student population.</span>',
+            description: 'Internet access at each school varies. The green schools have good connections, the red have little or none, and the yellow are somewhere in between.' + '<div class="textLegend"><span style="background:#ff605b"><label>Limited</label></span><span style="background:#ffc83d"><label>< 5 mb/s</label></span><span style="background:#8bd432"><label>> 5 mb/s</label></span></div><br><span style="font-size:0.8em;color:#d3d3d3;">*Schools are sized by student population.</span>',
             location: {
               center: [65.121,48.391],
               zoom: 4,
@@ -315,7 +320,7 @@ var config = {
                 bearing: 20,
                 duration: 5000
             },
-            callback: 'enableFreetime',
+            // callback: 'enableFreetime',
             onChapterEnter: [
               {
                 layer: 'kz30-high',
@@ -350,6 +355,11 @@ var config = {
                 layer: '3D-extrusions',
                 opacity: 0,
                 duration:0
+              },
+              {
+                layer: 'kaz-analysis-urban',
+                opacity: 0,
+                duration:0
               }
             ],
             onChapterExit: []
@@ -362,7 +372,7 @@ var config = {
             description: 'Then we can overlay this map with population data and start to see how many people have access to this level of connectivity. Remember, that we’re defining access as being within a 30 minute drive of a connected school. We found: <b>14.78 million people with high connectivity, 932k with only medium, and 40.5k with only low connectivity school access</b> leaving ~3m people without connectivity as defined by a 30 minute drive.' + '<div class="legendHold"><div class="textLegend"><span style="background:#d7191c;"></span><span style="background:#fdae61"></span><span style="background:#ffffbf"></span><span style="background:#a6d96a"></span><span style="background:#1a9641"></span><label class="lowLabel">← Lower connectivity</label><label class="highLabel">Higher connectivity →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div>',
             location: {
               center: [68.32591470259335, 40.77472359994684],
-              zoom: 9,
+              zoom: 8.8,
               pitch: 28,
               bearing: 0,
               duration: 5000
@@ -382,8 +392,13 @@ var config = {
               /* not sure this adds much at this zoom level*/
               {
                 layer: '3D-extrusions',
+                opacity: 0.2,
+                duration: 1000
+              },
+              {
+                layer: 'kaz-analysis-urban',
                 opacity: 1,
-                duration:1000
+                duration: 1000
               },
               // {
               //   layer: 'heatmap',
@@ -440,18 +455,23 @@ var config = {
             description: 'We can also overlay this with other data to see how connectivity interacts with important socioeconomic indicators.' + '<div class="legendHold"><div class="textLegend"><span style="background:#d7191c;"></span><span style="background:#fdae61"></span><span style="background:#ffffbf"></span><span style="background:#a6d96a"></span><span style="background:#1a9641"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div>',
             location: {
               center: [68.32591470259335, 40.77472359994684],
-              zoom: 9,
+              zoom: 8.8,
               pitch: 28,
               bearing: 0,
               duration: 5000
             },
-            rotateAnimation: true,
-            callback: 'enableFreetime',
+            // rotateAnimation: true,
+            // callback: 'enableFreetime',
             onChapterEnter: [
               {
                 layer: '3D-extrusions',
-                opacity: 1,
+                opacity: 0.2,
                 duration:1000
+              },
+              {
+                layer: 'kaz-analysis-urban',
+                opacity: 1,
+                duration: 1000
               },
               // { /* not sure this adds much at this zoom level*/
               //   layer: 'heatmap',
@@ -484,25 +504,30 @@ var config = {
             onChapterExit: []
         },
         {
-          id: 'high-economic',
+          id: 'high-economic-1',
           alignment: 'left',
-          title: 'Low connectivity in wealthy regions',
+          title: 'Higher connectivity in schools in higher wealth regions. Urban region of Almaty',
           image: '',
           description: 'Lorem Ipsum' + '<div class="legendHold" id="legendSm"><div class="textLegend"><span style="background:#e66101;"></span><span style="background:#fdb863"></span><span style="background:#f7f7f7;"></span><span style="background:#b2abd2;"></span><span style="background:#5e3c99;"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div>' + '<nav id="menuSm"></nav>',
           location: {
-            center: [57.19104067072559, 50.28485206328431],
-            zoom: 8,
-            pitch: 28,
+            center: [76.9024443, 43.260229],
+            zoom: 6.8,
+            pitch: 20,
             bearing: 0,
             duration: 5000
           },
-          rotateAnimation: true,
-          callback: 'enableFreetime',
+          // rotateAnimation: true,
+          // callback: 'enableFreetime',
           onChapterEnter: [
             {
               layer: '3D-extrusions',
-              opacity: 1,
+              opacity: 0.2,
               duration:1000
+            },
+            {
+              layer: 'kaz-analysis-urban',
+              opacity: 1,
+              duration: 1000
             },
             // { /* not sure this adds much at this zoom level*/
             //   layer: 'heatmap',
@@ -533,7 +558,63 @@ var config = {
             }
           ],
           onChapterExit: []
-      },
+        },
+        {
+          id: 'high-economic-2',
+          alignment: 'left',
+          title: 'Low connectivity in schools in spite of high wealth regions. Urban town of Aqtobe.',
+          image: '',
+          description: 'Lorem Ipsum' + '<div class="legendHold" id="legendSmTwo"><div class="textLegend"><span style="background:#e66101;"></span><span style="background:#fdb863"></span><span style="background:#f7f7f7;"></span><span style="background:#b2abd2;"></span><span style="background:#5e3c99;"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div>' + '<nav id="menuSmTwo"></nav>',
+          location: {
+            center: [57.1926438, 50.2867314],
+            zoom: 8,
+            pitch: 28,
+            bearing: 0,
+            duration: 5000
+          },
+          // rotateAnimation: true,
+          // callback: 'enableFreetime',
+          onChapterEnter: [
+            {
+              layer: '3D-extrusions',
+              opacity: 0.2,
+              duration:1000
+            },
+            {
+              layer: 'kaz-analysis-urban',
+              opacity: 1,
+              duration: 1000
+            },
+            // { /* not sure this adds much at this zoom level*/
+            //   layer: 'heatmap',
+            //   opacity: 0
+            // },
+            {
+              layer: 'kazakhstan-merged',
+              opacity: 0
+            },
+            // {
+            //   layer: 'kz-relative-wealth-index',
+            //   opacity: .9
+            // },
+            {
+              layer: 'kz30-high',
+              opacity: 0.2,
+              duration: 1000
+            },
+            {
+              layer: 'kz30-med',
+              opacity: 0.2,
+              duration: 1000
+            },
+            {
+              layer: 'kz30-low',
+              opacity: 0.2,
+              duration: 1000
+            }
+          ],
+          onChapterExit: []
+        },
         {
             id: 'other-facilities',
             alignment: 'left',
@@ -553,6 +634,11 @@ var config = {
                 layer: '3D-extrusions',
                 opacity: 0,
                 duration:0
+              },
+              {
+                layer: 'kaz-analysis-urban',
+                opacity: 0,
+                duration: 0
               },
               {
                 layer: 'kazakhstan-merged',
@@ -586,7 +672,7 @@ var config = {
                 duration: 1000
               }
             ],
-            callback: 'enableFreetime',
+            callback: 'disableFreetime',
             onChapterExit: [
               {
                 layer: 'kazakhstan-merged',
@@ -599,7 +685,7 @@ var config = {
             alignment: 'left',
             title: 'Explore',
             image: '',
-            description: '<div id="freeExplore">Back to story ↑</div>' + 'Go ahead, explore if you like! Just drag and zoom to go where you want.' + '<nav id="menu"></nav>',
+            description: '<div id="freeExplore">Back to story ↑</div>' + 'Go ahead, explore if you like! Just drag and zoom to go where you want.' + '<nav id="menu"></nav>' + '<div id="methodNote">Note: Quantile legends were simplified. Wealth index values ranged from -0.42 up to 1.99 in urban regions. Connectivity speeds ranged from 1 up to 11.</div>',
             location: {
               center: [65.12,48.39],
               zoom: 4.5,
