@@ -51,8 +51,8 @@ var popBounds = [
 ]
 
 var maxBounds = [
-    [24.345703125,21.94304553343818],
-    [105.029296875,63.15435519659187]
+    [-45.703125,-44.59046718130883],
+    [179.736328125,78.34941069014629]
 ]
 
 var initLoad = true;
@@ -182,8 +182,8 @@ var map = new mapboxgl.Map({
     bearing: config.chapters[0].location.bearing,
     pitch: config.chapters[0].location.pitch,
     scrollZoom: false,
-    transformRequest: transformRequest
-    // maxBounds: maxBounds
+    transformRequest: transformRequest,
+    maxBounds: maxBounds
 });
 
 var mapInset = new mapboxgl.Map({
@@ -203,6 +203,9 @@ if (config.showMarkers) {
     var marker = new mapboxgl.Marker({ color: config.markerColor });
     marker.setLngLat(config.chapters[0].location.center).addTo(map);
 }
+
+var connectivityLegend = ["step",["get","connectivity_speed"],"#d7191c",4.1,"#fdae61",7.1,"#ffffbf",8.1,"#a6d96a",10.1,"#1a9641"];
+var wealthLegend = ["step",["get", "rwi"],"#d7191c",0.67,"#fdae61",0.88,"#ffffbf",1.01,"#a6d96a",1.21,"#1a9641"];
 
 // instantiate the scrollama
 var scroller = scrollama();
@@ -265,8 +268,8 @@ map.on("load", function() {
         } else if (chapter.id === 'quschoqy') {
             document.getElementById('mapInset').style.opacity = 0;
         } else if (chapter.id === 'schools-population') {
-            map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', ["step",["get","connectivity_speed"],"#d7191c",4.1,"#fdae61",7.1,"#ffffbf",8.1,"#a6d96a",10.1,"#1a9641"]);
-            map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', ["step",["get","connectivity_speed"],"#d7191c",4.1,"#fdae61",7.1,"#ffffbf",8.1,"#a6d96a",10.1,"#1a9641"]);
+            map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', connectivityLegend);
+            map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', connectivityLegend);
             // map.setPaintProperty('3D-extrusions', 'fill-extrusion-opacity', ["match",["get","hex7"],["8720a5491ffffff"],1,0]);
             // map.setFilter('3D-extrusions', ['match',['get', 'hex7'],["8720a5491ffffff", "8720a549cffffff", "8720a5498ffffff"],true,false]);
         } else if (chapter.id === 'high-economic-1' || chapter.id === 'high-economic-2') {
@@ -277,8 +280,8 @@ map.on("load", function() {
             document.getElementById('3D-extrusions-wealth-2').classList = 'active';
             document.getElementById('legendSm').innerHTML = '<div class="textLegend"><span style="background:#d7191c;"></span><span style="background:#fdae61"></span><span style="background:#ffffbf"></span><span style="background:#a6d96a"></span><span style="background:#1a9641"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div>';
             document.getElementById('legendSmTwo').innerHTML = '<div class="textLegend"><span style="background:#d7191c;"></span><span style="background:#fdae61"></span><span style="background:#ffffbf"></span><span style="background:#a6d96a"></span><span style="background:#1a9641"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div>';
-            map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', ["step",["get", "rwi"],"#d7191c",0.67,"#fdae61",0.88,"#ffffbf",1.01,"#a6d96a",1.21,"#1a9641"]);
-            map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', ["step",["get", "rwi"],"#d7191c",0.67,"#fdae61",0.88,"#ffffbf",1.01,"#a6d96a",1.21,"#1a9641"]);
+            map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', wealthLegend);
+            map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', wealthLegend);
         } else if (chapter.id === 'schools-infographic-1') {
             document.getElementById('loader').style.opacity = 1;
             document.getElementById('infographicHold').style.opacity = 1;
@@ -298,8 +301,8 @@ map.on("load", function() {
             document.getElementById('freeExplore').style.display = 'block';
             
         } else if (chapter.id === 'economic') {
-            map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', ["step",["get", "rwi"],"#d7191c",0.67,"#fdae61",0.88,"#ffffbf",1.01,"#a6d96a",1.21,"#1a9641"]);
-            map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', ["step",["get", "rwi"],"#d7191c",0.67,"#fdae61",0.88,"#ffffbf",1.01,"#a6d96a",1.21,"#1a9641"]);
+            map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', wealthLegend);
+            map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', wealthLegend);
             // map.setFilter('3D-extrusions', ['match',['get', 'hex7'],["8720a5491ffffff", "8720a549cffffff", "8720a5498ffffff"],true,false]);
         } else if (chapter.id === 'other-facilities') {
             // document.getElementById('mapInset').style.visibility = 'visible';
@@ -387,6 +390,7 @@ function customizeZooms(chap) {
         });
     } else if (chap.id === 'explore') {
         map.fitBounds(popBounds, {
+            pitch: 0,
             padding: {top: 0, bottom: 0, left: leftPadding, right: 0}
         });
     } else {
@@ -615,8 +619,8 @@ function buildMenu() {
                                     'fill-extrusion-opacity',
                                     1
                                 );
-                                map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', ["step",["get","connectivity_speed"],"#d7191c",4.1,"#fdae61",7.1,"#ffffbf",8.1,"#a6d96a",10.1,"#1a9641"]);
-                                map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', ["step",["get","connectivity_speed"],"#d7191c",4.1,"#fdae61",7.1,"#ffffbf",8.1,"#a6d96a",10.1,"#1a9641"]);
+                                map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', connectivityLegend);
+                                map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', connectivityLegend);
                                 document.getElementById('legendSm').innerHTML = '<div class="textLegend"><span style="background:#d7191c;"></span><span style="background:#fdae61"></span><span style="background:#ffffbf"></span><span style="background:#a6d96a"></span><span style="background:#1a9641"></span><label class="lowLabel">← Lower connectivity</label><label class="highLabel">Higher connectivity →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div>';
                                 this.className = 'active';
                                 document.getElementById('3D-extrusions-wealth').className = '';
@@ -647,8 +651,8 @@ function buildMenu() {
                                     1
                                 );
                                 // map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', ["step",["get", "rwi"],"#e66101",0.67,"#fdb863",0.88,"#f7f7f7",1.01,"#b2abd2",1.21,"#5e3c99"]);
-                                map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', ["step",["get", "rwi"],"#d7191c",0.67,"#fdae61",0.88,"#ffffbf",1.01,"#a6d96a",1.21,"#1a9641"]);
-                                map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', ["step",["get", "rwi"],"#d7191c",0.67,"#fdae61",0.88,"#ffffbf",1.01,"#a6d96a",1.21,"#1a9641"]);
+                                map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', wealthLegend);
+                                map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', wealthLegend);
                                 document.getElementById('legendSm').innerHTML = '<div class="textLegend"><span style="background:#d7191c;"></span><span style="background:#fdae61"></span><span style="background:#ffffbf"></span><span style="background:#a6d96a"></span><span style="background:#1a9641"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div>';
                                 this.className = 'active';
                                 document.getElementById('3D-extrusions-connectivity').className = '';
@@ -690,12 +694,12 @@ function buildMenu() {
                             1
                         );
                         if (id === '3D-extrusions-connectivity') {
-                            map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', ["step",["get","connectivity_speed"],"#d7191c",4.1,"#fdae61",7.1,"#ffffbf",8.1,"#a6d96a",10.1,"#1a9641"]);
-                            map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', ["step",["get","connectivity_speed"],"#d7191c",4.1,"#fdae61",7.1,"#ffffbf",8.1,"#a6d96a",10.1,"#1a9641"]);
+                            map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', connectivityLegend);
+                            map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', connectivityLegend);
                             
                         } else {
-                            map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', ["step",["get", "rwi"],"#d7191c",0.67,"#fdae61",0.88,"#ffffbf",1.01,"#a6d96a",1.21,"#1a9641"]);
-                            map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', ["step",["get", "rwi"],"#d7191c",0.67,"#fdae61",0.88,"#ffffbf",1.01,"#a6d96a",1.21,"#1a9641"]);
+                            map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', wealthLegend);
+                            map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', wealthLegend);
                             
                         }
                     } else if (id === 'schools-glow') {
@@ -763,8 +767,8 @@ function buildMenu() {
                                     'fill-extrusion-opacity',
                                     1
                                 );
-                                map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', ["step",["get","connectivity_speed"],"#d7191c",4.1,"#fdae61",7.1,"#ffffbf",8.1,"#a6d96a",10.1,"#1a9641"]);
-                                map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', ["step",["get","connectivity_speed"],"#d7191c",4.1,"#fdae61",7.1,"#ffffbf",8.1,"#a6d96a",10.1,"#1a9641"]);
+                                map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', connectivityLegend);
+                                map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', connectivityLegend);
                                 document.getElementById('legendSmTwo').innerHTML = '<div class="textLegend"><span style="background:#d7191c;"></span><span style="background:#fdae61"></span><span style="background:#ffffbf"></span><span style="background:#a6d96a"></span><span style="background:#1a9641"></span><label class="lowLabel">← Lower connectivity</label><label class="highLabel">Higher connectivity →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div>';
                                 this.className = 'active';
                                 document.getElementById('3D-extrusions-wealth-2').className = '';
@@ -795,8 +799,8 @@ function buildMenu() {
                                     1
                                 );
                                 // map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', ["step",["get", "rwi"],"#e66101",0.67,"#fdb863",0.88,"#f7f7f7",1.01,"#b2abd2",1.21,"#5e3c99"]);
-                                map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', ["step",["get", "rwi"],"#d7191c",0.67,"#fdae61",0.88,"#ffffbf",1.01,"#a6d96a",1.21,"#1a9641"]);
-                                map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', ["step",["get", "rwi"],"#d7191c",0.67,"#fdae61",0.88,"#ffffbf",1.01,"#a6d96a",1.21,"#1a9641"]);
+                                map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', wealthLegend);
+                                map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', wealthLegend);
                                 document.getElementById('legendSmTwo').innerHTML = '<div class="textLegend"><span style="background:#d7191c;"></span><span style="background:#fdae61"></span><span style="background:#ffffbf"></span><span style="background:#a6d96a"></span><span style="background:#1a9641"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div>';
                                 this.className = 'active';
                                 document.getElementById('3D-extrusions-connectivity-2').className = '';
@@ -838,12 +842,12 @@ function buildMenu() {
                             1
                         );
                         if (id === '3D-extrusions-connectivity') {
-                            map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', ["step",["get","connectivity_speed"],"#d7191c",4.1,"#fdae61",7.1,"#ffffbf",8.1,"#a6d96a",10.1,"#1a9641"]);
-                            map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', ["step",["get","connectivity_speed"],"#d7191c",4.1,"#fdae61",7.1,"#ffffbf",8.1,"#a6d96a",10.1,"#1a9641"]);
+                            map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', connectivityLegend);
+                            map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', connectivityLegend);
                             
                         } else {
-                            map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', ["step",["get", "rwi"],"#d7191c",0.67,"#fdae61",0.88,"#ffffbf",1.01,"#a6d96a",1.21,"#1a9641"]);
-                            map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', ["step",["get", "rwi"],"#d7191c",0.67,"#fdae61",0.88,"#ffffbf",1.01,"#a6d96a",1.21,"#1a9641"]);
+                            map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', wealthLegend);
+                            map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', wealthLegend);
                             
                         }
                     } else if (id === 'schools-glow') {

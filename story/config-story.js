@@ -689,8 +689,8 @@ var config = {
             location: {
               center: [65.12,48.39],
               zoom: 4.5,
-              pitch: 4.00,
-              bearing: 0.00
+              pitch: 0,
+              bearing: 0
           },
             callback: 'enableFreetime',
             onChapterEnter: [

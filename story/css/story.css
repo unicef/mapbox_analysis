@@ -200,7 +200,7 @@ a, a:hover, a:visited {
 }
 #features {
     padding-top: 10vh;
-    padding-bottom: 10vh;
+    padding-bottom: 0;
     z-index: 100;
 }
 #features #intro h3 {
