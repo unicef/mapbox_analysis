@@ -242,13 +242,13 @@ a, a:hover, a:visited {
     /* box-sizing: border-box; */
 }
 
-#schools-connectivity .textLegend {
+#kazakhstan-schools .textLegend, #schools-connectivity .textLegend {
     padding:0;
     margin-top:15px;
     position: relative;
 }
 
-#schools-connectivity .textLegend span {
+#kazakhstan-schools .textLegend span, #schools-connectivity .textLegend span {
     width:33%;
     display: inline-block;
     height: 12px;
