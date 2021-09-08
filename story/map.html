@@ -15,10 +15,10 @@
 <div id="map"></div>
 <div id="loader">
     <div id="loaderSpin"></div>
-    <div id="infographicHold">
+    <!-- <div id="infographicHold">
         <img id="infographicImgOne" src="./img/infographic-02.svg">
         <img id="infographicImgTwo" src="./img/infographic-01.svg">
-    </div>
+    </div> -->
 </div>
 <div id="story"></div>
 <script src="./config-story.js"></script>
@@ -204,8 +204,12 @@ if (config.showMarkers) {
     marker.setLngLat(config.chapters[0].location.center).addTo(map);
 }
 
-var connectivityLegend = ["step",["get","connectivity_speed"],"#d7191c",4.1,"#fdae61",7.1,"#ffffbf",8.1,"#a6d96a",10.1,"#1a9641"];
-var wealthLegend = ["step",["get", "rwi"],"#d7191c",0.67,"#fdae61",0.88,"#ffffbf",1.01,"#a6d96a",1.21,"#1a9641"];
+// Old legend values
+// var connectivityLegend = ["step",["get","connectivity_speed"],"#d7191c",4.1,"#fdae61",7.1,"#ffffbf",8.1,"#a6d96a",10.1,"#1a9641"];
+// var wealthLegend = ["step",["get", "rwi"],"#d7191c",0.67,"#fdae61",0.88,"#ffffbf",1.01,"#a6d96a",1.21,"#1a9641"];
+
+var connectivityLegend = ["step",["get","connectivity_speed"],"#d7191c",7.9,"#fdae61",9.5,"#ffffbf",10.44,"#a6d96a",10.99,"#1a9641"];
+var wealthLegend = ["step",["get", "rwi"],"#d7191c",0.5,"#fdae61",0.75,"#ffffbf",0.9,"#a6d96a",1.1,"#1a9641"];
 
 // instantiate the scrollama
 var scroller = scrollama();
@@ -282,19 +286,19 @@ map.on("load", function() {
             document.getElementById('legendSmTwo').innerHTML = '<div class="textLegend"><span style="background:#d7191c;"></span><span style="background:#fdae61"></span><span style="background:#ffffbf"></span><span style="background:#a6d96a"></span><span style="background:#1a9641"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div>';
             map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', wealthLegend);
             map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', wealthLegend);
-        } else if (chapter.id === 'schools-infographic-1') {
-            document.getElementById('loader').style.opacity = 1;
-            document.getElementById('infographicHold').style.opacity = 1;
-            document.getElementById('infographicImgOne').style.opacity = 1;
-            document.getElementById('infographicImgTwo').style.opacity = 0;
-            document.getElementById('mapInset').style.opacity = 0;
-        } else if (chapter.id === 'schools-infographic-2') {
-            document.getElementById('loader').style.opacity = 1;
-            document.getElementById('infographicHold').style.opacity = 1;
-            document.getElementById('infographicImgOne').style.opacity = 0;
-            document.getElementById('infographicImgTwo').style.opacity = 1;
-            document.getElementById('mapInset').style.opacity = 0;
-            document.getElementById('freeExplore').style.display = 'none';
+        // } else if (chapter.id === 'schools-infographic-1') {
+        //     document.getElementById('loader').style.opacity = 1;
+        //     document.getElementById('infographicHold').style.opacity = 1;
+        //     document.getElementById('infographicImgOne').style.opacity = 1;
+        //     document.getElementById('infographicImgTwo').style.opacity = 0;
+        //     document.getElementById('mapInset').style.opacity = 0;
+        // } else if (chapter.id === 'schools-infographic-2') {
+        //     document.getElementById('loader').style.opacity = 1;
+        //     document.getElementById('infographicHold').style.opacity = 1;
+        //     document.getElementById('infographicImgOne').style.opacity = 0;
+        //     document.getElementById('infographicImgTwo').style.opacity = 1;
+        //     document.getElementById('mapInset').style.opacity = 0;
+        //     document.getElementById('freeExplore').style.display = 'none';
         } else if (chapter.id === 'schools-accessibility') {
             document.getElementById('loader').style.opacity = 0;
             document.getElementById('mapInset').style.opacity = 1;
@@ -378,16 +382,17 @@ function customizeZooms(chap) {
         leftPadding = 0;
     }
 
-    if (chap.id === 'kazakhstan-schools' || chap.id === 'schools-connectivity' || chap.id === 'schools-infographic-1' || chap.id === 'schools-infographic-2') {
+    if (chap.id === 'kazakhstan-schools' || chap.id === 'schools-connectivity' || chap.id === 'schools-accessibility') {
         map.fitBounds(countryBounds, {
             padding: {top: 0, bottom: 0, left: leftPadding, right: 0},
+            duration: 1000,
             pitch: 0
         });
-    } else if (chap.id === 'schools-accessibility') {
-        map.fitBounds(popBounds, {
-            duration: 3000,
-            pitch:40
-        });
+    // } else if (chap.id === 'schools-accessibility') {
+    //     map.fitBounds(popBounds, {
+    //         duration: 3000,
+    //         pitch:40
+    //     });
     } else if (chap.id === 'explore') {
         map.fitBounds(popBounds, {
             pitch: 0,

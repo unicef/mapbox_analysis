@@ -60,61 +60,61 @@ var config = {
             ],
             onChapterExit: []
         },
-        {
-            id: 'quschoqy',
-            alignment: 'left',
-            title: '',
-            description: 'This school serves Quschoqy, Kazakhstan.',
-            location: {
-                center: [73.40055406093597,50.2306759908996],
-                zoom: 17,
-                pitch: 0,
-                bearing: 0.00,
-                duration: 3000
-            },
-            onChapterEnter: [
-              {
-                layer: 'school-outline',
-                opacity: 1,
-                duration: 3000
-              },
-              {
-                layer: 'kz30-high',
-                opacity: 0,
-                duration: 1000
-              },
-              {
-                layer: 'kz30-med',
-                opacity: 0,
-                duration: 1000
-              },
-              {
-                layer: 'kz30-low',
-                opacity: 0,
-                duration: 1000
-              },
-              {
-                layer: 'mask',
-                opacity: 0.2,
-                duration: 1000
-              },
-              {
-                layer: 'place-label (3) copy',
-                opacity:1
-              },
-              {
-                layer: 'schools-dots',
-                opacity: 1,
-                duration:2000
-              }
-            ],
-            onChapterExit: []
-        },
+        // {
+        //     id: 'quschoqy',
+        //     alignment: 'left',
+        //     title: '',
+        //     description: 'This school serves Quschoqy, Kazakhstan.',
+        //     location: {
+        //         center: [73.40055406093597,50.2306759908996],
+        //         zoom: 17,
+        //         pitch: 0,
+        //         bearing: 0.00,
+        //         duration: 3000
+        //     },
+        //     onChapterEnter: [
+        //       {
+        //         layer: 'school-outline',
+        //         opacity: 1,
+        //         duration: 3000
+        //       },
+        //       {
+        //         layer: 'kz30-high',
+        //         opacity: 0,
+        //         duration: 1000
+        //       },
+        //       {
+        //         layer: 'kz30-med',
+        //         opacity: 0,
+        //         duration: 1000
+        //       },
+        //       {
+        //         layer: 'kz30-low',
+        //         opacity: 0,
+        //         duration: 1000
+        //       },
+        //       {
+        //         layer: 'mask',
+        //         opacity: 0.2,
+        //         duration: 1000
+        //       },
+        //       {
+        //         layer: 'place-label (3) copy',
+        //         opacity:1
+        //       },
+        //       {
+        //         layer: 'schools-dots',
+        //         opacity: 1,
+        //         duration:2000
+        //       }
+        //     ],
+        //     onChapterExit: []
+        // },
         {
             id: 'kazakhstan-schools',
             alignment: 'left',
             title: '',
-            description: 'There are <b>7,410 schools</b> in Kazakhstan.<br><span style="font-size:0.8em;color:#9a9a9a;">*Schools are sized by student population.</span>',
+            description: 'There are <b>7,410 schools</b> in Kazakhstan.' + '<div class="textLegend"><span style="background:#ff605b"><label>< 1 mb/s</label></span><span style="background:#ffc83d"><label>1-10 mb/s</label></span><span style="background:#8bd432"><label>> 10 mb/s</label></span></div>',
             location: {
                 center: [65.121,48.391],
                 zoom: 4,
@@ -133,6 +133,21 @@ var config = {
                   layer: 'mask',
                   opacity:0.9,
                   duration: 3000
+                },
+                {
+                  layer: 'kz30-high',
+                  opacity: 0,
+                  duration: 1000
+                },
+                {
+                  layer: 'kz30-med',
+                  opacity: 0,
+                  duration: 1000
+                },
+                {
+                  layer: 'kz30-low',
+                  opacity: 0,
+                  duration: 1000
                 },
                 {
                   layer: 'place-label (3) copy',
@@ -170,7 +185,7 @@ var config = {
             alignment: 'left',
             title: 'School Connectivity',
             image: '',
-            description: 'Internet access at each school varies. The green schools have good connections, the red have little or none, and the yellow are somewhere in between.' + '<div class="textLegend"><span style="background:#ff605b"><label>Limited</label></span><span style="background:#ffc83d"><label>< 5 mb/s</label></span><span style="background:#8bd432"><label>> 5 mb/s</label></span></div><br><span style="font-size:0.8em;color:#d3d3d3;">*Schools are sized by student population.</span>',
+            description: 'Internet access at each school varies. The green schools have good connections, the red have little or none, and the yellow are somewhere in between.' + '<div class="textLegend"><span style="background:#ff605b"><label>< 1 mb/s</label></span><span style="background:#ffc83d"><label>1-10 mb/s</label></span><span style="background:#8bd432"><label>> 10 mb/s</label></span></div><br><span style="font-size:0.8em;color:#d3d3d3;">*Schools are sized by student population.</span>',
             location: {
               center: [65.121,48.391],
               zoom: 4,
@@ -208,105 +223,105 @@ var config = {
             ],
             onChapterExit: []
         },
-        {
-          id: 'schools-infographic-1',
-          alignment: 'left',
-          title: 'Placeholder',
-          image: '',
-          description: 'Lorem',
-          location: {
-            center: [65.121,48.391],
-            zoom: 4,
-            pitch: 0,
-            bearing: 0
-              // duration: 5000
-          },
-          onChapterEnter: [
-            {
-              layer: 'mask',
-              opacity: 0.6,
-            },
-            {
-              layer: 'kz30-high',
-              opacity: .8,
-              duration: 1000
-            },
-            {
-              layer: 'kz30-med',
-              opacity: .8,
-              duration: 1000
-            },
-            {
-              layer: 'kz30-low',
-              opacity: .8,
-              duration: 1000
-            },
-            {
-              layer: 'place-label (3) copy',
-              opacity:1
-            },
-            {
-              layer: 'schools-glow',
-              opacity: 0,
-              duration: 1000
-            },
-            { /* not sure this adds much at this zoom level*/
-              layer: 'heatmap',
-              opacity: 0,
-              duration: 0
-            }
-          ],
-          onChapterExit: []
-        },
-        {
-          id: 'schools-infographic-2',
-          alignment: 'left',
-          title: 'Placeholder',
-          image: '',
-          description: 'Lorem',
-          location: {
-            center: [65.121,48.391],
-            zoom: 4,
-            pitch: 0,
-            bearing: 0
-          },
-          onChapterEnter: [
-            {
-              layer: 'mask',
-              opacity: 0.6,
-            },
-            {
-              layer: 'kz30-high',
-              opacity: .8,
-              duration: 1000
-            },
-            {
-              layer: 'kz30-med',
-              opacity: .8,
-              duration: 1000
-            },
-            {
-              layer: 'kz30-low',
-              opacity: .8,
-              duration: 1000
-            },
-            {
-              layer: 'place-label (3) copy',
-              opacity:1
-            },
-            {
-              layer: 'schools-glow',
-              opacity: 0,
-              duration: 1000
-            }
-            // { /* not sure this adds much at this zoom level*/
-            //   layer: 'heatmap',
-            //   opacity: 0,
-            //   duration: 0
-            // }
-          ],
-          onChapterExit: []
-        },
+        // {
+        //   id: 'schools-infographic-1',
+        //   alignment: 'left',
+        //   title: 'Placeholder',
+        //   image: '',
+        //   description: 'Lorem',
+        //   location: {
+        //     center: [65.121,48.391],
+        //     zoom: 4,
+        //     pitch: 0,
+        //     bearing: 0
+        //       // duration: 5000
+        //   },
+        //   onChapterEnter: [
+        //     {
+        //       layer: 'mask',
+        //       opacity: 0.6,
+        //     },
+        //     {
+        //       layer: 'kz30-high',
+        //       opacity: .8,
+        //       duration: 1000
+        //     },
+        //     {
+        //       layer: 'kz30-med',
+        //       opacity: .8,
+        //       duration: 1000
+        //     },
+        //     {
+        //       layer: 'kz30-low',
+        //       opacity: .8,
+        //       duration: 1000
+        //     },
+        //     {
+        //       layer: 'place-label (3) copy',
+        //       opacity:1
+        //     },
+        //     {
+        //       layer: 'schools-glow',
+        //       opacity: 0,
+        //       duration: 1000
+        //     },
+        //     { /* not sure this adds much at this zoom level*/
+        //       layer: 'heatmap',
+        //       opacity: 0,
+        //       duration: 0
+        //     }
+        //   ],
+        //   onChapterExit: []
+        // },
+        // {
+        //   id: 'schools-infographic-2',
+        //   alignment: 'left',
+        //   title: 'Placeholder',
+        //   image: '',
+        //   description: 'Lorem',
+        //   location: {
+        //     center: [65.121,48.391],
+        //     zoom: 4,
+        //     pitch: 0,
+        //     bearing: 0
+        //   },
+        //   onChapterEnter: [
+        //     {
+        //       layer: 'mask',
+        //       opacity: 0.6,
+        //     },
+        //     {
+        //       layer: 'kz30-high',
+        //       opacity: .8,
+        //       duration: 1000
+        //     },
+        //     {
+        //       layer: 'kz30-med',
+        //       opacity: .8,
+        //       duration: 1000
+        //     },
+        //     {
+        //       layer: 'kz30-low',
+        //       opacity: .8,
+        //       duration: 1000
+        //     },
+        //     {
+        //       layer: 'place-label (3) copy',
+        //       opacity:1
+        //     },
+        //     {
+        //       layer: 'schools-glow',
+        //       opacity: 0,
+        //       duration: 1000
+        //     }
+        //     // { /* not sure this adds much at this zoom level*/
+        //     //   layer: 'heatmap',
+        //     //   opacity: 0,
+        //     //   duration: 0
+        //     // }
+        //   ],
+        //   onChapterExit: []
+        // },
         {
             id: 'schools-accessibility',
             alignment: 'left',
@@ -322,6 +337,10 @@ var config = {
             },
             // callback: 'enableFreetime',
             onChapterEnter: [
+              {
+                layer: 'mask',
+                opacity: 0.6,
+              },
               {
                 layer: 'kz30-high',
                 opacity: .8,
