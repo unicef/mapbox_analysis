@@ -100,7 +100,7 @@ var config = {
                 },
                 {
                   layer: 'schools-dots',
-                  opacity: 0.45,
+                  opacity: 1,
                   duration: 3000
                 }
                 // {
@@ -175,13 +175,13 @@ var config = {
             alignment: 'left',
             title: 'Socio-economic disparity in Kazakhstan',
             image: '',
-            description: 'To understand the unequal distribution of connectivity across the region better, we analysed internet speed against population, wealth index, internet speed, schools count and region type (urban or rural). <br><br><b>As expected, we saw strong positive correlation between internet speed and wealth, while controlling for population and region type.</b><br><br>This relation is evident visually on the map as well. The map shows all populated regions of Kazakshtan divided into 5 sq km area grids.' + '<div class="legendHold"><div class="textLegend"><span style="background:#d7191c;"> <label style="margin-top: -25px;">217,835</label></span><span style="background:#fdae61"><label style="margin-top: -25px;">780,671</label></span><span style="background:#ffffbf"><label style="margin-top: -25px;">447,723</label></span><span style="background:#a6d96a"><label style="margin-top: -25px;">1,237,559</label></span><span style="background:#1a9641"><label style="margin-top: -25px;">2,367,047</label></span><label class="lowLabel">← Lower wealth population</label><label class="highLabel">Higher wealth population→</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div><br><span style="font-size:0.8em;color:#d3d3d3;">*Source: Facebook Data for Good - https://dataforgood.fb.com/tools/population-density-maps/.</span>',
+            description: 'To understand the unequal distribution of connectivity across the region better, we analysed internet speed against population, wealth index, internet speed, schools count and region type (urban or rural). <br><br><b>As expected, we saw strong positive correlation between internet speed and wealth, while controlling for population and region type.</b><br><br>This relation is evident visually on the map as well. The map shows all populated regions of Kazakshtan divided into 5 sq km area grids.'+ '<div class="legendHold"><div class="textLegend"><span style="background:#d7191c;"> <label style="margin-top: -25px;">4,657,693</label></span><span style="background:#fdae61"><label style="margin-top: -25px;">1,324,825</label></span><span style="background:#ffffbf"><label style="margin-top: -25px;">1,579,179</label></span><span style="background:#a6d96a"><label style="margin-top: -25px;">1,676,972</label></span><span style="background:#1a9641"><label style="margin-top: -25px;">2,554,279people</label></span><label class="lowLabel">← Lower wealth population</label><label class="highLabel">Higher wealth population→</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div><br><span style="font-size:0.8em;color:#d3d3d3;">*Source: Facebook Data for Good - https://dataforgood.fb.com/tools/population-density-maps/.</span>',
             location: {
-            center: [68.200,47.391],
-            zoom: 5,
-            pitch: 35,
-            bearing: 1,
-            duration: 1000
+             center: [68.200,47.391],
+             zoom: 5,
+             pitch: 35,
+             bearing: 1,
+             duration: 1000
             },
             // rotateAnimation: true,
             // callback: 'enableFreetime',
@@ -238,15 +238,15 @@ var config = {
         {
             id: 'economic',
             alignment: 'left',
-            title: 'Economic',
+            title: 'Lower connectivity in schools in lower wealth regions in urban Maktaaralskiy (South Kazakshtan)',
             image: '',
-            description: 'We can also overlay this with other data to see how connectivity interacts with important socioeconomic indicators.' + '<div class="legendHold"><div class="textLegend"><span style="background:#d7191c;"></span><span style="background:#fdae61"></span><span style="background:#ffffbf"></span><span style="background:#a6d96a"></span><span style="background:#1a9641"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div>',
+            description: 'Lorem Ipsum'  + '<div class="legendHold"><div class="textLegend"><span style="background:#d7191c;"> <label style="margin-top: -25px;">217,835</lowabel></span><span style="background:#fdae61"><label style="margin-top: -25px;">780,671</label></span><span style="background:#ffffbf"><label style="margin-top: -25px;">447,723</label></span><span style="background:#a6d96a"><label style="margin-top: -25px;">1,237,559</label></span><span style="background:#1a9641"><label style="margin-top: -25px;">2,367,047people</label></span><label class="lowLabel">← Lower wealth urban population</label><label class="highLabel">Higher wealth urban population→</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div>' + '<nav id="menuSm"></nav>', 
             location: {
-              center: [68.32591470259335, 40.77472359994684],
-              zoom: 8.8,
-              pitch: 28,
-              bearing: 0,
-              duration: 5000
+            center: [68.32591470259335, 40.77472359994684],
+            zoom: 8.8,
+            pitch: 28,
+            bearing: 0,
+            duration: 5000
             },
             // rotateAnimation: true,
             // callback: 'enableFreetime',
@@ -302,7 +302,7 @@ var config = {
         {
           id: 'high-economic-1',
           alignment: 'left',
-          title: 'Higher connectivity in schools in higher wealth regions. Urban region of Almaty',
+          title: 'Higher connectivity in schools in higher wealth regions of urban Almaty (Alma-Ata)',
           image: '',
           description: 'Lorem Ipsum' + '<div class="legendHold" id="legendSm"><div class="textLegend"><span style="background:#e66101;"></span><span style="background:#fdb863"></span><span style="background:#f7f7f7;"></span><span style="background:#b2abd2;"></span><span style="background:#5e3c99;"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div>' + '<nav id="menuSm"></nav>',
           location: {
@@ -366,7 +366,7 @@ var config = {
         {
           id: 'high-economic-2',
           alignment: 'left',
-          title: 'Low connectivity in schools in spite of high wealth regions. Urban town of Aqtobe.',
+          title: 'Low connectivity in schools in spite of high wealth regions in urban town of Aqtobe',
           image: '',
           description: 'Lorem Ipsum' + '<div class="legendHold" id="legendSmTwo"><div class="textLegend"><span style="background:#e66101;"></span><span style="background:#fdb863"></span><span style="background:#f7f7f7;"></span><span style="background:#b2abd2;"></span><span style="background:#5e3c99;"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div>' + '<nav id="menuSmTwo"></nav>',
           location: {
