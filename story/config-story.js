@@ -64,7 +64,7 @@ var config = {
             id: 'kazakhstan-schools',
             alignment: 'left',
             title: 'School Connectivity',
-            description: 'There are <b>7,437 schools</b> in Kazakhstan with varying levels of internet connection. On the map, Green represents <b>3251 schools</b> with good internet connections (10 mbps speed or more), yellow represents 4062 schools with low quality internet connections (less than 10 mbps speed), and red represents 95 schools with no internet connections. (29 schools have not reported yet)' + '<div class="textLegend"><span style="background:#ff605b"><label>< 1 mb/s</label></span><span style="background:#ffc83d"><label>1-10 mb/s</label></span><span style="background:#8bd432"><label>> 10 mb/s</label></span></div>',
+            description: 'There are <b>7,437 schools</b> in Kazakhstan with varying levels of internet connection.' + '<div class="textLegend"><span style="background:#ff605b"> <label style="margin-top: -25px;">95 schools</label><label>< 1 mb/s</label></span><span style="background:#ffc83d"><label style="margin-top: -25px;">4062 schools</label><label>1-10 mb/s</label></span><span style="background:#8bd432"><label style="margin-top: -25px;">3251 schools</label><label>> 10 mb/s</label></span></div><br><span style="font-size:0.8em;color:#d3d3d3;">*29 schools have not reported data yet.</span>',
             location: {
                 center: [65.121,48.391],
                 zoom: 4,
@@ -120,7 +120,7 @@ var config = {
             alignment: 'left',
             title: 'Student Connectivity',
             image: '',
-            description: 'This disparity in connectivity is impacting the students. There are <b>3,669,269 students</b> in Kazakhstan. The map represents students count in each school through circle size and internet strength in school through colour. Green schools represent <b>2,433,695 students</b> with good internet connections (10 mbps speed or more), yellow represents 1,214,596 schools with low quality internet connections (less than 10 mbps speed), and red represents 19,413 schools with no internet connections. (29 schools have not reported yet)' + '<div class="textLegend"><span style="background:#ff605b"><label>< 1 mb/s</label></span><span style="background:#ffc83d"><label>1-10 mb/s</label></span><span style="background:#8bd432"><label>> 10 mb/s</label></span></div><br><span style="font-size:0.8em;color:#d3d3d3;">*Schools are sized by student population.</span>',
+            description: 'This disparity in connectivity is impacting the students. There are <b>3,669,269 students</b> in Kazakhstan. The map represents students count in each school through circle size and internet strength through colour.' + '<div class="textLegend"><span style="background:#ff605b"> <label style="margin-top: -25px;">19,413 students</label><label>< 1 mb/s</label></span><span style="background:#ffc83d"><label style="margin-top: -25px;">1,214,596 students</label><label>1-10 mb/s</label></span><span style="background:#8bd432"><label style="margin-top: -25px;">2,433,695 students</label><label>> 10 mb/s</label></span></div><br><span style="font-size:0.8em;color:#d3d3d3;">*29 schools have not reported data yet.</span>',
             location: {
               center: [65.121,48.391],
               zoom: 4,
@@ -173,15 +173,15 @@ var config = {
         {
             id: 'socio-economic',
             alignment: 'left',
-            title: 'Socio-economic status of Kazakhstan',
+            title: 'Socio-economic disparity in Kazakhstan',
             image: '',
-            description: 'We can also overlay this with other data to see how connectivity interacts with important socioeconomic indicators.' + '<div class="legendHold"><div class="textLegend"><span style="background:#d7191c;"></span><span style="background:#fdae61"></span><span style="background:#ffffbf"></span><span style="background:#a6d96a"></span><span style="background:#1a9641"></span></div></div>',
+            description: 'To understand the unequal distribution of connectivity across the region better, we analysed internet speed against population, wealth index, internet speed, schools count and region type (urban or rural). <br><br><b>As expected, we saw strong positive correlation between internet speed and wealth, while controlling for population and region type.</b><br><br>This relation is evident visually on the map as well. The map shows all populated regions of Kazakshtan divided into 5 sq km area grids.' + '<div class="legendHold"><div class="textLegend"><span style="background:#d7191c;"> <label style="margin-top: -25px;">217,835</label></span><span style="background:#fdae61"><label style="margin-top: -25px;">780,671</label></span><span style="background:#ffffbf"><label style="margin-top: -25px;">447,723</label></span><span style="background:#a6d96a"><label style="margin-top: -25px;">1,237,559</label></span><span style="background:#1a9641"><label style="margin-top: -25px;">2,367,047</label></span><label class="lowLabel">← Lower wealth population</label><label class="highLabel">Higher wealth population→</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div><br><span style="font-size:0.8em;color:#d3d3d3;">*Source: Facebook Data for Good - https://dataforgood.fb.com/tools/population-density-maps/.</span>',
             location: {
-              center: [68.200,47.391],
-              zoom: 5,
-              pitch: 35,
-              bearing: 1,
-              duration: 1000
+            center: [68.200,47.391],
+            zoom: 5,
+            pitch: 35,
+            bearing: 1,
+            duration: 1000
             },
             // rotateAnimation: true,
             // callback: 'enableFreetime',
@@ -197,7 +197,7 @@ var config = {
               },
               {
                 layer: '3D-extrusions',
-                opacity: 0.8,
+                opacity: 1,
                 duration:1000
               },
               {
