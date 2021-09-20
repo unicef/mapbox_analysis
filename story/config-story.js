@@ -27,8 +27,13 @@ var config = {
             onChapterEnter: [
               {
                 layer: 'school-outline',
-                opacity: 1,
+                opacity: 0,
                 duration: 3000
+              },
+              {
+                layer: '3D-extrusions',
+                opacity: 0,
+                duration:1000
               },
                 {
                   layer: 'kz30-high',
@@ -47,7 +52,7 @@ var config = {
                 },
                 {
                   layer: 'mask',
-                  opacity:0.8,
+                  opacity:0.9,
                 },
                 {
                   layer: 'place-label (3) copy',
@@ -135,7 +140,7 @@ var config = {
             },
             {
               layer: 'place-label (3) copy',
-              opacity:1
+              opacity:0
              },
               {
                 layer: 'schools-glow',
@@ -153,14 +158,6 @@ var config = {
               {
                 layer: 'kz30-low',
                 opacity: 0
-              },
-              {
-                layer: 'mask',
-                opacity: 0.8,
-              },
-              {
-                layer: 'place-label (3) copy',
-                opacity:0
               },
               {
                 layer: 'schools-dots',
@@ -238,9 +235,9 @@ var config = {
         {
             id: 'economic',
             alignment: 'left',
-            title: 'Lower connectivity in schools in lower wealth regions in urban Maktaaralskiy (South Kazakshtan)',
+            title: 'Lower connectivity in schools in lower wealth regions',
             image: '',
-            description: 'Lorem Ipsum'  + '<div class="legendHold"><div class="textLegend"><span style="background:#d7191c;"> <label style="margin-top: -25px;">217,835</lowabel></span><span style="background:#fdae61"><label style="margin-top: -25px;">780,671</label></span><span style="background:#ffffbf"><label style="margin-top: -25px;">447,723</label></span><span style="background:#a6d96a"><label style="margin-top: -25px;">1,237,559</label></span><span style="background:#1a9641"><label style="margin-top: -25px;">2,367,047people</label></span><label class="lowLabel">← Lower wealth urban population</label><label class="highLabel">Higher wealth urban population→</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div>' + '<nav id="menuSm"></nav>', 
+            description: '<b>Urban Maktaaralskiy (South Kazakshtan)</b>'  + '<div class="legendHold"><div class="textLegend"><span style="background:#d7191c;"> <label style="margin-top: -25px;">217,835</lowabel></span><span style="background:#fdae61"><label style="margin-top: -25px;">780,671</label></span><span style="background:#ffffbf"><label style="margin-top: -25px;">447,723</label></span><span style="background:#a6d96a"><label style="margin-top: -25px;">1,237,559</label></span><span style="background:#1a9641"><label style="margin-top: -25px;">2,367,047people</label></span><label class="lowLabel">← Lower wealth urban population</label><label class="highLabel">Higher wealth urban population→</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div>' + '<nav id="menuSm"></nav>', 
             location: {
             center: [68.32591470259335, 40.77472359994684],
             zoom: 8.8,
@@ -302,9 +299,9 @@ var config = {
         {
           id: 'high-economic-1',
           alignment: 'left',
-          title: 'Higher connectivity in schools in higher wealth regions of urban Almaty (Alma-Ata)',
+          title: 'Higher connectivity in schools in higher wealth regions',
           image: '',
-          description: 'Lorem Ipsum' + '<div class="legendHold" id="legendSm"><div class="textLegend"><span style="background:#e66101;"></span><span style="background:#fdb863"></span><span style="background:#f7f7f7;"></span><span style="background:#b2abd2;"></span><span style="background:#5e3c99;"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div>' + '<nav id="menuSm"></nav>',
+          description: '<b>Urban Almaty (Alma-Ata)</b>' + '<div class="legendHold" id="legendSm"><div class="textLegend"><span style="background:#e66101;"></span><span style="background:#fdb863"></span><span style="background:#f7f7f7;"></span><span style="background:#b2abd2;"></span><span style="background:#5e3c99;"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div>' + '<nav id="menuSm"></nav>',
           location: {
             center: [76.9024443, 43.260229],
             zoom: 6.8,
@@ -366,9 +363,9 @@ var config = {
         {
           id: 'high-economic-2',
           alignment: 'left',
-          title: 'Low connectivity in schools in spite of high wealth regions in urban town of Aqtobe',
+          title: 'Low connectivity in schools in spite of high wealth regions',
           image: '',
-          description: 'Lorem Ipsum' + '<div class="legendHold" id="legendSmTwo"><div class="textLegend"><span style="background:#e66101;"></span><span style="background:#fdb863"></span><span style="background:#f7f7f7;"></span><span style="background:#b2abd2;"></span><span style="background:#5e3c99;"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div>' + '<nav id="menuSmTwo"></nav>',
+          description: 'With granular geospatial data, we found regions like <b>urban town of Aqtobe</b> where there is low connectivity in schools in spite of high wealth. Such regions hold a lot of potential to get connected in a self-sustaining way, given the right infrastructure investment.' + '<div class="legendHold" id="legendSmTwo"><div class="textLegend"><span style="background:#e66101;"></span><span style="background:#fdb863"></span><span style="background:#f7f7f7;"></span><span style="background:#b2abd2;"></span><span style="background:#5e3c99;"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div>' + '<nav id="menuSmTwo"></nav>',
           location: {
             center: [57.1926438, 50.2867314],
             zoom: 8,
@@ -430,9 +427,9 @@ var config = {
         {
             id: 'explore',
             alignment: 'left',
-            title: 'Explore',
+            title: 'Explore & find more insights!',
             image: '',
-            description: '<div id="freeExplore">Back to story ↑</div>' + 'Go ahead, explore if you like! Just drag and zoom to go where you want.' + '<nav id="menu"></nav>' + '<div id="methodNote">Note: Quantile legends were simplified. Wealth index values ranged from -0.42 up to 1.99 in urban regions. Connectivity speeds ranged from 1 up to 11.</div>',
+            description: '<div id="freeExplore">Back to story ↑</div>' + 'Go ahead, explore and find more insights as you like! Just drag and zoom to go where you want.' + '<nav id="menu"></nav>' + '<div id="methodNote">Note: Quantile legends were simplified. Wealth index values ranged from -0.42 up to 1.99 in urban regions. Connectivity speeds ranged from 1 up to 11.</div>',
             location: {
               center: [65.12,48.39],
               zoom: 4.5,
