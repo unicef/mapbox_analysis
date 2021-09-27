@@ -289,7 +289,7 @@ map.on("load", function() {
             map.setLayoutProperty('3D-extrusions', 'visibility', 'visible');
             map.setLayoutProperty('kaz-analysis-urban', 'visibility', 'visible');
         } else if (chapter.id === 'explore') {
-            map.on('moveend', enableFreeExplore);
+            // map.on('moveend', enableFreeExplore);
             map.setLayoutProperty('3D-extrusions', 'visibility', 'none');
             map.setLayoutProperty('kaz-analysis-urban', 'visibility', 'none');
             document.getElementById("econBtn").checked = false;
@@ -658,17 +658,17 @@ function buildLegend(id) {
 }
 
 function enableFreeExplore() {
-    let exploreActive = document.getElementById('freeExplore')
+    let exploreActive = document.getElementById('freeExplore');
     if (exploreActive.classList.contains("active")) {
         exploreActive.classList.remove("active");
-        exploreActive.innerHTML = "Free explore";
+        exploreActive.innerHTML = "Scroll Zoom";
         map.scrollZoom.disable();
     } else {
         exploreActive.classList.add("active");
         exploreActive.innerHTML = "Back to story ↑";
         map.scrollZoom.enable();
     }
-    map.off('moveend', enableFreeExplore);
+    // map.off('moveend', enableFreeExplore);
 }
 
 window.onload = function() {

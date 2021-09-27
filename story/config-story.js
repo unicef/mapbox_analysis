@@ -7,7 +7,7 @@ var config = {
     title: 'Unicef Giga: Kazakhstan',
     subtitle: 'Accessibility analysis of connected schools',
     byline: '',
-    footer: 'Note: ',
+    footer: 'Note: This is some text as an example',
     use3dTerrain: false,
     rotateAnimation: true,
     chapters: [
@@ -429,7 +429,7 @@ var config = {
             alignment: 'left',
             title: 'Explore & find more insights!',
             image: '',
-            description: '<div id="freeExplore">Back to story ↑</div>' + 'Go ahead, explore and find more insights as you like! Just drag and zoom to go where you want.' + '<div id="methodNote">Note: Quantile legends were simplified. Wealth index values ranged from -0.42 up to 1.99 in urban regions. Connectivity speeds ranged from 1 up to 11.</div>',
+            description: '<div id="freeExplore">Scroll Zoom</div>' + 'Go ahead, explore and find more insights as you like! Just drag and zoom to go where you want.' + '<div id="methodNote">Note: Quantile legends were simplified. Wealth index values ranged from -0.42 up to 1.99 in urban regions. Connectivity speeds ranged from 1 up to 11.</div>',
             location: {
               center: [65.12,48.39],
               zoom: 4.5,

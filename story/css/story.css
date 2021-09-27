@@ -214,8 +214,9 @@ a, a:hover, a:visited {
     text-align: center;
     line-height: 25px;
     font-size: 13px;
-    /* position: absolute; */
-    display: none;
+    position: absolute;
+    z-index:2;
+    /* display: none; */
 }
 #features {
     padding-top: 10vh;
@@ -466,6 +467,10 @@ a, a:hover, a:visited {
 
     #header span {
         text-align: center;
+    }
+
+    #freeExplore {
+        display: none !important;
     }
 
     #features #intro h3 {
