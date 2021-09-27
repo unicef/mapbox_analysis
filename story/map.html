@@ -302,7 +302,7 @@ map.on("load", function() {
         } else if (chapter.id === 'schools-accessibility') {
             document.getElementById('loader').style.opacity = 0;
             document.getElementById('mapInset').style.opacity = 1;
-            document.getElementById('freeExplore').style.display = 'block';
+            
             
         } else if (chapter.id === 'economic') {
             map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', wealthLegend);
@@ -312,6 +312,7 @@ map.on("load", function() {
             // document.getElementById('mapInset').style.visibility = 'visible';
         } else if (chapter.id === 'explore') {
             map.on('moveend', enableFreeExplore);
+            document.getElementById('freeExplore').style.display = 'block';
             // document.getElementById('mapInset').style.visibility = 'hidden';
             // map.on('moveend', function() {
             //     console.log('move ended');
