@@ -261,9 +261,17 @@ a, a:hover, a:visited {
     /* box-sizing: border-box; */
 }
 
+.textLegend .textLegendHeader {
+    font-size: 0.8em;
+    color: #9a9a9a;
+    display: block;
+    margin: 0;
+    padding: 0px 0 20px 0;
+}
+
 #kazakhstan-schools .textLegend, #schools-connectivity .textLegend {
     padding:0;
-    margin-top:30px;
+    margin-top:15px;
     margin-bottom: 15px;
     position: relative;
 }
@@ -288,6 +296,10 @@ a, a:hover, a:visited {
     width: 60%;
     /* position: relative; */
     box-sizing: border-box;
+}
+
+#economic .textLegendHeader, #socio-economic .textLegendHeader, #schools-population .textLegendHeader, #high-economic-1 .textLegendHeader, #high-economic-2 .textLegendHeader {
+    padding:0;
 }
 
 #economic .heightLegend, #socio-economic .heightLegend, #schools-population .heightLegend, #high-economic-1 .heightLegend, #high-economic-2 .heightLegend {

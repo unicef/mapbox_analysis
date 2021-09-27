@@ -616,12 +616,13 @@ function buildLegend(id) {
         console.log('economic legend', document.getElementById("econBtn").checked);
         if (document.getElementById("econBtn").checked) {
             document.getElementById(legendName).innerHTML = '<div class="textLegend">' +
+                '<div class="textLegendHeader">Population estimates</div>' +
                 // '<span style="background:#d7191c;"><label style="margin-top: -25px;">4,657,693</label></span>' +
                 // '<span style="background:#fdae61"><label style="margin-top: -25px;">1,324,825</label></span>' +
                 // '<span style="background:#ffffbf"><label style="margin-top: -25px;">1,579,179</label></span>' +
                 // '<span style="background:#a6d96a"><label style="margin-top: -25px;">1,676,972</label></span>' +
                 // '<span style="background:#1a9641"><label style="margin-top: -25px;">2,554,279</label></span>' +
-                '<span style="background:#d7191c;"><label style="margin-top: -25px;">4.66M pop.</label></span>' +
+                '<span style="background:#d7191c;"><label style="margin-top: -25px;">4.66M</label></span>' +
                 '<span style="background:#fdae61"><label style="margin-top: -25px;">1.32M</label></span>' +
                 '<span style="background:#ffffbf"><label style="margin-top: -25px;">1.58M</label></span>' +
                 '<span style="background:#a6d96a"><label style="margin-top: -25px;">1.68M</label></span>' +
@@ -635,7 +636,8 @@ function buildLegend(id) {
                 '<span style="font-size:0.8em;color:#d3d3d3;">Source: <a href="https://dataforgood.fb.com/tools/population-density-maps/" target="_blank">Facebook Data for Good</a></span>';
         } else {
             document.getElementById(legendName).innerHTML = '<div class="textLegend">' +
-                '<span style="background:#d7191c;"><label style="margin-top: -25px;">2.19M pop.</label></span>' +
+                '<div class="textLegendHeader">Population estimates</div>' +
+                '<span style="background:#d7191c;"><label style="margin-top: -25px;">2.19M</label></span>' +
                 '<span style="background:#fdae61"><label style="margin-top: -25px;">2.28M</label></span>' +
                 '<span style="background:#ffffbf"><label style="margin-top: -25px;">2.61M</label></span>' +
                 '<span style="background:#a6d96a"><label style="margin-top: -25px;">1.50M</label></span>' +
@@ -653,12 +655,13 @@ function buildLegend(id) {
     } else if (id === 'economic' || id === 'high-economic-1' || id === 'high-economic-2') {
         if (document.getElementById("econBtn").checked) {
             document.getElementById(legendName).innerHTML = '<div class="textLegend">' +
+                '<div class="textLegendHeader">Population estimates</div>' +
                 // '<span style="background:#d7191c;"><label style="margin-top: -25px;">217,835</label></span>' +
                 // '<span style="background:#fdae61"><label style="margin-top: -25px;">780,671</label></span>' +
                 // '<span style="background:#ffffbf"><label style="margin-top: -25px;">447,723</label></span>' +
                 // '<span style="background:#a6d96a"><label style="margin-top: -25px;">1,237,559</label></span>' +
                 // '<span style="background:#1a9641"><label style="margin-top: -25px;">2,367,047people</label></span>' +
-                '<span style="background:#d7191c;"><label style="margin-top: -25px;">0.22M pop.</label></span>' +
+                '<span style="background:#d7191c;"><label style="margin-top: -25px;">0.22M</label></span>' +
                 '<span style="background:#fdae61"><label style="margin-top: -25px;">0.78M</label></span>' +
                 '<span style="background:#ffffbf"><label style="margin-top: -25px;">0.45M</label></span>' +
                 '<span style="background:#a6d96a"><label style="margin-top: -25px;">1.24M</label></span>' +
@@ -671,7 +674,8 @@ function buildLegend(id) {
                 '</div>'
         } else {
             document.getElementById(legendName).innerHTML = '<div class="textLegend">' +
-                '<span style="background:#d7191c;"><label style="margin-top: -25px;">0.28M pop.</label></span>' +
+                '<div class="textLegendHeader">Population estimates</div>' +
+                '<span style="background:#d7191c;"><label style="margin-top: -25px;">0.28M</label></span>' +
                 '<span style="background:#fdae61"><label style="margin-top: -25px;">0.99M</label></span>' +
                 '<span style="background:#ffffbf"><label style="margin-top: -25px;">0.81M</label></span>' +
                 '<span style="background:#a6d96a"><label style="margin-top: -25px;">1.20M</label></span>' +

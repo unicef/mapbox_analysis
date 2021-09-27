@@ -69,7 +69,7 @@ var config = {
             id: 'kazakhstan-schools',
             alignment: 'left',
             title: 'School Connectivity',
-            description: 'There are <b>7,437 schools</b> in Kazakhstan with varying levels of internet connection.' + '<div class="textLegend"><span style="background:#ff605b"> <label style="margin-top: -25px;">95 schools</label><label>< 1 mb/s</label></span><span style="background:#ffc83d"><label style="margin-top: -25px;">4,062</label><label>1-10 mb/s</label></span><span style="background:#8bd432"><label style="margin-top: -25px;">3,251</label><label>> 10 mb/s</label></span></div><span style="font-size:0.8em;color:#d3d3d3;">*29 schools have not reported data yet.</span>',
+            description: 'There are <b>7,437 schools</b> in Kazakhstan with varying levels of internet connection.' + '<div class="textLegend"><div class="textLegendHeader">Number of schools</div><span style="background:#ff605b"> <label style="margin-top: -25px;">95</label><label>< 1 mb/s</label></span><span style="background:#ffc83d"><label style="margin-top: -25px;">4,062</label><label>1-10 mb/s</label></span><span style="background:#8bd432"><label style="margin-top: -25px;">3,251</label><label>> 10 mb/s</label></span></div><span style="font-size:0.8em;color:#d3d3d3;">*29 schools have not reported data yet.</span>',
             location: {
                 center: [65.121,48.391],
                 zoom: 4,
@@ -125,7 +125,7 @@ var config = {
             alignment: 'left',
             title: 'Student Connectivity',
             image: '',
-            description: 'This disparity in connectivity is impacting the students. There are <b>3,669,269 students</b> in Kazakhstan. The map represents students count in each school through circle size and internet strength through colour.' + '<div class="textLegend"><span style="background:#ff605b"> <label style="margin-top: -25px;">19,413 students</label><label>< 1 mb/s</label></span><span style="background:#ffc83d"><label style="margin-top: -25px;">1,214,596</label><label>1-10 mb/s</label></span><span style="background:#8bd432"><label style="margin-top: -25px;">2,433,695</label><label>> 10 mb/s</label></span></div><span style="font-size:0.8em;color:#d3d3d3;">*29 schools have not reported data yet.</span>',
+            description: 'This disparity in connectivity is impacting the students. There are <b>3,669,269 students</b> in Kazakhstan. The map represents students count in each school through circle size and internet strength through colour.' + '<div class="textLegend"><div class="textLegendHeader">Student population estimates</div><span style="background:#ff605b"> <label style="margin-top: -25px;">19,413</label><label>< 1 mb/s</label></span><span style="background:#ffc83d"><label style="margin-top: -25px;">1,214,596</label><label>1-10 mb/s</label></span><span style="background:#8bd432"><label style="margin-top: -25px;">2,433,695</label><label>> 10 mb/s</label></span></div><span style="font-size:0.8em;color:#d3d3d3;">*29 schools have not reported data yet.</span>',
             location: {
               center: [65.121,48.391],
               zoom: 4,
@@ -429,7 +429,7 @@ var config = {
             alignment: 'left',
             title: 'Explore & find more insights!',
             image: '',
-            description: '<div id="freeExplore">Back to story ↑</div>' + 'Go ahead, explore and find more insights as you like! Just drag and zoom to go where you want.' + '<nav id="menu"></nav>' + '<div id="methodNote">Note: Quantile legends were simplified. Wealth index values ranged from -0.42 up to 1.99 in urban regions. Connectivity speeds ranged from 1 up to 11.</div>',
+            description: '<div id="freeExplore">Back to story ↑</div>' + 'Go ahead, explore and find more insights as you like! Just drag and zoom to go where you want.' + '<div id="methodNote">Note: Quantile legends were simplified. Wealth index values ranged from -0.42 up to 1.99 in urban regions. Connectivity speeds ranged from 1 up to 11.</div>',
             location: {
               center: [65.12,48.39],
               zoom: 4.5,
