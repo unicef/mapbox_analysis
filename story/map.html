@@ -484,7 +484,7 @@ function layerToggle(e) {
         map.setLayoutProperty('kaz-analysis-urban', 'visibility', 'visible');
         if (this.checked) {
             if (document.getElementById("connectBtn").checked) {
-                console.log('connect is checked');
+                
                 document.getElementById("connectBtn").checked = false;
                 buildLegend(currentChapter);
             }
@@ -582,7 +582,6 @@ function buildLegend(id) {
     const labelName = id + '-label';
 
     if (id === 'socio-economic') {
-        console.log('economic legend', document.getElementById("econBtn").checked);
         if (document.getElementById("econBtn").checked) {
             document.getElementById(legendName).innerHTML = '<div class="textLegend">' +
                 '<div class="textLegendHeader">Population estimates</div>' +
