@@ -69,7 +69,7 @@ var config = {
             id: 'kazakhstan-schools',
             alignment: 'left',
             title: 'School Connectivity',
-            description: 'There are <b>7,437 schools</b> in Kazakhstan with varying levels of internet connection.' + '<div class="textLegend"><span style="background:#ff605b"> <label style="margin-top: -25px;">95 schools</label><label>< 1 mb/s</label></span><span style="background:#ffc83d"><label style="margin-top: -25px;">4062 schools</label><label>1-10 mb/s</label></span><span style="background:#8bd432"><label style="margin-top: -25px;">3251 schools</label><label>> 10 mb/s</label></span></div><br><span style="font-size:0.8em;color:#d3d3d3;">*29 schools have not reported data yet.</span>',
+            description: 'There are <b>7,437 schools</b> in Kazakhstan with varying levels of internet connection.' + '<div class="textLegend"><div class="textLegendHeader">Number of schools</div><span style="background:#ff605b"> <label style="margin-top: -25px;">95</label><label>< 1 mb/s</label></span><span style="background:#ffc83d"><label style="margin-top: -25px;">4,062</label><label>1-10 mb/s</label></span><span style="background:#8bd432"><label style="margin-top: -25px;">3,251</label><label>> 10 mb/s</label></span></div><span style="font-size:0.8em;color:#d3d3d3;">*29 schools have not reported data yet.</span>',
             location: {
                 center: [65.121,48.391],
                 zoom: 4,
@@ -125,7 +125,7 @@ var config = {
             alignment: 'left',
             title: 'Student Connectivity',
             image: '',
-            description: 'This disparity in connectivity is impacting the students. There are <b>3,669,269 students</b> in Kazakhstan. The map represents students count in each school through circle size and internet strength through colour.' + '<div class="textLegend"><span style="background:#ff605b"> <label style="margin-top: -25px;">19,413 students</label><label>< 1 mb/s</label></span><span style="background:#ffc83d"><label style="margin-top: -25px;">1,214,596 students</label><label>1-10 mb/s</label></span><span style="background:#8bd432"><label style="margin-top: -25px;">2,433,695 students</label><label>> 10 mb/s</label></span></div><br><span style="font-size:0.8em;color:#d3d3d3;">*29 schools have not reported data yet.</span>',
+            description: 'This disparity in connectivity is impacting the students. There are <b>3,669,269 students</b> in Kazakhstan. The map represents students count in each school through circle size and internet strength through colour.' + '<div class="textLegend"><div class="textLegendHeader">Student population estimates</div><span style="background:#ff605b"> <label style="margin-top: -25px;">19,413</label><label>< 1 mb/s</label></span><span style="background:#ffc83d"><label style="margin-top: -25px;">1,214,596</label><label>1-10 mb/s</label></span><span style="background:#8bd432"><label style="margin-top: -25px;">2,433,695</label><label>> 10 mb/s</label></span></div><span style="font-size:0.8em;color:#d3d3d3;">*29 schools have not reported data yet.</span>',
             location: {
               center: [65.121,48.391],
               zoom: 4,
@@ -172,7 +172,7 @@ var config = {
             alignment: 'left',
             title: 'Socio-economic disparity in Kazakhstan',
             image: '',
-            description: 'To understand the unequal distribution of connectivity across the region better, we analysed internet speed against population, wealth index, internet speed, schools count and region type (urban or rural). <br><br><b>As expected, we saw strong positive correlation between internet speed and wealth, while controlling for population and region type.</b><br><br>This relation is evident visually on the map as well. The map shows all populated regions of Kazakshtan divided into 5 sq km area grids.'+ '<div class="legendHold"><div class="textLegend"><span style="background:#d7191c;"> <label style="margin-top: -25px;">4,657,693</label></span><span style="background:#fdae61"><label style="margin-top: -25px;">1,324,825</label></span><span style="background:#ffffbf"><label style="margin-top: -25px;">1,579,179</label></span><span style="background:#a6d96a"><label style="margin-top: -25px;">1,676,972</label></span><span style="background:#1a9641"><label style="margin-top: -25px;">2,554,279people</label></span><label class="lowLabel">← Lower wealth population</label><label class="highLabel">Higher wealth population→</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div><br><span style="font-size:0.8em;color:#d3d3d3;">*Source: Facebook Data for Good - https://dataforgood.fb.com/tools/population-density-maps/.</span>',
+            description: 'To understand the unequal distribution of connectivity across the region better, we analysed internet speed against population, wealth index, internet speed, schools count and region type (urban or rural). <br><br><b>As expected, we saw strong positive correlation between internet speed and wealth, while controlling for population and region type.</b><br><br>This relation is evident visually on the map as well. The map shows all populated regions of Kazakshtan divided into 5 sq km area grids.'+ '<div class="legendHold" id="socio-economic-legend"></div>',
             location: {
              center: [68.200,47.391],
              zoom: 5,
@@ -237,7 +237,7 @@ var config = {
             alignment: 'left',
             title: 'Lower connectivity in schools in lower wealth regions',
             image: '',
-            description: '<b>Urban Maktaaralskiy (South Kazakshtan)</b>'  + '<div class="legendHold"><div class="textLegend"><span style="background:#d7191c;"> <label style="margin-top: -25px;">217,835</lowabel></span><span style="background:#fdae61"><label style="margin-top: -25px;">780,671</label></span><span style="background:#ffffbf"><label style="margin-top: -25px;">447,723</label></span><span style="background:#a6d96a"><label style="margin-top: -25px;">1,237,559</label></span><span style="background:#1a9641"><label style="margin-top: -25px;">2,367,047people</label></span><label class="lowLabel">← Lower wealth urban population</label><label class="highLabel">Higher wealth urban population→</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div>' + '<nav id="menuSm"></nav>', 
+            description: '<b>Urban Maktaaralskiy (South Kazakshtan)</b>'  + '<div class="legendHold" id="economic-legend"></div>',
             location: {
             center: [68.32591470259335, 40.77472359994684],
             zoom: 8.8,
@@ -301,7 +301,7 @@ var config = {
           alignment: 'left',
           title: 'Higher connectivity in schools in higher wealth regions',
           image: '',
-          description: '<b>Urban Almaty (Alma-Ata)</b>' + '<div class="legendHold" id="legendSm"><div class="textLegend"><span style="background:#e66101;"></span><span style="background:#fdb863"></span><span style="background:#f7f7f7;"></span><span style="background:#b2abd2;"></span><span style="background:#5e3c99;"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div>' + '<nav id="menuSm"></nav>',
+          description: '<b>Urban Almaty (Alma-Ata)</b>' + '<div class="legendHold" id="high-economic-1-legend"></div>',
           location: {
             center: [76.9024443, 43.260229],
             zoom: 6.8,
@@ -365,7 +365,7 @@ var config = {
           alignment: 'left',
           title: 'Low connectivity in schools in spite of high wealth regions',
           image: '',
-          description: 'With granular geospatial data, we found regions like <b>urban town of Aqtobe</b> where there is low connectivity in schools in spite of high wealth. Such regions hold a lot of potential to get connected in a self-sustaining way, given the right infrastructure investment.' + '<div class="legendHold" id="legendSmTwo"><div class="textLegend"><span style="background:#e66101;"></span><span style="background:#fdb863"></span><span style="background:#f7f7f7;"></span><span style="background:#b2abd2;"></span><span style="background:#5e3c99;"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div></div>' + '<nav id="menuSmTwo"></nav>',
+          description: 'With granular geospatial data, we found regions like <b>urban town of Aqtobe</b> where there is low connectivity in schools in spite of high wealth. Such regions hold a lot of potential to get connected in a self-sustaining way, given the right infrastructure investment.' + '<div class="legendHold" id="high-economic-2-legend"></div>',
           location: {
             center: [57.1926438, 50.2867314],
             zoom: 8,
@@ -429,7 +429,7 @@ var config = {
             alignment: 'left',
             title: 'Explore & find more insights!',
             image: '',
-            description: '<div id="freeExplore">Back to story ↑</div>' + 'Go ahead, explore and find more insights as you like! Just drag and zoom to go where you want.' + '<nav id="menu"></nav>' + '<div id="methodNote">Note: Quantile legends were simplified. Wealth index values ranged from -0.42 up to 1.99 in urban regions. Connectivity speeds ranged from 1 up to 11.</div>',
+            description: '<div id="freeExplore">Back to story ↑</div>' + 'Go ahead, explore and find more insights as you like! Just drag and zoom to go where you want.' + '<div id="methodNote">Note: Quantile legends were simplified. Wealth index values ranged from -0.42 up to 1.99 in urban regions. Connectivity speeds ranged from 1 up to 11.</div>',
             location: {
               center: [65.12,48.39],
               zoom: 4.5,

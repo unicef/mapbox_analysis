@@ -22,6 +22,25 @@ a, a:hover, a:visited {
 #mapInset .mapboxgl-ctrl-bottom-left{
     display: none;
 }
+#mapToggle {
+    position: fixed;
+    top: 10px;
+    right: 30px;
+    color:#fff;
+    opacity:0;
+    transition: opacity 0.5s ease-in-out;
+    z-index: 100;
+}
+
+#mapToggle span {
+    display: block;
+}
+
+#mapToggle #isoBtnHold, #mapToggle #schoolsBtnHold {
+    opacity: 0;
+    display: none;
+}
+
 #map {
     top:0;
     left:0;
@@ -242,9 +261,18 @@ a, a:hover, a:visited {
     /* box-sizing: border-box; */
 }
 
+.textLegend .textLegendHeader {
+    font-size: 0.8em;
+    color: #9a9a9a;
+    display: block;
+    margin: 0;
+    padding: 0px 0 20px 0;
+}
+
 #kazakhstan-schools .textLegend, #schools-connectivity .textLegend {
     padding:0;
-    margin-top:30px;
+    margin-top:15px;
+    margin-bottom: 15px;
     position: relative;
 }
 
@@ -270,9 +298,14 @@ a, a:hover, a:visited {
     box-sizing: border-box;
 }
 
-#economic .heightLegend, #schools-population .heightLegend, #high-economic-1 .heightLegend, #high-economic-2 .heightLegend {
+#economic .textLegendHeader, #socio-economic .textLegendHeader, #schools-population .textLegendHeader, #high-economic-1 .textLegendHeader, #high-economic-2 .textLegendHeader {
+    padding:0;
+}
+
+#economic .heightLegend, #socio-economic .heightLegend, #schools-population .heightLegend, #high-economic-1 .heightLegend, #high-economic-2 .heightLegend {
     display: inline-block;
     padding: 0 0 0 10px;
+    margin-bottom: 10px;
     width: 40%;
     position: relative;
     box-sizing: border-box;
@@ -314,7 +347,7 @@ a, a:hover, a:visited {
     color:#9a9a9a;
 }
 
-#schools-connectivity .heightLegend label.popLabel, #economic .heightLegend label.popLabel, #schools-population .heightLegend label.popLabel, #high-economic-1 .heightLegend label.popLabel, #high-economic-2 .heightLegend label.popLabel {
+#schools-connectivity .heightLegend label.popLabel, #economic .heightLegend label.popLabel, #socio-economic .heightLegend label.popLabel, #high-economic-1 .heightLegend label.popLabel, #high-economic-2 .heightLegend label.popLabel {
     /* position: absolute;
     /* top:0; */
     font-size: 0.8em;
@@ -365,6 +398,9 @@ a, a:hover, a:visited {
     opacity: 0.25;
     pointer-events: none;
 }
+.step a {
+    pointer-events: initial;
+}
 .step.active {
     opacity: 0.9;
 }
@@ -400,19 +436,31 @@ a, a:hover, a:visited {
 } */
 
 @media (max-width: 1530px) {
-    #economic .textLegend, #socio-economic .textLegend, #schools-population .textLegend, #high-economic-1 .textLegend, #high-economic-2 .textLegend, #economic .heightLegend, #schools-population .heightLegend, #high-economic-1 .heightLegend, #high-economic-2 .heightLegend {
+    #economic .textLegend, #socio-economic .textLegend, #schools-population .textLegend, #high-economic-1 .textLegend, #high-economic-2 .textLegend, #economic .heightLegend, #socio-economic .heightLegend, #schools-population .heightLegend, #high-economic-1 .heightLegend, #high-economic-2 .heightLegend {
         width:100%;
         display: block;
     }
 }
 
-@media (max-width: 1020px) {
+@media (max-width: 1050px) {
     .centered, .lefty, .righty, .fully {
         width: 90vw;
         margin: 0 auto;
     }
 
     #mapInset {
+        display: none;
+    }
+
+    #mapToggle {
+        top: 0;
+        right: auto;
+        width: 100%;
+        background: #000;
+        padding: 20px;
+    }
+
+    #mapToggle h3 {
         display: none;
     }
 
