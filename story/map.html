@@ -250,9 +250,6 @@ map.on("load", function() {
     };
 
     map.on('move', getInsetBounds);
-    // map.on('move', getInsetBounds);
-
-    // buildMenu();
 
     // setup the instance, pass callback functions
     scroller
@@ -370,11 +367,6 @@ function customizeZooms(chap) {
             duration: 1000,
             pitch: 0
         });
-    // } else if (chap.id === 'schools-accessibility') {
-    //     map.fitBounds(popBounds, {
-    //         duration: 3000,
-    //         pitch:40
-    //     });
     } else if (chap.id === 'explore') {
         map.fitBounds(popBounds, {
             pitch: 0,
@@ -395,17 +387,12 @@ function customizeChapters(chap) {
 }
 
 function removeLoader() {
-    // map.on('rotatestart', function() {
-    // console.log('map is moving now');
     document.getElementById('loader').style.opacity = 0;
     document.getElementById('loaderSpin').style.opacity = 0;
-    // });
 }
 
 function getInsetBounds() {
     let bounds = map.getBounds();
-    // console.log('bounds sw', bounds._sw.lng);
-    // console.log('bounds ne', bounds._ne.lng);
 
     let boundsJson = {
         "type": "FeatureCollection",
@@ -445,14 +432,6 @@ function getInsetBounds() {
     }
 
     var bbox = [[bounds._sw.lng,bounds._sw.lat], [bounds._ne.lng,bounds._ne.lat]];
-
-    // map.on('moveend', function() {
-        // mapInset.fitBounds(bbox, {
-        //     padding: {top: 30, bottom:30, left: 30, right: 30},
-        //     duration:0
-        // });
-    // });
-
 
     if (initLoad) {
         addInsetLayer(boundsJson);
@@ -495,22 +474,15 @@ function addInsetLayer(bounds) {
 }
 
 function updateInsetLayer(bounds) {
-    // console.log('updated layer', bounds);
     mapInset.getSource('boundsSource').setData(bounds);
 }
 
 
 function layerToggle(e) {
-    console.log('e', this);
-    
     if (this.id === "econBtn") {
-        
         map.setLayoutProperty('3D-extrusions', 'visibility', 'visible');
         map.setLayoutProperty('kaz-analysis-urban', 'visibility', 'visible');
-        console.log('this', this.id);
-        console.log('this', this.checked);
         if (this.checked) {
-            console.log('econ is checked');
             if (document.getElementById("connectBtn").checked) {
                 console.log('connect is checked');
                 document.getElementById("connectBtn").checked = false;
@@ -530,13 +502,10 @@ function layerToggle(e) {
         map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', wealthLegend);
         map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', wealthLegend);
     } else if (this.id === "connectBtn") {
-        
         map.setLayoutProperty('3D-extrusions', 'visibility', 'visible');
         map.setLayoutProperty('kaz-analysis-urban', 'visibility', 'visible');
         if (this.checked) {
-            // console.log('econ is checked');
             if (document.getElementById("econBtn").checked) {
-                // console.log('connect is checked');
                 document.getElementById("econBtn").checked = false;
                 buildLegend(currentChapter);
             }
@@ -650,7 +619,6 @@ function buildLegend(id) {
                 '</div>' +
                 '<span style="font-size:0.8em;color:#d3d3d3;">Source: <a href="https://dataforgood.fb.com/tools/population-density-maps/" target="_blank">Facebook Data for Good</a></span>';
         }
-        // document.getElementById(legendName).innerHTML = 'test';
         
     } else if (id === 'economic' || id === 'high-economic-1' || id === 'high-economic-2') {
         if (document.getElementById("econBtn").checked) {
@@ -688,434 +656,21 @@ function buildLegend(id) {
                 '</div>'
         }
     }
-
-    // 
-
 }
-
-
-
-
-
-
-
-
-
-
-function buildMenu() {
-    const toggleableLayerIds = ['3D-extrusions-connectivity', '3D-extrusions-wealth', 'schools-glow', 'isochrones'];
-    // Set up the corresponding toggle button for each layer.
-    for (let i = 0; i < toggleableLayerIds.length; i++) {
-        let id = toggleableLayerIds[i];
-        if (!document.getElementById(id)) {
-            // Create a link.
-            const link = document.createElement('a');
-            const linkTwo = document.createElement('a');
-            link.id = id;
-            linkTwo.id = id + '-2';
-            link.href = '#';
-            linkTwo.href = '#';
-
-            if (id === '3D-extrusions-connectivity') {
-                link.textContent = 'Relative Connectivity';
-                linkTwo.textContent = 'Relative Connectivity';
-                link.className = '';
-                linkTwo.className = '';
-            } else if (id === '3D-extrusions-wealth') {
-                link.textContent = 'Relative Wealth Index';
-                linkTwo.textContent = 'Relative Wealth Index';
-                link.className = '';
-                linkTwo.className = '';
-            } else if (id === 'schools-glow') {
-                link.textContent = 'Schools by Connectivity';
-                linkTwo.textContent = 'Schools by Connectivity';
-                link.className = '';
-                linkTwo.className = '';
-            } else if (id === 'isochrones') {
-                link.textContent = 'Isochrones';
-                link.className = 'active';
-                linkTwo.className = 'active';
-            }
-            
-            // Show or hide layer when the toggle is clicked.
-            link.onclick = function (e) {
-                let clickedLayer;
-
-                if (id === '3D-extrusions-connectivity' || id === '3D-extrusions-wealth') {
-                    clickedLayer = ['3D-extrusions', 'kaz-analysis-urban'];
-                } else {
-                    clickedLayer = this.id;
-                }
-                // console.log('clickedLayer', clickedLayer);
-                e.preventDefault();
-                e.stopPropagation();
-                let visibility;
-                // console.log('id', id);
-                if (id === 'isochrones') {
-                    // console.log('id', id);
-                    visibility = map.getPaintProperty(
-                        'kz30-high',
-                        'fill-opacity'
-                    );
-                    // console.log('visibility', visibility);
-                } else if (id === '3D-extrusions-connectivity' || id === '3D-extrusions-wealth') {
-                    visibility = map.getPaintProperty(
-                        clickedLayer[0],
-                        'fill-extrusion-opacity'
-                    );
-                    visibility = map.getPaintProperty(
-                        clickedLayer[1],
-                        'fill-extrusion-opacity'
-                    );
-                } else if (id === 'schools-glow') {
-                    visibility = map.getPaintProperty(
-                        clickedLayer,
-                        'circle-opacity',
-                    );
-                }
-
-                // Toggle layer visibility by changing the layout object's visibility property.
-                if (visibility > 0.1) {
-                    console.log('is visible');
-                    if (id === 'isochrones') {
-                        map.setPaintProperty(
-                            'kz30-high',
-                            'fill-opacity',
-                            0
-                        );
-                        map.setPaintProperty(
-                            'kz30-med',
-                            'fill-opacity',
-                            0
-                        );
-                        map.setPaintProperty(
-                            'kz30-low',
-                            'fill-opacity',
-                            0
-                        );
-                        this.className = '';
-                    } else if (id === '3D-extrusions-connectivity' || id === '3D-extrusions-wealth') {
-
-                        if (id === '3D-extrusions-connectivity') {
-
-                            if (document.getElementById('3D-extrusions-wealth').classList.contains('active')) {
-                                map.setPaintProperty(
-                                    clickedLayer[0],
-                                    'fill-extrusion-opacity',
-                                    0.2
-                                );
-                                map.setPaintProperty(
-                                    clickedLayer[1],
-                                    'fill-extrusion-opacity',
-                                    1
-                                );
-                                map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', connectivityLegend);
-                                map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', connectivityLegend);
-                                document.getElementById('legendSm').innerHTML = '<div class="textLegend"><span style="background:#d7191c;"></span><span style="background:#fdae61"></span><span style="background:#ffffbf"></span><span style="background:#a6d96a"></span><span style="background:#1a9641"></span><label class="lowLabel">← Lower connectivity</label><label class="highLabel">Higher connectivity →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div>';
-                                this.className = 'active';
-                                document.getElementById('3D-extrusions-wealth').className = '';
-                            } else {
-                                map.setPaintProperty(
-                                    clickedLayer[0],
-                                    'fill-extrusion-opacity',
-                                    0
-                                );
-                                map.setPaintProperty(
-                                    clickedLayer[1],
-                                    'fill-extrusion-opacity',
-                                    0
-                                );
-                                this.className = '';
-                            }
-
-                        } else if (id === '3D-extrusions-wealth') {
-                            if (document.getElementById('3D-extrusions-connectivity').classList.contains('active')) {
-                                map.setPaintProperty(
-                                    clickedLayer[0],
-                                    'fill-extrusion-opacity',
-                                    0.2
-                                );
-                                map.setPaintProperty(
-                                    clickedLayer[1],
-                                    'fill-extrusion-opacity',
-                                    1
-                                );
-                                // map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', ["step",["get", "rwi"],"#e66101",0.67,"#fdb863",0.88,"#f7f7f7",1.01,"#b2abd2",1.21,"#5e3c99"]);
-                                map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', wealthLegend);
-                                map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', wealthLegend);
-                                document.getElementById('legendSm').innerHTML = '<div class="textLegend"><span style="background:#d7191c;"></span><span style="background:#fdae61"></span><span style="background:#ffffbf"></span><span style="background:#a6d96a"></span><span style="background:#1a9641"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div>';
-                                this.className = 'active';
-                                document.getElementById('3D-extrusions-connectivity').className = '';
-                            } else {
-                                map.setPaintProperty(
-                                    clickedLayer[0],
-                                    'fill-extrusion-opacity',
-                                    0
-                                );
-                                map.setPaintProperty(
-                                    clickedLayer[1],
-                                    'fill-extrusion-opacity',
-                                    0
-                                );
-                                this.className = '';
-                            }
-                        }
-                    } else if (id === 'kz-relative-wealth-index' || id === 'schools-glow') {
-                        map.setPaintProperty(
-                            clickedLayer,
-                            'circle-opacity',
-                            0
-                        );
-                        this.className = '';
-                    }
-                    
-
-                } else {                    
-                    console.log('is not visible');
-                    if (id === '3D-extrusions-connectivity' || id === '3D-extrusions-wealth') {
-                        map.setPaintProperty(
-                            clickedLayer[0],
-                            'fill-extrusion-opacity',
-                            0.2
-                        );
-                        map.setPaintProperty(
-                            clickedLayer[1],
-                            'fill-extrusion-opacity',
-                            1
-                        );
-                        if (id === '3D-extrusions-connectivity') {
-                            map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', connectivityLegend);
-                            map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', connectivityLegend);
-                            
-                        } else {
-                            map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', wealthLegend);
-                            map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', wealthLegend);
-                            
-                        }
-                    } else if (id === 'schools-glow') {
-                        map.setPaintProperty(
-                            clickedLayer,
-                            'circle-opacity',
-                            1
-                        );
-                    } else if (id === 'isochrones') {
-                        map.setPaintProperty(
-                            'kz30-high',
-                            'fill-opacity',
-                            1
-                        );
-                        map.setPaintProperty(
-                            'kz30-med',
-                            'fill-opacity',
-                            1
-                        );
-                        map.setPaintProperty(
-                            'kz30-low',
-                            'fill-opacity',
-                            1
-                        );
-                    }
-                    this.className = 'active';
-                }
-            };
-
-            linkTwo.onclick = function (e) {
-                let clickedLayer;
-
-                if (id === '3D-extrusions-connectivity' || id === '3D-extrusions-wealth') {
-                    clickedLayer = ['3D-extrusions', 'kaz-analysis-urban'];
-                }
-                // console.log('clickedLayer', clickedLayer);
-                e.preventDefault();
-                e.stopPropagation();
-
-                let visibility;
-                // console.log('id', id);
-                if (id === '3D-extrusions-connectivity' || id === '3D-extrusions-wealth') {
-                    visibility = map.getPaintProperty(
-                        clickedLayer[0],
-                        'fill-extrusion-opacity'
-                    );
-                    visibility = map.getPaintProperty(
-                        clickedLayer[1],
-                        'fill-extrusion-opacity'
-                    );
-                }
-                // Toggle layer visibility by changing the layout object's visibility property.
-                if (visibility > 0.1) {
-                    console.log('is visible');
-                    if (id === '3D-extrusions-connectivity' || id === '3D-extrusions-wealth') {
-                        if (id === '3D-extrusions-connectivity') {
-                            if (document.getElementById('3D-extrusions-wealth-2').classList.contains('active')) {
-                                map.setPaintProperty(
-                                    clickedLayer[0],
-                                    'fill-extrusion-opacity',
-                                    0.2
-                                );
-                                map.setPaintProperty(
-                                    clickedLayer[1],
-                                    'fill-extrusion-opacity',
-                                    1
-                                );
-                                map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', connectivityLegend);
-                                map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', connectivityLegend);
-                                document.getElementById('legendSmTwo').innerHTML = '<div class="textLegend"><span style="background:#d7191c;"></span><span style="background:#fdae61"></span><span style="background:#ffffbf"></span><span style="background:#a6d96a"></span><span style="background:#1a9641"></span><label class="lowLabel">← Lower connectivity</label><label class="highLabel">Higher connectivity →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div>';
-                                this.className = 'active';
-                                document.getElementById('3D-extrusions-wealth-2').className = '';
-                            } else {
-                                map.setPaintProperty(
-                                    clickedLayer[0],
-                                    'fill-extrusion-opacity',
-                                    0
-                                );
-                                map.setPaintProperty(
-                                    clickedLayer[1],
-                                    'fill-extrusion-opacity',
-                                    0
-                                );
-                                this.className = '';
-                            }
-
-                        } else if (id === '3D-extrusions-wealth') {
-                            if (document.getElementById('3D-extrusions-connectivity-2').classList.contains('active')) {
-                                map.setPaintProperty(
-                                    clickedLayer[0],
-                                    'fill-extrusion-opacity',
-                                    0.2
-                                );
-                                map.setPaintProperty(
-                                    clickedLayer[1],
-                                    'fill-extrusion-opacity',
-                                    1
-                                );
-                                // map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', ["step",["get", "rwi"],"#e66101",0.67,"#fdb863",0.88,"#f7f7f7",1.01,"#b2abd2",1.21,"#5e3c99"]);
-                                map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', wealthLegend);
-                                map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', wealthLegend);
-                                document.getElementById('legendSmTwo').innerHTML = '<div class="textLegend"><span style="background:#d7191c;"></span><span style="background:#fdae61"></span><span style="background:#ffffbf"></span><span style="background:#a6d96a"></span><span style="background:#1a9641"></span><label class="lowLabel">← Lower wealth</label><label class="highLabel">Higher wealth →</label></div><div class="heightLegend"><img src="./img/legend_height.svg"><label class="popLabel">Higher Pop. Density ⟶</label></div>';
-                                this.className = 'active';
-                                document.getElementById('3D-extrusions-connectivity-2').className = '';
-                            } else {
-                                map.setPaintProperty(
-                                    clickedLayer[0],
-                                    'fill-extrusion-opacity',
-                                    0
-                                );
-                                map.setPaintProperty(
-                                    clickedLayer[1],
-                                    'fill-extrusion-opacity',
-                                    0
-                                );
-                                this.className = '';
-                            }
-                        }
-                    } else if (id === 'kz-relative-wealth-index' || id === 'schools-glow') {
-                        map.setPaintProperty(
-                            clickedLayer,
-                            'circle-opacity',
-                            0
-                        );
-                        this.className = '';
-                    }
-                    
-
-                } else {                    
-                    console.log('is not visible');
-                    if (id === '3D-extrusions-connectivity' || id === '3D-extrusions-wealth') {
-                        map.setPaintProperty(
-                            clickedLayer[0],
-                            'fill-extrusion-opacity',
-                            0.2
-                        );
-                        map.setPaintProperty(
-                            clickedLayer[1],
-                            'fill-extrusion-opacity',
-                            1
-                        );
-                        if (id === '3D-extrusions-connectivity') {
-                            map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', connectivityLegend);
-                            map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', connectivityLegend);
-                            
-                        } else {
-                            map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', wealthLegend);
-                            map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', wealthLegend);
-                            
-                        }
-                    } else if (id === 'schools-glow') {
-                        map.setPaintProperty(
-                            clickedLayer,
-                            'circle-opacity',
-                            1
-                        );
-                    } else if (id === 'isochrones') {
-                        map.setPaintProperty(
-                            'kz30-high',
-                            'fill-opacity',
-                            1
-                        );
-                        map.setPaintProperty(
-                            'kz30-med',
-                            'fill-opacity',
-                            1
-                        );
-                        map.setPaintProperty(
-                            'kz30-low',
-                            'fill-opacity',
-                            1
-                        );
-                    }
-                    this.className = 'active';
-                }
-            };
-            
-            var layers = document.getElementById('menu');
-            var layersSm = document.getElementById('menuSm');
-            var layersSmTwo = document.getElementById('menuSmTwo');
-
-
-            // var div = document.createElement('div');
-            // div.innerText = 'Hello!';
-            // document.body.appendChild(div);
-            // var div2 = div.cloneNode(true);
-            // document.body.appendChild(div2);
-            
-            if (id === '3D-extrusions-connectivity' || id === '3D-extrusions-wealth') {
-                layersSm.appendChild(link);
-                // let link2 = link.cloneNode(true);
-                layersSmTwo.appendChild(linkTwo);
-            } else {
-                layers.appendChild(link);
-            }
-        }
-    }
-}
-
 
 function enableFreeExplore() {
     let exploreActive = document.getElementById('freeExplore')
-    // console.log('this', this);
-    // console.log('exploreActive', exploreActive);
     if (exploreActive.classList.contains("active")) {
-        // console.log('is active');
         exploreActive.classList.remove("active");
         exploreActive.innerHTML = "Free explore";
         map.scrollZoom.disable();
     } else {
-        // console.log('is not active');
         exploreActive.classList.add("active");
         exploreActive.innerHTML = "Back to story ↑";
         map.scrollZoom.enable();
     }
     map.off('moveend', enableFreeExplore);
 }
-
-// function addLoader() {
-//     document.getElementById('loader').style.opacity = 1;
-// }
-
-// function fitCountry() {
-//     map.fitBounds(countryBounds);
-// }
-
 
 window.onload = function() {
  setTimeout (function () {
