@@ -19,6 +19,7 @@
     <span id="isoBtnHold"><input type="checkbox" id="isoBtn" name="isoBtn" value="isochrones" checked="true"><label for="vehicle3"> Isochrones</label></span>
     <span id="schoolsBtnHold"><input type="checkbox" id="schoolsBtn" name="schoolsBtn" value="schools-glow"><label for="vehicle3"> Schools</label></span>
 </div>
+<div id="mapScrollNote">Scroll to begin ↓</div>
 <div id="map"></div>
 <div id="loader">
     <div id="loaderSpin"></div>
@@ -272,6 +273,7 @@ map.on("load", function() {
             document.getElementById('mapInset').style.opacity = 0;
         } else if (chapter.id === 'kazakhstan-schools' || chapter.id === 'schools-connectivity') {
             map.setPaintProperty('background', 'background-color', '#000');
+            document.getElementById('mapScrollNote').style.opacity = 0;
             document.getElementById('loader').style.opacity = 0;
             document.getElementById('mapInset').style.opacity = 1;
             document.getElementById('mapToggle').style.opacity = 0;
