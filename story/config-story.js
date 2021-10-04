@@ -7,7 +7,7 @@ var config = {
     title: 'Unicef Giga: Kazakhstan',
     subtitle: 'Accessibility analysis of connected schools',
     byline: '',
-    footer: 'Data powered by: Project Connect.',
+    footer: 'Data powered by: <a href="https://projectconnect.unicef.org/map" target="_blank">Project Connect.</a>',
     use3dTerrain: false,
     rotateAnimation: true,
     chapters: [
@@ -237,7 +237,7 @@ var config = {
             alignment: 'left',
             title: 'Lower connectivity in schools in lower wealth regions',
             image: '',
-            description: 'As expected we found many regions such as <b>Urban Maktaaralskiy (South Kazakhstan)</b> where both connectivity and wealth were in the lower spectrum.'  + '<div class="legendHold" id="economic-legend"></div><span style="font-size:0.8em;color:#d3d3d3;">Given the significant gap in urban and rural regions, we analysed them separately. The highlighted layer represents urban regions and the background layer with low opacity represents the entire populated region.</span>',
+            description: 'As expected we found many regions such as <b>Urban Maktaaralskiy (South Kazakhstan)</b> where both connectivity and wealth were in the lower spectrum.'  + '<div class="legendHold" id="economic-legend"></div><p style="font-size:0.8em;color:#d3d3d3;line-height: 1.8em;">Given the significant gap in urban and rural regions, we analysed them separately. The highlighted layer represents urban regions and the background layer with low opacity represents the entire populated region.</p>',
             location: {
             center: [68.32591470259335, 40.77472359994684],
             zoom: 8.8,
