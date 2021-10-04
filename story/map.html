@@ -14,8 +14,8 @@
 <div id="mapInset"></div>
 <div id="mapToggle">
     <h3>Toggle layers</h3>
-    <span id="econBtnHold"><input type="checkbox" id="econBtn" name="econBtn" value="3D-extrusions-wealth" checked="true"><label for="econBtn"> Socio-economic</label></span>
-    <span id="connectBtnHold"><input type="checkbox" id="connectBtn" name="connectBtn" value="3D-extrusions-connectivity"><label for="vehicle2"> Connectivity</label></span>
+    <span id="econBtnHold"><input type="checkbox" id="econBtn" name="econBtn" value="3D-extrusions-wealth" checked="true"><label for="econBtn"> Wealth Index</label></span>
+    <span id="connectBtnHold"><input type="checkbox" id="connectBtn" name="connectBtn" value="3D-extrusions-connectivity"><label for="vehicle2"> Internet Speed</label></span>
     <span id="isoBtnHold"><input type="checkbox" id="isoBtn" name="isoBtn" value="isochrones" checked="true"><label for="vehicle3"> Isochrones</label></span>
     <span id="schoolsBtnHold"><input type="checkbox" id="schoolsBtn" name="schoolsBtn" value="schools-glow"><label for="vehicle3"> Schools</label></span>
 </div>
@@ -622,7 +622,7 @@ function buildLegend(id) {
     } else if (id === 'economic' || id === 'high-economic-1' || id === 'high-economic-2') {
         if (document.getElementById("econBtn").checked) {
             document.getElementById(legendName).innerHTML = '<div class="textLegend">' +
-                '<div class="textLegendHeader">Population estimates</div>' +
+                '<div class="textLegendHeader">Urban population estimates</div>' +
                 // '<span style="background:#d7191c;"><label style="margin-top: -25px;">217,835</label></span>' +
                 // '<span style="background:#fdae61"><label style="margin-top: -25px;">780,671</label></span>' +
                 // '<span style="background:#ffffbf"><label style="margin-top: -25px;">447,723</label></span>' +
@@ -641,7 +641,7 @@ function buildLegend(id) {
                 '</div>'
         } else {
             document.getElementById(legendName).innerHTML = '<div class="textLegend">' +
-                '<div class="textLegendHeader">Population estimates</div>' +
+                '<div class="textLegendHeader">Urban population estimates</div>' +
                 '<span style="background:#d7191c;"><label style="margin-top: -25px;">0.28M</label></span>' +
                 '<span style="background:#fdae61"><label style="margin-top: -25px;">0.99M</label></span>' +
                 '<span style="background:#ffffbf"><label style="margin-top: -25px;">0.81M</label></span>' +
