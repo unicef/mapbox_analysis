@@ -7,7 +7,7 @@ var config = {
     title: 'Unicef Giga: Kazakhstan',
     subtitle: 'Accessibility analysis of connected schools',
     byline: '',
-    footer: 'Data powered by: <a href="https://projectconnect.unicef.org/map" target="_blank">Project Connect.</a>',
+    footer: '<li>School geolocation, internet connectivity and coverage data powered by <a href="https://projectconnect.unicef.org/map" target="_blank">Project Connect.</a></li><li><a href="https://www.mapbox.com/solutions/interactive-storytelling" target="_blank">Interactive Storytelling</a> and <a href="https://docs.mapbox.com/playground/isochrone/" target="_blank">Isochrone API</a> powered by Mapbox.</li><li>Population and wealth index data estimates powered by <a href="https://dataforgood.fb.com/tools/population-density-maps/" target="_blank">Facebook Data for Good</a></li><li>Rural-urban polygons powered by <a href="https://ghsl.jrc.ec.europa.eu/" target="_blank">GHSL - Global Human Settlement Layer</a></li><li>Hexagonal grids powered by <a href="https://eng.uber.com/h3/" target="_blank">Uber-H3 library</a></li>',
     use3dTerrain: false,
     rotateAnimation: true,
     chapters: [
@@ -125,7 +125,7 @@ var config = {
             alignment: 'left',
             title: 'Student Connectivity',
             image: '',
-            description: 'This disparity in internet connectivity is impacting the students. There are <b>3.67M students</b> in Kazakhstan. Around 20 thousand students in red areas do not have access to internet at all. More than 1.21 million students in yellow zones inspite of having internet connection do not have enough internet bandwidth to properly use any digital learning resources.' + '<div class="textLegend"><div class="textLegendHeader">Student population estimates</div><span style="background:#ff605b"> <label style="margin-top: -25px;">0.02M</label><label>< 1 mb/s</label></span><span style="background:#ffc83d"><label style="margin-top: -25px;">1.21M</label><label>1-10 mb/s</label></span><span style="background:#8bd432"><label style="margin-top: -25px;">2.43M</label><label>> 10 mb/s</label></span></div><span>The map represents student count in each school through circle size and internet strength through colour.<br><br></span><span style="font-size:0.8em;color:#d3d3d3;">*29 schools have not reported data yet.</span>',
+            description: 'This disparity in internet connectivity is impacting the students. There are <b>3.67 million students</b> in Kazakhstan. Nearly <b>20 thousand</b> students in red areas do not have access to internet at all. More than <b>1.21 million</b> students in yellow zones inspite of having internet connection do not have enough internet bandwidth to properly use any digital learning resources.' + '<div class="textLegend"><div class="textLegendHeader">Student population estimates</div><span style="background:#ff605b"> <label style="margin-top: -25px;">0.02M</label><label>< 1 mb/s</label></span><span style="background:#ffc83d"><label style="margin-top: -25px;">1.21M</label><label>1-10 mb/s</label></span><span style="background:#8bd432"><label style="margin-top: -25px;">2.43M</label><label>> 10 mb/s</label></span></div><span>The map represents student count in each school through circle size and internet strength through colour.<br><br></span><span style="font-size:0.8em;color:#d3d3d3;">*29 schools have not reported data yet.</span>',
             location: {
               center: [65.121,48.391],
               zoom: 4,
@@ -365,7 +365,7 @@ var config = {
           alignment: 'left',
           title: 'Low connectivity in schools in spite of high wealth regions',
           image: '',
-          description: 'Unexpectedly, we also found some regions like <b>urban town of Aqtobe</b> where there is low connectivity in schools in spite of high wealth. Such regions might hold a lot of potential to get connected in a self-sustaining way, given the right infrastructure investment.' + '<div class="legendHold" id="high-economic-2-legend"></div><span><b>At Giga, we are leveraging geospatial big data, modeling and new technologies to find innovative ways to support connecting every school to the internet.</span>',
+          description: 'Unexpectedly, we also found some regions like <b>urban town of Aqtobe</b> where there is low connectivity in schools in spite of high wealth. Such regions might hold a lot of potential to get connected in a self-sustaining way, given the right infrastructure investment.' + '<div class="legendHold" id="high-economic-2-legend"></div><span><b>At <a href="https://gigaconnect.org/" target="_blank">Giga</a>, we are leveraging geospatial data modelling, machine learning and new technologies to find innovative ways to support connecting every school to the internet.</span>',
           location: {
             center: [57.1926438, 50.2867314],
             zoom: 8,
@@ -429,9 +429,9 @@ var config = {
             alignment: 'left',
             title: 'Explore & find more insights!',
             image: '',
-            description: '<div id="freeExplore">Scroll Zoom</div>' + 'Go ahead, explore and find more brilliant insights! Just drag and zoom to go where you want.' + '<div id="methodNote">Note: Quantile legends were simplified. Wealth index values ranged from -0.42 up to 1.99 in urban regions. Connectivity speeds ranged from 1 up to 11.</div>',
+            description: '<btn id="freeExplore">Scroll Zoom</btn>' + 'Go ahead, explore and find more brilliant insights! Just drag and zoom to go where you want.' + '<div id="methodNote">Note: Quantile legends were simplified. Wealth index values ranged from -0.42 up to 1.99 in urban regions. Connectivity speeds ranged from 1 up to 11.</div>',
             location: {
-              center: [65.121,48.391],
+              center: [80.270,50.448],
               zoom: 4,
               pitch: 0,
               bearing: 0,

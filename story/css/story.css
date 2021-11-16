@@ -225,12 +225,19 @@ a, a:hover, a:visited {
     min-height: 5vh;
     padding-top: 2vh;
     padding-bottom: 2vh;
-    text-align: center;
+    text-align: left;
     line-height: 25px;
+    padding-left: 30px;
     font-size: 13px;
     position: absolute;
     z-index:2;
     /* display: none; */
+}
+#footer ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 0;
+    width: 85%;
 }
 #features {
     padding-top: 10vh;
@@ -464,6 +471,9 @@ a, a:hover, a:visited {
 }
 
 @media (max-width: 1050px) {
+    #map {
+        z-index:0;
+    }
     .centered, .lefty, .righty, .fully {
         width: 90vw;
         margin: 0 auto;
@@ -490,7 +500,12 @@ a, a:hover, a:visited {
     }
 
     #freeExplore {
-        display: none !important;
+        /* display: none !important; */
+        position: fixed;
+        bottom:32px;
+        right:5vw;
+        top:auto;
+        padding:10px;
     }
 
     #features #intro h3 {
@@ -510,6 +525,8 @@ a, a:hover, a:visited {
 }
 
 @media (max-width: 650px) {
+
+
     #features {
         padding-top:0;
     }

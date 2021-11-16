@@ -50,8 +50,8 @@ var countryBounds = [
 ];
 
 var popBounds = [
-    [66.533203125, 40.29628651711716],
-    [80.13427734374999,44.84029065139799]
+    [75.41046370362497, 47.56055778858862],
+    [85.75267975798518,53.04559595892645]
 ]
 
 var maxBounds = [
@@ -157,9 +157,10 @@ config.chapters.forEach((record, idx) => {
 story.appendChild(features);
 
 var footer = document.createElement('div');
+footer.innerHTML = '<b>Sources</b>';
 
 if (config.footer) {
-    var footerText = document.createElement('p');
+    var footerText = document.createElement('ul');
     footerText.innerHTML = config.footer;
     footer.appendChild(footerText);
 }
@@ -602,8 +603,7 @@ function buildLegend(id) {
                 '</div>' +
                 '<div class="heightLegend"><img src="./img/legend_height.svg">' +
                 '<label class="popLabel">Higher Pop. Density ⟶</label></div>' +
-                '</div>' +
-                '<span style="font-size:0.8em;color:#d3d3d3;">Source: <a href="https://dataforgood.fb.com/tools/population-density-maps/" target="_blank">Facebook Data for Good</a></span>';
+                '</div>';
         } else {
             document.getElementById(legendName).innerHTML = '<div class="textLegend">' +
                 '<div class="textLegendHeader">Population estimates</div>' +
@@ -661,12 +661,20 @@ function buildLegend(id) {
 
 function enableFreeExplore() {
     let exploreActive = document.getElementById('freeExplore');
+    let windowWidth = window.innerWidth;
     if (exploreActive.classList.contains("active")) {
         exploreActive.classList.remove("active");
+        if (windowWidth < 1050) {
+            document.getElementById('explore').style.visibility = 'visible';
+        }
         exploreActive.innerHTML = "Scroll Zoom";
         map.scrollZoom.disable();
     } else {
         exploreActive.classList.add("active");
+        if (windowWidth < 1050) {
+            document.getElementById('explore').style.visibility = 'hidden';
+            exploreActive.style.visibility = 'visible';
+        }
         exploreActive.innerHTML = "Back to story ↑";
         map.scrollZoom.enable();
     }
