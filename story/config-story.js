@@ -7,7 +7,7 @@ var config = {
     title: 'Unicef Giga: Kazakhstan',
     subtitle: 'Accessibility analysis of connected schools',
     byline: '',
-    footer: 'School geolocation, internet connectivity and coverage data powered by <a href="https://projectconnect.unicef.org/map" target="_blank">Project Connect.</a><br><br><a href="https://www.mapbox.com/solutions/interactive-storytelling" target="_blank">Interactive Storytelling</a> and <a href="https://docs.mapbox.com/playground/isochrone/" target="_blank">Isochrone API</a> powered by Mapbox.<br><br>Population and wealth index data estimates powered by <a href="https://dataforgood.fb.com/tools/population-density-maps/" target="_blank">Facebook Data for Good</a><br><br>Rural-urban polygons powered by <a href="https://ghsl.jrc.ec.europa.eu/" target="_blank">GHSL - Global Human Settlement Layer</a><br><br>Hexagonal grids powered by <a href="https://eng.uber.com/h3/" target="_blank">Uber-H3 library</a>',
+    footer: '<li>School geolocation, internet connectivity and coverage data powered by <a href="https://projectconnect.unicef.org/map" target="_blank">Project Connect.</a></li><li><a href="https://www.mapbox.com/solutions/interactive-storytelling" target="_blank">Interactive Storytelling</a> and <a href="https://docs.mapbox.com/playground/isochrone/" target="_blank">Isochrone API</a> powered by Mapbox.</li><li>Population and wealth index data estimates powered by <a href="https://dataforgood.fb.com/tools/population-density-maps/" target="_blank">Facebook Data for Good</a></li><li>Rural-urban polygons powered by <a href="https://ghsl.jrc.ec.europa.eu/" target="_blank">GHSL - Global Human Settlement Layer</a></li><li>Hexagonal grids powered by <a href="https://eng.uber.com/h3/" target="_blank">Uber-H3 library</a></li>',
     use3dTerrain: false,
     rotateAnimation: true,
     chapters: [
@@ -429,9 +429,9 @@ var config = {
             alignment: 'left',
             title: 'Explore & find more insights!',
             image: '',
-            description: '<div id="freeExplore">Scroll Zoom</div>' + 'Go ahead, explore and find more brilliant insights! Just drag and zoom to go where you want.' + '<div id="methodNote">Note: Quantile legends were simplified. Wealth index values ranged from -0.42 up to 1.99 in urban regions. Connectivity speeds ranged from 1 up to 11.</div>',
+            description: '<btn id="freeExplore">Scroll Zoom</btn>' + 'Go ahead, explore and find more brilliant insights! Just drag and zoom to go where you want.' + '<div id="methodNote">Note: Quantile legends were simplified. Wealth index values ranged from -0.42 up to 1.99 in urban regions. Connectivity speeds ranged from 1 up to 11.</div>',
             location: {
-              center: [65.121,48.391],
+              center: [80.270,50.448],
               zoom: 4,
               pitch: 0,
               bearing: 0,
