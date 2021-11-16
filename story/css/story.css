@@ -471,9 +471,6 @@ a, a:hover, a:visited {
 }
 
 @media (max-width: 1050px) {
-    #map {
-        z-index:0;
-    }
     .centered, .lefty, .righty, .fully {
         width: 90vw;
         margin: 0 auto;

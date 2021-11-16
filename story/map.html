@@ -666,6 +666,7 @@ function enableFreeExplore() {
         exploreActive.classList.remove("active");
         if (windowWidth < 1050) {
             document.getElementById('explore').style.visibility = 'visible';
+            document.getElementById('map').style.zIndex = -1;
         }
         exploreActive.innerHTML = "Scroll Zoom";
         map.scrollZoom.disable();
@@ -673,6 +674,7 @@ function enableFreeExplore() {
         exploreActive.classList.add("active");
         if (windowWidth < 1050) {
             document.getElementById('explore').style.visibility = 'hidden';
+            document.getElementById('map').style.zIndex = 0;
             exploreActive.style.visibility = 'visible';
         }
         exploreActive.innerHTML = "Back to story ↑";
