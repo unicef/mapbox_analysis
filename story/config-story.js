@@ -437,7 +437,7 @@ var config = {
               bearing: 0,
               duration: 4000
             },
-            callback: 'enableFreetime',
+            // callback: 'enableFreetime',
             onChapterEnter: [
               {
                 layer: 'kz30-low',
