@@ -118,8 +118,8 @@ a, a:hover, a:visited {
     font-family: 'Open Sans', sans-serif;
     font-weight: bold;
     text-align: center;
-    background-color: #111;
-    color: #ffffff;
+    background-color: #fff;
+    color: #111;
     font-size: 13px;
     /* color: #404040; */
     display: none;
@@ -127,16 +127,17 @@ a, a:hover, a:visited {
     /* padding: 0; */
     padding: 10px 10px 30px 10px;
     transition: 0.1s;
+    text-transform: uppercase;
 }
 #freeExplore:hover {
-    background-color: #111;
-    color: #ffffff;
+    background-color: #fff;
+    color: #000;
     cursor: pointer;
 }
 
 #freeExplore.active {
-    background-color: #111;
-    color: #ffffff;
+    background-color: #fff;
+    color: #000;
 }
 #menu, #menuSm, #menuSmTwo {
     background: #fff;
