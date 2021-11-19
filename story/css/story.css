@@ -219,7 +219,7 @@ a, a:hover, a:visited {
 #header span img {
     margin-left:25px;
     margin-top:10px;
-    height:22px;
+    height:28px;
 }
 #footer {
     width: 100%;
@@ -472,6 +472,10 @@ a, a:hover, a:visited {
 }
 
 @media (max-width: 1050px) {
+    #header span img {
+        height:22px;
+    }
+
     .centered, .lefty, .righty, .fully {
         width: 90vw;
         margin: 0 auto;
