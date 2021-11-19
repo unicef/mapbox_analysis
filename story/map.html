@@ -1,706 +1,718 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset='utf-8' />
-<title>Unicef Giga Kazakhstan</title>
-<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js'></script>
-<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css' rel='stylesheet' />
-<script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
-<script src="https://unpkg.com/scrollama"></script>
-<link href='./css/story.css' rel='stylesheet' />
+    <meta charset='utf-8' />
+    <title>Unicef Giga Kazakhstan</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.js"></script>
+    <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
+    <script src="https://unpkg.com/scrollama"></script>
+    <link href='./css/story.css' rel='stylesheet' />
 </head>
+
 <body>
-<div id="mapInset"></div>
-<div id="mapToggle">
-    <h3>Toggle layers</h3>
-    <span id="econBtnHold"><input type="checkbox" id="econBtn" name="econBtn" value="3D-extrusions-wealth" checked="true"><label for="econBtn"> Wealth Index</label></span>
-    <span id="connectBtnHold"><input type="checkbox" id="connectBtn" name="connectBtn" value="3D-extrusions-connectivity"><label for="vehicle2"> Internet Speed</label></span>
-    <span id="isoBtnHold"><input type="checkbox" id="isoBtn" name="isoBtn" value="isochrones" checked="true"><label for="vehicle3"> Isochrones</label></span>
-    <span id="schoolsBtnHold"><input type="checkbox" id="schoolsBtn" name="schoolsBtn" value="schools-glow"><label for="vehicle3"> Schools</label></span>
-</div>
-<div id="mapScrollNote">Scroll to begin ↓</div>
-<div id="map"></div>
-<div id="loader">
-    <div id="loaderSpin"></div>
-</div>
-<div id="story"></div>
-<script src="./config-story.js"></script>
-<script>
-var layerTypes = {
-    'fill': ['fill-opacity'],
-    'line': ['line-opacity'],
-    'circle': ['circle-opacity', 'circle-stroke-opacity'],
-    'symbol': ['icon-opacity', 'text-opacity'],
-    'raster': ['raster-opacity'],
-    'fill-extrusion': ['fill-extrusion-opacity'],
-    'heatmap': ['heatmap-opacity']
-}
-
-var alignments = {
-    'left': 'lefty',
-    'center': 'centered',
-    'right': 'righty',
-    'full': 'fully'
-}
-
-var countryBounds = [
-  [45.615234375,40.713955826286046],
-  [89.912109375,56.36525013685606]
-];
-
-var popBounds = [
-    [75.41046370362497, 47.56055778858862],
-    [85.75267975798518,53.04559595892645]
-]
-
-var maxBounds = [
-    [-45.703125,-44.59046718130883],
-    [179.736328125,78.34941069014629]
-]
-
-var initLoad = true;
-
-var currentChapter;
-
-function getLayerPaintType(layer) {
-    var layerType = map.getLayer(layer).type;
-    return layerTypes[layerType];
-}
-
-function setLayerOpacity(layer) {
-    var paintProps = getLayerPaintType(layer.layer);
-    paintProps.forEach(function(prop) {
-        var options = {};
-        if (layer.duration) {
-            var transitionProp = prop + "-transition";
-            options = { "duration": layer.duration };
-            map.setPaintProperty(layer.layer, transitionProp, options);
-        }
-        map.setPaintProperty(layer.layer, prop, layer.opacity, options);
-    });
-}
-
-var story = document.getElementById('story');
-var features = document.createElement('div');
-features.setAttribute('id', 'features');
-
-var header = document.createElement('div');
-var banner = document.createElement('span');
-banner.innerHTML = '<img src="./img/giga.svg"><img src="./img/unicef.svg"><img src="./img/itu.svg">'
-
-if (config.title) {
-    var titleText = document.createElement('h1');
-    titleText.innerText = config.title;
-    header.appendChild(banner);
-    header.appendChild(titleText);
-    
-}
-
-if (config.subtitle) {
-    var subtitleText = document.createElement('h2');
-    subtitleText.innerText = config.subtitle;
-    header.appendChild(subtitleText);
-}
-
-if (config.byline) {
-    var bylineText = document.createElement('p');
-    bylineText.innerText = config.byline;
-    header.appendChild(bylineText);
-}
-
-if (header.innerText.length > 0) {
-    header.classList.add(config.theme);
-    header.setAttribute('id', 'header');
-    story.appendChild(header);
-}
-
-config.chapters.forEach((record, idx) => {
-    var container = document.createElement('div');
-    var chapter = document.createElement('div');
-
-    if (record.title) {
-        var title = document.createElement('h3');
-        title.innerText = record.title;
-        chapter.appendChild(title);
-    }
-
-    if (record.image) {
-        var image = new Image();
-        image.src = record.image;
-        chapter.appendChild(image);
-    }
-
-    if (record.description) {
-        var story = document.createElement('p');
-        story.innerHTML = record.description;
-        chapter.appendChild(story);
-    }
-
-    container.setAttribute('id', record.id);
-    container.classList.add('step');
-    if (idx === 0) {
-        container.classList.add('active');
-    }
-
-    chapter.classList.add(config.theme);
-    container.appendChild(chapter);
-    if (record.alignment) {
-        container.classList.add(alignments[record.alignment]);
-    }
-    if (record.hidden) {
-        container.classList.add('hidden');
-    }
-    features.appendChild(container);
-});
-
-story.appendChild(features);
-
-var footer = document.createElement('div');
-footer.innerHTML = '<b>Sources</b>';
-
-if (config.footer) {
-    var footerText = document.createElement('ul');
-    footerText.innerHTML = config.footer;
-    footer.appendChild(footerText);
-}
-
-if (footer.innerText.length > 0) {
-    footer.classList.add(config.theme);
-    footer.setAttribute('id', 'footer');
-    story.appendChild(footer);
-}
-
-mapboxgl.accessToken = config.accessToken;
-
-const transformRequest = (url) => {
-    const hasQuery = url.indexOf("?") !== -1;
-    const suffix = hasQuery ? "&pluginName=scrollytellingV2" : "?pluginName=scrollytellingV2";
-    return {
-      url: url + suffix
-    }
-}
-
-var map = new mapboxgl.Map({
-    container: 'map',
-    style: config.style,
-    center: config.chapters[0].location.center,
-    zoom: config.chapters[0].location.zoom,
-    bearing: config.chapters[0].location.bearing,
-    pitch: config.chapters[0].location.pitch,
-    scrollZoom: false,
-    transformRequest: transformRequest,
-    maxBounds: maxBounds
-});
-
-var mapInset = new mapboxgl.Map({
-    container: 'mapInset',
-    style: 'mapbox://styles/mikelmaron/ckq6sqbpy3h7h17ns51p46jvq',
-    center: [66.884765625,46.619261036171515],
-    interactive: false,
-    zoom:1.2,
-    maxZoom: 3,
-    minZoom:1,
-    attributionControl: false
-    // transformRequest: transformRequest,
-    // maxBounds: maxBounds
-});
-
-var nav = new mapboxgl.NavigationControl();
-
-if (config.showMarkers) {
-    var marker = new mapboxgl.Marker({ color: config.markerColor });
-    marker.setLngLat(config.chapters[0].location.center).addTo(map);
-}
-
-// Old legend values
-// var connectivityLegend = ["step",["get","connectivity_speed"],"#d7191c",4.1,"#fdae61",7.1,"#ffffbf",8.1,"#a6d96a",10.1,"#1a9641"];
-// var wealthLegend = ["step",["get", "rwi"],"#d7191c",0.67,"#fdae61",0.88,"#ffffbf",1.01,"#a6d96a",1.21,"#1a9641"];
-
-var connectivityLegend = ["step",["get","connectivity_speed"],"#d7191c",7.9,"#fdae61",9.5,"#ffffbf",10.44,"#a6d96a",10.99,"#1a9641"];
-var wealthLegend = ["step",["get", "rwi"],"#d7191c",0.5,"#fdae61",0.75,"#ffffbf",0.9,"#a6d96a",1.1,"#1a9641"];
-
-// instantiate the scrollama
-var scroller = scrollama();
-
-map.on("load", function() {
-    console.log('loaded');
-    document.getElementById("freeExplore").addEventListener("click", enableFreeExplore);
-    document.getElementById("econBtn").addEventListener("click", layerToggle);
-    document.getElementById("connectBtn").addEventListener("click", layerToggle);
-    document.getElementById("isoBtn").addEventListener("click", layerToggle);
-    document.getElementById("schoolsBtn").addEventListener("click", layerToggle);
-
-    if (config.use3dTerrain) {
-        map.addSource('mapbox-dem', {
-            'type': 'raster-dem',
-            'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
-            'tileSize': 512,
-            'maxzoom': 14
-        });
-        // add the DEM source as a terrain layer with exaggerated height
-        map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.5 });
-
-        // add a sky layer that will show when the map is highly pitched
-        map.addLayer({
-            'id': 'sky',
-            'type': 'sky',
-            'paint': {
-                'sky-type': 'atmosphere',
-                'sky-atmosphere-sun': [0.0, 0.0],
-                'sky-atmosphere-sun-intensity': 15
-            }
-        });
-    };
-
-    map.on('move', getInsetBounds);
-
-    // setup the instance, pass callback functions
-    scroller
-    .setup({
-        step: '.step',
-        offset: 0.5,
-        progress: true
-    })
-    .onStepEnter(response => {
-        
-        var chapter = config.chapters.find(chap => chap.id === response.element.id);
-        currentChapter = chapter.id;
-
-        customizeChapters(chapter.id);
-        customizeZooms(chapter);
-        buildLegend(chapter.id);
-
-        response.element.classList.add('active');
-        if (chapter.id === 'intro') {
-            document.getElementById('mapInset').style.opacity = 0;
-        } else if (chapter.id === 'kazakhstan-schools' || chapter.id === 'schools-connectivity') {
-            map.setPaintProperty('background', 'background-color', '#000');
-            document.getElementById('mapScrollNote').style.opacity = 0;
-            document.getElementById('loader').style.opacity = 0;
-            document.getElementById('mapInset').style.opacity = 1;
-            document.getElementById('mapToggle').style.opacity = 0;
-        } else if (chapter.id === 'socio-economic') {
-            map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', wealthLegend);
-            map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', wealthLegend);
-            document.getElementById('mapToggle').style.opacity = 1;
-        } else if (chapter.id === 'economic') {
- 
-        } else if (chapter.id === 'high-economic-1' || chapter.id === 'high-economic-2') {
-            document.getElementById("isoBtnHold").style.opacity = 0;
-            document.getElementById("isoBtnHold").style.display = "none";
-            document.getElementById("schoolsBtnHold").style.opacity = 0;
-            document.getElementById("schoolsBtnHold").style.display = "none";
-            map.setLayoutProperty('3D-extrusions', 'visibility', 'visible');
-            map.setLayoutProperty('kaz-analysis-urban', 'visibility', 'visible');
-        } else if (chapter.id === 'explore') {
-            // map.on('moveend', enableFreeExplore);
-            map.setLayoutProperty('3D-extrusions', 'visibility', 'none');
-            map.setLayoutProperty('kaz-analysis-urban', 'visibility', 'none');
-            document.getElementById("econBtn").checked = false;
-            document.getElementById("connectBtn").checked = false;
-            document.getElementById('freeExplore').style.display = 'block';
-            document.getElementById("isoBtnHold").style.opacity = 1;
-            document.getElementById("isoBtnHold").style.display = "block";
-            document.getElementById("schoolsBtnHold").style.opacity = 1;
-            document.getElementById("schoolsBtnHold").style.display = "block";
+    <div id="mapInset"></div>
+    <div id="mapToggle">
+        <h3>Toggle layers</h3>
+        <form>
+            <span id="econBtnHold"><input type="radio" id="econBtn" name="econBtn" value="3D-extrusions-wealth"
+                    checked="true"><label for="econBtn"> Wealth Index</label></span>
+            <span id="connectBtnHold"><input type="radio" id="connectBtn" name="connectBtn"
+                    value="3D-extrusions-connectivity"><label for="vehicle2"> Internet Speed</label></span>
+            <span id="isoBtnHold"><input type="radio" id="isoBtn" name="isoBtn" value="isochrones" checked="true"><label
+                    for="vehicle3"> Isochrones</label></span>
+            <span id="schoolsBtnHold"><input type="radio" id="schoolsBtn" name="schoolsBtn" value="schools-glow"><label
+                    for="vehicle3"> Schools</label></span>
+        </form>
+    </div>
+    <div id="mapScrollNote">Scroll to begin ↓</div>
+    <div id="map"></div>
+    <div id="loader">
+        <div id="loaderSpin"></div>
+    </div>
+    <div id="story"></div>
+    <script src="./config-story.js"></script>
+    <script>
+        var layerTypes = {
+            'fill': ['fill-opacity'],
+            'line': ['line-opacity'],
+            'circle': ['circle-opacity', 'circle-stroke-opacity'],
+            'symbol': ['icon-opacity', 'text-opacity'],
+            'raster': ['raster-opacity'],
+            'fill-extrusion': ['fill-extrusion-opacity'],
+            'heatmap': ['heatmap-opacity']
         }
 
-        if (config.showMarkers) {
-            marker.setLngLat(chapter.location.center);
+        var alignments = {
+            'left': 'lefty',
+            'center': 'centered',
+            'right': 'righty',
+            'full': 'fully'
         }
-        if (chapter.onChapterEnter.length > 0) {
-            chapter.onChapterEnter.forEach(setLayerOpacity);
+
+        var countryBounds = [
+            [45.615234375, 40.713955826286046],
+            [89.912109375, 56.36525013685606]
+        ];
+
+        var popBounds = [
+            [75.41046370362497, 47.56055778858862],
+            [85.75267975798518, 53.04559595892645]
+        ]
+
+        var maxBounds = [
+            [-45.703125, -44.59046718130883],
+            [179.736328125, 78.34941069014629]
+        ]
+
+        var initLoad = true;
+
+        var currentChapter;
+
+        function getLayerPaintType(layer) {
+            var layerType = map.getLayer(layer).type;
+            return layerTypes[layerType];
         }
-        if (chapter.callback) {
-            window[chapter.callback]();
-        }
-        if (chapter.rotateAnimation) {
-            map.once('moveend', function() {
-                const rotateNumber = map.getBearing();
-                map.rotateTo(rotateNumber + 90, {
-                    duration: 100000, easing: function (t) {
-                        return t;
-                    }
-                });
+
+        function setLayerOpacity(layer) {
+            var paintProps = getLayerPaintType(layer.layer);
+            paintProps.forEach(function (prop) {
+                var options = {};
+                if (layer.duration) {
+                    var transitionProp = prop + "-transition";
+                    options = {
+                        "duration": layer.duration
+                    };
+                    map.setPaintProperty(layer.layer, transitionProp, options);
+                }
+                map.setPaintProperty(layer.layer, prop, layer.opacity, options);
             });
         }
-    })
-    .onStepExit(response => {
-        var chapter = config.chapters.find(chap => chap.id === response.element.id);
-        response.element.classList.remove('active');
-        if (chapter.onChapterExit.length > 0) {
-            chapter.onChapterExit.forEach(setLayerOpacity);
+
+        var story = document.getElementById('story');
+        var features = document.createElement('div');
+        features.setAttribute('id', 'features');
+
+        var header = document.createElement('div');
+        var banner = document.createElement('span');
+        banner.innerHTML = '<img src="./img/giga.svg"><img src="./img/unicef.svg"><img src="./img/itu.svg">'
+
+        if (config.title) {
+            var titleText = document.createElement('h1');
+            titleText.innerText = config.title;
+            header.appendChild(banner);
+            header.appendChild(titleText);
+
         }
-    });
-});
 
-// setup resize event
-window.addEventListener('resize', scroller.resize);
+        if (config.subtitle) {
+            var subtitleText = document.createElement('h2');
+            subtitleText.innerText = config.subtitle;
+            header.appendChild(subtitleText);
+        }
 
-// var nav = new mapboxgl.NavigationControl({visualizePitch: true});
-function enableFreetime() {
-  let windowWidth = window.innerWidth;
-  if (windowWidth >= 1050) {
-    document.getElementById('map').style['z-index'] = 0;
-    // map.addControl(nav, 'top-right');
-  }
-}
-function disableFreetime() {
-  let windowWidth = window.innerWidth;
-  if (windowWidth >= 1050) {
-    document.getElementById('map').style['z-index'] = -5;
-    // if (map.hasControl(nav)) {
-    //     map.removeControl(nav);
-    // }
-  }
-}
+        if (config.byline) {
+            var bylineText = document.createElement('p');
+            bylineText.innerText = config.byline;
+            header.appendChild(bylineText);
+        }
 
-function customizeZooms(chap) {
-    let windowWidth = window.innerWidth;
-    let leftPadding;
+        if (header.innerText.length > 0) {
+            header.classList.add(config.theme);
+            header.setAttribute('id', 'header');
+            story.appendChild(header);
+        }
 
-    if (windowWidth >= 1050) {
-        leftPadding = 100;
-    } else {
-        leftPadding = 0;
-    }
+        config.chapters.forEach((record, idx) => {
+            var container = document.createElement('div');
+            var chapter = document.createElement('div');
 
-    if (chap.id === 'kazakhstan-schools' || chap.id === 'schools-connectivity' || chap.id === 'schools-accessibility') {
-        map.fitBounds(countryBounds, {
-            padding: {top: 0, bottom: 0, left: leftPadding, right: 0},
-            duration: 1000,
-            pitch: 0
+            if (record.title) {
+                var title = document.createElement('h3');
+                title.innerText = record.title;
+                chapter.appendChild(title);
+            }
+
+            if (record.image) {
+                var image = new Image();
+                image.src = record.image;
+                chapter.appendChild(image);
+            }
+
+            if (record.description) {
+                var story = document.createElement('p');
+                story.innerHTML = record.description;
+                chapter.appendChild(story);
+            }
+
+            container.setAttribute('id', record.id);
+            container.classList.add('step');
+            if (idx === 0) {
+                container.classList.add('active');
+            }
+
+            chapter.classList.add(config.theme);
+            container.appendChild(chapter);
+            if (record.alignment) {
+                container.classList.add(alignments[record.alignment]);
+            }
+            if (record.hidden) {
+                container.classList.add('hidden');
+            }
+            features.appendChild(container);
         });
-    } else if (chap.id === 'explore') {
-        map.fitBounds(popBounds, {
-            pitch: 0,
-            padding: {top: 0, bottom: 0, left: leftPadding, right: 0}
+
+        story.appendChild(features);
+
+        var footer = document.createElement('div');
+        footer.innerHTML = '<b>Sources</b>';
+
+        if (config.footer) {
+            var footerText = document.createElement('ul');
+            footerText.innerHTML = config.footer;
+            footer.appendChild(footerText);
+        }
+
+        if (footer.innerText.length > 0) {
+            footer.classList.add(config.theme);
+            footer.setAttribute('id', 'footer');
+            story.appendChild(footer);
+        }
+
+        mapboxgl.accessToken = config.accessToken;
+
+        const transformRequest = (url) => {
+            const hasQuery = url.indexOf("?") !== -1;
+            const suffix = hasQuery ? "&pluginName=scrollytellingV2" : "?pluginName=scrollytellingV2";
+            return {
+                url: url + suffix
+            }
+        }
+
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: config.style,
+            center: config.chapters[0].location.center,
+            zoom: config.chapters[0].location.zoom,
+            bearing: config.chapters[0].location.bearing,
+            pitch: config.chapters[0].location.pitch,
+            scrollZoom: false,
+            transformRequest: transformRequest,
+            maxBounds: maxBounds
         });
-    } else {
-        map[chap.mapAnimation || 'flyTo'](chap.location);
-    }
 
-}
+        var mapInset = new mapboxgl.Map({
+            container: 'mapInset',
+            style: 'mapbox://styles/mikelmaron/ckq6sqbpy3h7h17ns51p46jvq',
+            center: [66.884, 49],
+            interactive: false,
+            zoom: 1.6,
+            maxZoom: 3,
+            minZoom: 1,
+            bearing: -32,
+            attributionControl: false,
+            projection: 'lambertConformalConic'
+            // transformRequest: transformRequest,
+            // maxBounds: maxBounds
+        });
 
-function customizeChapters(chap) {
-    if (chap === 'intro') {
-        map.on('render', removeLoader);
-    } else {
-        map.off('render', removeLoader);
-    }
-}
+        var nav = new mapboxgl.NavigationControl();
 
-function removeLoader() {
-    document.getElementById('loader').style.opacity = 0;
-    document.getElementById('loaderSpin').style.opacity = 0;
-}
-
-function getInsetBounds() {
-    let bounds = map.getBounds();
-
-    let boundsJson = {
-        "type": "FeatureCollection",
-        "features": [
-            {
-            "type": "Feature",
-            "properties": {},
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [
-                [
-                    [
-                    bounds._sw.lng,
-                    bounds._sw.lat
-                    ],
-                    [
-                    bounds._ne.lng,
-                    bounds._sw.lat
-                    ],
-                    [
-                    bounds._ne.lng,
-                    bounds._ne.lat
-                    ],
-                    [
-                    bounds._sw.lng,
-                    bounds._ne.lat
-                    ],
-                    [
-                    bounds._sw.lng,
-                    bounds._sw.lat
-                    ]
-                ]
-                ]
-            }
-            }
-        ]
-    }
-
-    var bbox = [[bounds._sw.lng,bounds._sw.lat], [bounds._ne.lng,bounds._ne.lat]];
-
-    if (initLoad) {
-        addInsetLayer(boundsJson);
-        initLoad = false;
-    } else {
-        updateInsetLayer(boundsJson);
-    }
-
-}
-
-function addInsetLayer(bounds) {
-    // console.log('added layer', bounds);
-
-    mapInset.addSource('boundsSource', {
-        'type': 'geojson',
-        'data': bounds
-    });
-
-    mapInset.addLayer({
-        'id': 'boundsLayer',
-        'type': 'fill',
-        'source': 'boundsSource', // reference the data source
-        'layout': {},
-        'paint': {
-            'fill-color': '#fff', // blue color fill
-            'fill-opacity': 0.2
+        if (config.showMarkers) {
+            var marker = new mapboxgl.Marker({
+                color: config.markerColor
+            });
+            marker.setLngLat(config.chapters[0].location.center).addTo(map);
         }
-    });
-    // // Add a black outline around the polygon.
-    mapInset.addLayer({
-        'id': 'outlineLayer',
-        'type': 'line',
-        'source': 'boundsSource',
-        'layout': {},
-        'paint': {
-            'line-color': '#000',
-            'line-width': 1
-        }
-    });
-}
 
-function updateInsetLayer(bounds) {
-    mapInset.getSource('boundsSource').setData(bounds);
-}
+        // Old legend values
+        // var connectivityLegend = ["step",["get","connectivity_speed"],"#d7191c",4.1,"#fdae61",7.1,"#ffffbf",8.1,"#a6d96a",10.1,"#1a9641"];
+        // var wealthLegend = ["step",["get", "rwi"],"#d7191c",0.67,"#fdae61",0.88,"#ffffbf",1.01,"#a6d96a",1.21,"#1a9641"];
 
+        var connectivityLegend = ["step", ["get", "connectivity_speed"], "#d7191c", 7.9, "#fdae61", 9.5, "#ffffbf",
+            10.44, "#a6d96a", 10.99, "#1a9641"
+        ];
+        var wealthLegend = ["step", ["get", "rwi"], "#d7191c", 0.5, "#fdae61", 0.75, "#ffffbf", 0.9, "#a6d96a", 1.1,
+            "#1a9641"
+        ];
 
-function layerToggle(e) {
-    if (this.id === "econBtn") {
-        map.setLayoutProperty('3D-extrusions', 'visibility', 'visible');
-        map.setLayoutProperty('kaz-analysis-urban', 'visibility', 'visible');
-        if (this.checked) {
-            if (document.getElementById("connectBtn").checked) {
-                
-                document.getElementById("connectBtn").checked = false;
-                buildLegend(currentChapter);
+        // instantiate the scrollama
+        var scroller = scrollama();
+
+        map.on("load", function () {
+            console.log('loaded');
+            document.getElementById("freeExplore").addEventListener("click", enableFreeExplore);
+            document.getElementById("econBtn").addEventListener("click", layerToggle);
+            document.getElementById("connectBtn").addEventListener("click", layerToggle);
+            document.getElementById("isoBtn").addEventListener("click", layerToggle);
+            document.getElementById("schoolsBtn").addEventListener("click", layerToggle);
+
+            if (config.use3dTerrain) {
+                map.addSource('mapbox-dem', {
+                    'type': 'raster-dem',
+                    'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
+                    'tileSize': 512,
+                    'maxzoom': 14
+                });
+                // add the DEM source as a terrain layer with exaggerated height
+                map.setTerrain({
+                    'source': 'mapbox-dem',
+                    'exaggeration': 1.5
+                });
+
+                // add a sky layer that will show when the map is highly pitched
+                map.addLayer({
+                    'id': 'sky',
+                    'type': 'sky',
+                    'paint': {
+                        'sky-type': 'atmosphere',
+                        'sky-atmosphere-sun': [0.0, 0.0],
+                        'sky-atmosphere-sun-intensity': 15
+                    }
+                });
+            };
+
+            map.on('move', getInsetBounds);
+
+            // setup the instance, pass callback functions
+            scroller
+                .setup({
+                    step: '.step',
+                    offset: 0.5,
+                    progress: true
+                })
+                .onStepEnter(response => {
+
+                    var chapter = config.chapters.find(chap => chap.id === response.element.id);
+                    currentChapter = chapter.id;
+
+                    customizeChapters(chapter.id);
+                    customizeZooms(chapter);
+                    buildLegend(chapter.id);
+
+                    response.element.classList.add('active');
+                    if (chapter.id === 'intro') {
+                        document.getElementById('mapInset').style.opacity = 0;
+                    } else if (chapter.id === 'kazakhstan-schools' || chapter.id ===
+                        'schools-connectivity') {
+                        map.setPaintProperty('background', 'background-color', '#000');
+                        document.getElementById('mapScrollNote').style.opacity = 0;
+                        document.getElementById('loader').style.opacity = 0;
+                        document.getElementById('mapInset').style.opacity = 1;
+                        document.getElementById('mapToggle').style.opacity = 0;
+                    } else if (chapter.id === 'socio-economic') {
+                        map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', wealthLegend);
+                        map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', wealthLegend);
+                        document.getElementById('mapToggle').style.opacity = 1;
+                    } else if (chapter.id === 'economic') {
+
+                    } else if (chapter.id === 'high-economic-1' || chapter.id === 'high-economic-2') {
+                        document.getElementById('mapToggle').style.opacity = 1;
+                        document.getElementById("isoBtnHold").style.opacity = 0;
+                        document.getElementById("isoBtnHold").style.display = "none";
+                        document.getElementById("schoolsBtnHold").style.opacity = 0;
+                        document.getElementById("schoolsBtnHold").style.display = "none";
+                        map.setLayoutProperty('3D-extrusions', 'visibility', 'visible');
+                        map.setLayoutProperty('kaz-analysis-urban', 'visibility', 'visible');
+                    } else if (chapter.id === 'isochrones') {
+                        document.getElementById('mapToggle').style.opacity = 0;
+                    } else if (chapter.id === 'explore') {
+                        // map.on('moveend', enableFreeExplore);
+                        map.setLayoutProperty('3D-extrusions', 'visibility', 'none');
+                        map.setLayoutProperty('kaz-analysis-urban', 'visibility', 'none');
+                        document.getElementById('mapToggle').style.opacity = 1;
+                        document.getElementById("econBtn").checked = false;
+                        document.getElementById("connectBtn").checked = false;
+                        document.getElementById('isoBtn').checked = true;
+                        document.getElementById('freeExplore').style.display = 'block';
+                        document.getElementById("isoBtnHold").style.opacity = 1;
+                        document.getElementById("isoBtnHold").style.display = "block";
+                        document.getElementById("schoolsBtnHold").style.opacity = 1;
+                        document.getElementById("schoolsBtnHold").style.display = "block";
+                    }
+
+                    if (config.showMarkers) {
+                        marker.setLngLat(chapter.location.center);
+                    }
+                    if (chapter.onChapterEnter.length > 0) {
+                        chapter.onChapterEnter.forEach(setLayerOpacity);
+                    }
+                    if (chapter.callback) {
+                        window[chapter.callback]();
+                    }
+                    if (chapter.rotateAnimation) {
+                        map.once('moveend', function () {
+                            const rotateNumber = map.getBearing();
+                            map.rotateTo(rotateNumber + 90, {
+                                duration: 100000,
+                                easing: function (t) {
+                                    return t;
+                                }
+                            });
+                        });
+                    }
+                })
+                .onStepExit(response => {
+                    var chapter = config.chapters.find(chap => chap.id === response.element.id);
+                    response.element.classList.remove('active');
+                    if (chapter.onChapterExit.length > 0) {
+                        chapter.onChapterExit.forEach(setLayerOpacity);
+                    }
+                });
+        });
+
+        // setup resize event
+        window.addEventListener('resize', scroller.resize);
+
+        // var nav = new mapboxgl.NavigationControl({visualizePitch: true});
+        function enableFreetime() {
+            let windowWidth = window.innerWidth;
+            if (windowWidth >= 1050) {
+                document.getElementById('map').style['z-index'] = 0;
+                // map.addControl(nav, 'top-right');
             }
-        } else {
-            if (document.getElementById("connectBtn").checked === false) {
-                if (currentChapter === 'explore') {
-                    map.setLayoutProperty('3D-extrusions', 'visibility', 'none');
-                    map.setLayoutProperty('kaz-analysis-urban', 'visibility', 'none');
-                } else {
-                    this.checked = true;
+        }
+
+        function disableFreetime() {
+            let windowWidth = window.innerWidth;
+            if (windowWidth >= 1050) {
+                document.getElementById('map').style['z-index'] = -5;
+                // if (map.hasControl(nav)) {
+                //     map.removeControl(nav);
+                // }
+            }
+        }
+
+        function customizeZooms(chap) {
+            let windowWidth = window.innerWidth;
+            let leftPadding;
+
+            if (windowWidth >= 1050) {
+                leftPadding = 100;
+            } else {
+                leftPadding = 0;
+            }
+
+            if (chap.id === 'kazakhstan-schools' || chap.id === 'schools-connectivity' || chap.id ===
+                'schools-accessibility') {
+                map.fitBounds(countryBounds, {
+                    padding: {
+                        top: 0,
+                        bottom: 0,
+                        left: leftPadding,
+                        right: 0
+                    },
+                    duration: 1000,
+                    pitch: 0
+                });
+            } else if (chap.id === 'explore') {
+                map.fitBounds(popBounds, {
+                    pitch: 0,
+                    padding: {
+                        top: 0,
+                        bottom: 0,
+                        left: leftPadding,
+                        right: 0
+                    }
+                });
+            } else {
+                map[chap.mapAnimation || 'flyTo'](chap.location);
+            }
+
+        }
+
+        function customizeChapters(chap) {
+            if (chap === 'intro') {
+                map.on('render', removeLoader);
+            } else {
+                map.off('render', removeLoader);
+            }
+        }
+
+        function removeLoader() {
+            document.getElementById('loader').style.opacity = 0;
+            document.getElementById('loaderSpin').style.opacity = 0;
+        }
+
+        function getInsetBounds() {
+            let bounds = map.getBounds();
+
+            let boundsJson = {
+                "type": "FeatureCollection",
+                "features": [{
+                    "type": "Feature",
+                    "properties": {},
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [
+                            [
+                                [
+                                    bounds._sw.lng,
+                                    bounds._sw.lat
+                                ],
+                                [
+                                    bounds._ne.lng,
+                                    bounds._sw.lat
+                                ],
+                                [
+                                    bounds._ne.lng,
+                                    bounds._ne.lat
+                                ],
+                                [
+                                    bounds._sw.lng,
+                                    bounds._ne.lat
+                                ],
+                                [
+                                    bounds._sw.lng,
+                                    bounds._sw.lat
+                                ]
+                            ]
+                        ]
+                    }
+                }]
+            }
+
+            var bbox = [
+                [bounds._sw.lng, bounds._sw.lat],
+                [bounds._ne.lng, bounds._ne.lat]
+            ];
+
+            if (initLoad) {
+                addInsetLayer(boundsJson);
+                initLoad = false;
+            } else {
+                updateInsetLayer(boundsJson);
+            }
+
+        }
+
+        function addInsetLayer(bounds) {
+            // console.log('added layer', bounds);
+
+            mapInset.addSource('boundsSource', {
+                'type': 'geojson',
+                'data': bounds
+            });
+
+            mapInset.addLayer({
+                'id': 'boundsLayer',
+                'type': 'fill',
+                'source': 'boundsSource', // reference the data source
+                'layout': {},
+                'paint': {
+                    'fill-color': '#fff', // blue color fill
+                    'fill-opacity': 0.2
                 }
-                buildLegend(currentChapter);
-            }
-        }
-        map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', wealthLegend);
-        map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', wealthLegend);
-    } else if (this.id === "connectBtn") {
-        map.setLayoutProperty('3D-extrusions', 'visibility', 'visible');
-        map.setLayoutProperty('kaz-analysis-urban', 'visibility', 'visible');
-        if (this.checked) {
-            if (document.getElementById("econBtn").checked) {
-                document.getElementById("econBtn").checked = false;
-                buildLegend(currentChapter);
-            }
-        } else {
-            if (document.getElementById("econBtn").checked === false) {
-                if (currentChapter === 'explore') {
-                    map.setLayoutProperty('3D-extrusions', 'visibility', 'none');
-                    map.setLayoutProperty('kaz-analysis-urban', 'visibility', 'none');
-                } else {
-                    this.checked = true;
+            });
+            // // Add a black outline around the polygon.
+            mapInset.addLayer({
+                'id': 'outlineLayer',
+                'type': 'line',
+                'source': 'boundsSource',
+                'layout': {},
+                'paint': {
+                    'line-color': '#000',
+                    'line-width': 1
                 }
-                buildLegend(currentChapter);
-            }
+            });
         }
-        
-        map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', connectivityLegend);
-        map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', connectivityLegend);
-    } else if (this.id === "isoBtn") {
-        if (this.checked) {
-            map.setPaintProperty(
-                'kz30-high',
-                'fill-opacity',
-                0.75
-            );
-            map.setPaintProperty(
-                'kz30-med',
-                'fill-opacity',
-                0.75
-            );
-            map.setPaintProperty(
-                'kz30-low',
-                'fill-opacity',
-                0.75
-            );
-        } else {
-            map.setPaintProperty(
-                'kz30-high',
-                'fill-opacity',
-                0
-            );
-            map.setPaintProperty(
-                'kz30-med',
-                'fill-opacity',
-                0
-            );
-            map.setPaintProperty(
-                'kz30-low',
-                'fill-opacity',
-                0
-            );
+
+        function updateInsetLayer(bounds) {
+            mapInset.getSource('boundsSource').setData(bounds);
         }
-    } else if (this.id === "schoolsBtn") {
-        if (this.checked) {
+
+
+        function layerToggle(e) {
+            document.getElementById('econBtn').checked = false;
+            document.getElementById('connectBtn').checked = false;
+            document.getElementById('isoBtn').checked = false;
+            document.getElementById('schoolsBtn').checked = false;
+            this.checked = true;
+
+            map.setLayoutProperty('3D-extrusions', 'visibility', 'none');
+            map.setLayoutProperty('kaz-analysis-urban', 'visibility', 'none');
+
             map.setPaintProperty(
                 'schools-glow',
                 'circle-opacity',
-                1
-            );
-        } else {
-            map.setPaintProperty(
-                'schools-glow',
-                'circle-opacity',
                 0
             );
-        }
-    }
-}
+            map.setPaintProperty(
+                'kz30-high-buff',
+                'fill-opacity',
+                0
+            );
+            map.setPaintProperty(
+                'kz30-med-buff',
+                'fill-opacity',
+                0
+            );
+            map.setPaintProperty(
+                'kz30-low-buff',
+                'fill-opacity',
+                0
+            );
 
-
-
-function buildLegend(id) {
-
-    const legendName = id + '-legend';
-    const labelName = id + '-label';
-
-    if (id === 'socio-economic') {
-        if (document.getElementById("econBtn").checked) {
-            document.getElementById(legendName).innerHTML = '<div class="textLegend">' +
-                '<div class="textLegendHeader">Population estimates</div>' +
-                // '<span style="background:#d7191c;"><label style="margin-top: -25px;">4,657,693</label></span>' +
-                // '<span style="background:#fdae61"><label style="margin-top: -25px;">1,324,825</label></span>' +
-                // '<span style="background:#ffffbf"><label style="margin-top: -25px;">1,579,179</label></span>' +
-                // '<span style="background:#a6d96a"><label style="margin-top: -25px;">1,676,972</label></span>' +
-                // '<span style="background:#1a9641"><label style="margin-top: -25px;">2,554,279</label></span>' +
-                '<span style="background:#d7191c;"><label style="margin-top: -25px;">4.66M</label></span>' +
-                '<span style="background:#fdae61"><label style="margin-top: -25px;">1.32M</label></span>' +
-                '<span style="background:#ffffbf"><label style="margin-top: -25px;">1.58M</label></span>' +
-                '<span style="background:#a6d96a"><label style="margin-top: -25px;">1.68M</label></span>' +
-                '<span style="background:#1a9641"><label style="margin-top: -25px;">2.55M</label></span>' +
-                '<label class="lowLabel">← Lower wealth</label>' +
-                '<label class="highLabel">Higher wealth →</label>' +
-                '</div>' +
-                '<div class="heightLegend"><img src="./img/legend_height.svg">' +
-                '<label class="popLabel">Higher Pop. Density ⟶</label></div>' +
-                '</div>';
-        } else {
-            document.getElementById(legendName).innerHTML = '<div class="textLegend">' +
-                '<div class="textLegendHeader">Population estimates</div>' +
-                '<span style="background:#d7191c;"><label style="margin-top: -25px;">2.19M</label></span>' +
-                '<span style="background:#fdae61"><label style="margin-top: -25px;">2.28M</label></span>' +
-                '<span style="background:#ffffbf"><label style="margin-top: -25px;">2.61M</label></span>' +
-                '<span style="background:#a6d96a"><label style="margin-top: -25px;">1.50M</label></span>' +
-                '<span style="background:#1a9641"><label style="margin-top: -25px;">3.22M</label></span>' +
-                '<label class="lowLabel">← Lower connectivity</label>' +
-                '<label class="highLabel">Higher connectivity →</label>' +
-                '</div>' +
-                '<div class="heightLegend"><img src="./img/legend_height.svg">' +
-                '<label class="popLabel">Higher Pop. Density ⟶</label></div>' +
-                '</div>' +
-                '<span style="font-size:0.8em;color:#d3d3d3;">Source: <a href="https://dataforgood.fb.com/tools/population-density-maps/" target="_blank">Facebook Data for Good</a></span>';
-        }
-        
-    } else if (id === 'economic' || id === 'high-economic-1' || id === 'high-economic-2') {
-        if (document.getElementById("econBtn").checked) {
-            document.getElementById(legendName).innerHTML = '<div class="textLegend">' +
-                '<div class="textLegendHeader">Urban population estimates</div>' +
-                // '<span style="background:#d7191c;"><label style="margin-top: -25px;">217,835</label></span>' +
-                // '<span style="background:#fdae61"><label style="margin-top: -25px;">780,671</label></span>' +
-                // '<span style="background:#ffffbf"><label style="margin-top: -25px;">447,723</label></span>' +
-                // '<span style="background:#a6d96a"><label style="margin-top: -25px;">1,237,559</label></span>' +
-                // '<span style="background:#1a9641"><label style="margin-top: -25px;">2,367,047people</label></span>' +
-                '<span style="background:#d7191c;"><label style="margin-top: -25px;">0.22M</label></span>' +
-                '<span style="background:#fdae61"><label style="margin-top: -25px;">0.78M</label></span>' +
-                '<span style="background:#ffffbf"><label style="margin-top: -25px;">0.45M</label></span>' +
-                '<span style="background:#a6d96a"><label style="margin-top: -25px;">1.24M</label></span>' +
-                '<span style="background:#1a9641"><label style="margin-top: -25px;">2.37M</label></span>' +
-                '<label class="lowLabel">← Lower wealth</label>' +
-                '<label class="highLabel">Higher wealth →</label>' +
-                '</div>' +
-                '<div class="heightLegend"><img src="./img/legend_height.svg">' +
-                '<label class="popLabel">Higher Pop. Density ⟶</label></div>' +
-                '</div>'
-        } else {
-            document.getElementById(legendName).innerHTML = '<div class="textLegend">' +
-                '<div class="textLegendHeader">Urban population estimates</div>' +
-                '<span style="background:#d7191c;"><label style="margin-top: -25px;">0.28M</label></span>' +
-                '<span style="background:#fdae61"><label style="margin-top: -25px;">0.99M</label></span>' +
-                '<span style="background:#ffffbf"><label style="margin-top: -25px;">0.81M</label></span>' +
-                '<span style="background:#a6d96a"><label style="margin-top: -25px;">1.20M</label></span>' +
-                '<span style="background:#1a9641"><label style="margin-top: -25px;">1.77M</label></span>' +
-                '<label class="lowLabel">← Lower connectivity</label>' +
-                '<label class="highLabel">Higher connectivity →</label>' +
-                '</div>' +
-                '<div class="heightLegend"><img src="./img/legend_height.svg">' +
-                '<label class="popLabel">Higher Pop. Density ⟶</label></div>' +
-                '</div>'
-        }
-    }
-}
-
-
-function enableFreeExplore() {
-    let exploreActive = document.getElementById('freeExplore');
-    let windowWidth = window.innerWidth;
-    if (exploreActive.classList.contains("active")) {
-        exploreActive.classList.remove("active");
-        
-        if (windowWidth < 1050) {
-            document.getElementById('explore').style.visibility = 'visible';
-        } else {
-            if (map.hasControl(nav)) {
-                map.removeControl(nav);
+            if (this.id === "econBtn") {
+                map.setLayoutProperty('3D-extrusions', 'visibility', 'visible');
+                map.setLayoutProperty('kaz-analysis-urban', 'visibility', 'visible');
+                buildLegend(currentChapter);
+                map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', wealthLegend);
+                map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', wealthLegend);
+            } else if (this.id === "connectBtn") {
+                map.setLayoutProperty('3D-extrusions', 'visibility', 'visible');
+                map.setLayoutProperty('kaz-analysis-urban', 'visibility', 'visible');
+                buildLegend(currentChapter);
+                map.setPaintProperty('3D-extrusions', 'fill-extrusion-color', connectivityLegend);
+                map.setPaintProperty('kaz-analysis-urban', 'fill-extrusion-color', connectivityLegend);
+            } else if (this.id === "isoBtn") {
+                map.setPaintProperty(
+                    'kz30-high-buff',
+                    'fill-opacity',
+                    0.75
+                );
+                map.setPaintProperty(
+                    'kz30-med-buff',
+                    'fill-opacity',
+                    0.75
+                );
+                map.setPaintProperty(
+                    'kz30-low-buff',
+                    'fill-opacity',
+                    0.75
+                );
+            } else if (this.id === "schoolsBtn") {
+                map.setPaintProperty(
+                    'schools-glow',
+                    'circle-opacity',
+                    1
+                );
             }
-
         }
-        document.getElementById('map').style.zIndex = -1;
-        exploreActive.innerHTML = "Scroll Zoom";
-        map.scrollZoom.disable();
-    } else {
-        exploreActive.classList.add("active");
-        if (windowWidth < 1050) {
-            document.getElementById('explore').style.visibility = 'hidden';
-            exploreActive.style.visibility = 'visible';
-        } else {
-            map.addControl(nav, 'top-left');
+
+
+
+        function buildLegend(id) {
+
+            const legendName = id + '-legend';
+            const labelName = id + '-label';
+
+            if (id === 'socio-economic') {
+                if (document.getElementById("econBtn").checked) {
+                    document.getElementById(legendName).innerHTML = '<div class="textLegend">' +
+                        '<div class="textLegendHeader">Population estimates per wealth interval</div>' +
+                        // '<span style="background:#d7191c;"><label style="margin-top: -25px;">4,657,693</label></span>' +
+                        // '<span style="background:#fdae61"><label style="margin-top: -25px;">1,324,825</label></span>' +
+                        // '<span style="background:#ffffbf"><label style="margin-top: -25px;">1,579,179</label></span>' +
+                        // '<span style="background:#a6d96a"><label style="margin-top: -25px;">1,676,972</label></span>' +
+                        // '<span style="background:#1a9641"><label style="margin-top: -25px;">2,554,279</label></span>' +
+                        '<span style="background:#d7191c;"><label style="margin-top: -25px;">4.66M</label></span>' +
+                        '<span style="background:#fdae61"><label style="margin-top: -25px;">1.32M</label></span>' +
+                        '<span style="background:#ffffbf"><label style="margin-top: -25px;">1.58M</label></span>' +
+                        '<span style="background:#a6d96a"><label style="margin-top: -25px;">1.68M</label></span>' +
+                        '<span style="background:#1a9641"><label style="margin-top: -25px;">2.55M</label></span>' +
+                        '<label class="lowLabel">← Lower wealth</label>' +
+                        '<label class="highLabel">Higher wealth →</label>' +
+                        '</div>' +
+                        '<div class="heightLegend"><img src="./img/legend_height.svg">' +
+                        '<label class="popLabel">Higher Pop. Density ⟶</label></div>' +
+                        '</div>';
+                } else {
+                    document.getElementById(legendName).innerHTML = '<div class="textLegend">' +
+                        '<div class="textLegendHeader">Population estimates per connectivity interval</div>' +
+                        '<span style="background:#d7191c;"><label style="margin-top: -25px;">2.19M</label></span>' +
+                        '<span style="background:#fdae61"><label style="margin-top: -25px;">2.28M</label></span>' +
+                        '<span style="background:#ffffbf"><label style="margin-top: -25px;">2.61M</label></span>' +
+                        '<span style="background:#a6d96a"><label style="margin-top: -25px;">1.50M</label></span>' +
+                        '<span style="background:#1a9641"><label style="margin-top: -25px;">3.22M</label></span>' +
+                        '<label class="lowLabel">← Lower connectivity</label>' +
+                        '<label class="highLabel">Higher connectivity →</label>' +
+                        '</div>' +
+                        '<div class="heightLegend"><img src="./img/legend_height.svg">' +
+                        '<label class="popLabel">Higher Pop. Density ⟶</label></div>' +
+                        '</div>';
+                }
+
+            } else if (id === 'economic' || id === 'high-economic-1' || id === 'high-economic-2') {
+                if (document.getElementById("econBtn").checked) {
+                    document.getElementById(legendName).innerHTML = '<div class="textLegend">' +
+                        '<div class="textLegendHeader">Urban population estimates per wealth interval</div>' +
+                        // '<span style="background:#d7191c;"><label style="margin-top: -25px;">217,835</label></span>' +
+                        // '<span style="background:#fdae61"><label style="margin-top: -25px;">780,671</label></span>' +
+                        // '<span style="background:#ffffbf"><label style="margin-top: -25px;">447,723</label></span>' +
+                        // '<span style="background:#a6d96a"><label style="margin-top: -25px;">1,237,559</label></span>' +
+                        // '<span style="background:#1a9641"><label style="margin-top: -25px;">2,367,047people</label></span>' +
+                        '<span style="background:#d7191c;"><label style="margin-top: -25px;">0.22M</label></span>' +
+                        '<span style="background:#fdae61"><label style="margin-top: -25px;">0.78M</label></span>' +
+                        '<span style="background:#ffffbf"><label style="margin-top: -25px;">0.45M</label></span>' +
+                        '<span style="background:#a6d96a"><label style="margin-top: -25px;">1.24M</label></span>' +
+                        '<span style="background:#1a9641"><label style="margin-top: -25px;">2.37M</label></span>' +
+                        '<label class="lowLabel">← Lower wealth</label>' +
+                        '<label class="highLabel">Higher wealth →</label>' +
+                        '</div>' +
+                        '<div class="heightLegend"><img src="./img/legend_height.svg">' +
+                        '<label class="popLabel">Higher Pop. Density ⟶</label></div>' +
+                        '</div>'
+                } else {
+                    document.getElementById(legendName).innerHTML = '<div class="textLegend">' +
+                        '<div class="textLegendHeader">Urban population estimates per connectivity interval</div>' +
+                        '<span style="background:#d7191c;"><label style="margin-top: -25px;">0.28M</label></span>' +
+                        '<span style="background:#fdae61"><label style="margin-top: -25px;">0.99M</label></span>' +
+                        '<span style="background:#ffffbf"><label style="margin-top: -25px;">0.81M</label></span>' +
+                        '<span style="background:#a6d96a"><label style="margin-top: -25px;">1.20M</label></span>' +
+                        '<span style="background:#1a9641"><label style="margin-top: -25px;">1.77M</label></span>' +
+                        '<label class="lowLabel">← Lower connectivity</label>' +
+                        '<label class="highLabel">Higher connectivity →</label>' +
+                        '</div>' +
+                        '<div class="heightLegend"><img src="./img/legend_height.svg">' +
+                        '<label class="popLabel">Higher Pop. Density ⟶</label></div>' +
+                        '</div>'
+                }
+            }
         }
-        document.getElementById('map').style.zIndex = 0;
-        exploreActive.innerHTML = "Back to story ↑";
-        map.scrollZoom.enable();
-    }
-}
 
-window.onload = function() {
- setTimeout (function () {
-  scrollTo(0,0);
-//   console.log('reset top');
- }, 100); //100ms for example
-}
 
-</script>
+        function enableFreeExplore() {
+            let exploreActive = document.getElementById('freeExplore');
+            let windowWidth = window.innerWidth;
+            if (exploreActive.classList.contains("active")) {
+                exploreActive.classList.remove("active");
+
+                if (windowWidth < 1050) {
+                    document.getElementById('explore').style.visibility = 'visible';
+                } else {
+                    if (map.hasControl(nav)) {
+                        map.removeControl(nav);
+                    }
+
+                }
+                document.getElementById('map').style.zIndex = -1;
+                exploreActive.innerHTML = "Scroll Zoom";
+                map.scrollZoom.disable();
+            } else {
+                exploreActive.classList.add("active");
+                if (windowWidth < 1050) {
+                    document.getElementById('explore').style.visibility = 'hidden';
+                    exploreActive.style.visibility = 'visible';
+                } else {
+                    map.addControl(nav, 'top-left');
+                }
+                document.getElementById('map').style.zIndex = 0;
+                exploreActive.innerHTML = "Back to story ↑";
+                map.scrollZoom.enable();
+            }
+        }
+
+        window.onload = function () {
+            setTimeout(function () {
+                scrollTo(0, 0);
+                //   console.log('reset top');
+            }, 100); //100ms for example
+        }
+    </script>
 
 </body>
+
 </html>
