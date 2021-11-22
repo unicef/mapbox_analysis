@@ -103,7 +103,7 @@ var config = {
       alignment: 'left',
       title: 'Student Connectivity',
       image: '',
-      description: 'Disparity in internet connectivity impacts students. There are 3.67 million students in Kazakhstan. Nearly 20 thousand students do not have access to the internetto internet at all. More than 1.21 million students, despite having some internet connectivity, do not have sufficient bandwidth to properly use digital learning resources.*' + '<div class="textLegend"><div class="textLegendHeader">Student population estimates by connectivity</div><span style="background:#ff605b"> <label style="margin-top: -25px;">0.02M</label><label>< 1 mb/s</label></span><span style="background:#ffc83d"><label style="margin-top: -25px;">1.21M</label><label>1-10 mb/s</label></span><span style="background:#8bd432"><label style="margin-top: -25px;">2.43M</label><label>> 10 mb/s</label></span></div><p style="font-size:0.8em;color:#d3d3d3;line-height:1.8em;">The map represents student population count per school by circle size, and internet strength through color.</p>',
+      description: 'Disparity in internet connectivity impacts students. There are 3.67 million students in Kazakhstan. Nearly 20 thousand students do not have access to the internet at all. More than 1.21 million students, despite having some internet connectivity, do not have sufficient bandwidth to properly use digital learning resources.*' + '<div class="textLegend"><div class="textLegendHeader">Student population estimates by connectivity</div><span style="background:#ff605b"> <label style="margin-top: -25px;">0.02M</label><label>< 1 mb/s</label></span><span style="background:#ffc83d"><label style="margin-top: -25px;">1.21M</label><label>1-10 mb/s</label></span><span style="background:#8bd432"><label style="margin-top: -25px;">2.43M</label><label>> 10 mb/s</label></span></div><p style="font-size:0.8em;color:#d3d3d3;line-height:1.8em;">The map represents student population count per school by circle size, and internet strength through color.</p>',
       location: {
         center: [65.121, 48.391],
         zoom: 4,
@@ -303,7 +303,7 @@ var config = {
       alignment: 'left',
       title: 'High wealth does not always mean high connectivity',
       image: '',
-      description: 'We also found some regions like the urban town of Aqtobe where there is low connectivity in schools despite highdespite of high wealth. Such regions might hold potential to get schools connected in a self-sustaining way, given the right infrastructure investment.' + '<div class="legendHold" id="high-economic-2-legend"></div>',
+      description: 'We also found some regions like the urban town of Aqtobe where there is low connectivity in schools despite high wealth. Such regions might hold potential to get schools connected in a self-sustaining way, given the right infrastructure investment.' + '<div class="legendHold" id="high-economic-2-legend"></div>',
       location: {
         center: [57.1926438, 50.2867314],
         zoom: 8,
@@ -354,7 +354,7 @@ var config = {
       alignment: 'left',
       title: 'How we did this?',
       image: '',
-      description: 'At Giga, we are leveraging geospatial data modelling, machine learning and new technologies to find innovative ways to support connecting every school to the internet. We worked with <a href="https://www.mapbox.com/community" target="_blank">Mapbox Community</a> to measure the internet accessibility of every school using the <a href="https://docs.mapbox.com/playground/isochrone/" target="_blank">Isochrone API</a> and used them for comparison against population and wealth of the regions.',
+      description: 'At Giga, we are leveraging geospatial data modelling, machine learning and new technologies to find innovative ways to support connecting every school to the internet. We worked with <a href="https://www.mapbox.com/community" target="_blank">Mapbox Community</a> to measure the internet accessibility of every school using the <a href="https://docs.mapbox.com/playground/isochrone/" target="_blank">Isochrone API</a>, and used them for comparison against population and wealth of the regions.',
       location: {
         center: [69.052, 47.437],
         zoom: 5,

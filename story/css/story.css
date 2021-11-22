@@ -232,6 +232,7 @@ a, a:hover, a:visited {
     font-size: 13px;
     position: absolute;
     z-index:2;
+    box-sizing: border-box;
     /* display: none; */
 }
 #footer ul {
