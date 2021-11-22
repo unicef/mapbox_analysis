@@ -317,6 +317,7 @@
                         map.setLayoutProperty('kaz-analysis-urban', 'visibility', 'visible');
                     } else if (chapter.id === 'isochrones') {
                         document.getElementById('mapToggle').style.opacity = 0;
+                        document.getElementById('freeExplore').style.display = 'none';
                     } else if (chapter.id === 'explore') {
                         // map.on('moveend', enableFreeExplore);
                         map.setLayoutProperty('3D-extrusions', 'visibility', 'none');
@@ -681,7 +682,8 @@
                 exploreActive.classList.remove("active");
 
                 if (windowWidth < 1050) {
-                    document.getElementById('explore').style.visibility = 'visible';
+                    // document.getElementById('explore').style.visibility = 'visible';
+                    // exploreActive.style.visibility = 'visible';
                 } else {
                     if (map.hasControl(nav)) {
                         map.removeControl(nav);
@@ -694,8 +696,8 @@
             } else {
                 exploreActive.classList.add("active");
                 if (windowWidth < 1050) {
-                    document.getElementById('explore').style.visibility = 'hidden';
-                    exploreActive.style.visibility = 'visible';
+                    // document.getElementById('explore').style.visibility = 'hidden';
+                    // exploreActive.style.visibility = 'visible';
                 } else {
                     map.addControl(nav, 'top-left');
                 }

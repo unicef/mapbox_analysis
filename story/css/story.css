@@ -503,11 +503,11 @@ a, a:hover, a:visited {
     }
 
     #freeExplore {
-        /* display: none !important; */
+        display: none;
         position: fixed;
-        bottom:32px;
+        top:137px;
         right:5vw;
-        top:auto;
+        /* top:auto; */
         padding:10px;
     }
 
