@@ -374,7 +374,12 @@ var config = {
         {
           layer: 'kz30-high-buff',
           opacity: .75
-        }
+        },
+        {
+          layer: 'schools-glow',
+          opacity: 0,
+          duration: 1000
+        },
       ],
       onChapterExit: []
     },

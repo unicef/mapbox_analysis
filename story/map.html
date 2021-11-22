@@ -21,10 +21,8 @@
                     checked="true"><label for="econBtn"> Wealth Index</label></span>
             <span id="connectBtnHold"><input type="radio" id="connectBtn" name="connectBtn"
                     value="3D-extrusions-connectivity"><label for="vehicle2"> Internet Speed</label></span>
-            <span id="isoBtnHold"><input type="radio" id="isoBtn" name="isoBtn" value="isochrones" checked="true"><label
-                    for="vehicle3"> Isochrones</label></span>
-            <span id="schoolsBtnHold"><input type="radio" id="schoolsBtn" name="schoolsBtn" value="schools-glow"><label
-                    for="vehicle3"> Schools</label></span>
+            <span id="isoBtnHold"><input type="radio" id="isoBtn" name="isoBtn" value="isochrones" checked="true"><label> Isochrones</label></span>
+            <span id="schoolsBtnHold"><input type="radio" id="schoolsBtn" name="schoolsBtn" value="schools-glow"><label> Schools</label></span>
         </form>
     </div>
     <div id="mapScrollNote">Scroll to begin ↓</div>
@@ -327,6 +325,7 @@
                         document.getElementById("econBtn").checked = false;
                         document.getElementById("connectBtn").checked = false;
                         document.getElementById('isoBtn').checked = true;
+                        document.getElementById("schoolsBtn").checked = false;
                         document.getElementById('freeExplore').style.display = 'block';
                         document.getElementById("isoBtnHold").style.opacity = 1;
                         document.getElementById("isoBtnHold").style.display = "block";
