@@ -13,7 +13,7 @@ var config = {
   chapters: [{
       id: 'intro',
       alignment: 'left',
-      title: 'Connectivity Disparity across Schools in Kazakhstan',
+      title: 'Connectivity Disparity Across Schools in Kazakhstan',
       description: '',
       location: {
         center: [60.30, 50.5],
