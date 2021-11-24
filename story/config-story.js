@@ -315,7 +315,7 @@ var config = {
       // callback: 'enableFreetime',
       onChapterEnter: [{
           layer: 'mask',
-          opacity: 0.6,
+          opacity: 0.8,
         },
         {
           layer: 'place-label (3) copy',
@@ -332,17 +332,17 @@ var config = {
           duration: 1000
         },
         {
-          layer: 'kz30-high-buff',
+          layer: 'kz30-low-iso',
           opacity: 0,
           duration: 1000
         },
         {
-          layer: 'kz30-med-buff',
+          layer: 'kz30-med-iso',
           opacity: 0,
           duration: 1000
         },
         {
-          layer: 'kz30-low-buff',
+          layer: 'kz30-high-iso',
           opacity: 0,
           duration: 1000
         }
@@ -364,22 +364,48 @@ var config = {
       },
       // callback: 'enableFreetime',
       onChapterEnter: [{
+          layer: 'mask',
+          opacity: 0.8,
+        },
+        {
           layer: 'kz30-low-buff',
-          opacity: .75
+          opacity: 0
         },
         {
           layer: 'kz30-med-buff',
-          opacity: .75
+          opacity: 0
         },
         {
           layer: 'kz30-high-buff',
-          opacity: .75
+          opacity: 0
         },
         {
           layer: 'schools-glow',
           opacity: 0,
           duration: 1000
         },
+        {
+          layer: '3D-extrusions',
+          opacity: 0,
+          duration: 1000
+        },
+        {
+          layer: 'kaz-analysis-urban',
+          opacity: 0,
+          duration: 1000
+        },
+        {
+          layer: 'kz30-low-iso',
+          opacity: 0.75
+        },
+        {
+          layer: 'kz30-med-iso',
+          opacity: 0.75
+        },
+        {
+          layer: 'kz30-high-iso',
+          opacity: 0.75
+        }
       ],
       onChapterExit: []
     },
@@ -398,6 +424,10 @@ var config = {
       },
       // callback: 'enableFreetime',
       onChapterEnter: [{
+          layer: 'mask',
+          opacity: 0.6,
+        },
+        {
           layer: 'kz30-low-buff',
           opacity: .75
         },
@@ -408,6 +438,28 @@ var config = {
         {
           layer: 'kz30-high-buff',
           opacity: .75
+        },
+        {
+          layer: 'kz30-low-iso',
+          opacity: 0
+        },
+        {
+          layer: 'kz30-med-iso',
+          opacity: 0
+        },
+        {
+          layer: 'kz30-high-iso',
+          opacity: 0
+        },
+        {
+          layer: '3D-extrusions',
+          opacity: 0.4,
+          duration: 1000
+        },
+        {
+          layer: 'kaz-analysis-urban',
+          opacity: 1,
+          duration: 1000
         }
       ],
       onChapterExit: []
