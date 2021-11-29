@@ -682,8 +682,8 @@
                 exploreActive.classList.remove("active");
 
                 if (windowWidth < 1050) {
-                    // document.getElementById('explore').style.visibility = 'visible';
-                    // exploreActive.style.visibility = 'visible';
+                    document.getElementById('explore').style.visibility = 'visible';
+                    exploreActive.style.visibility = 'visible';
                 } else {
                     if (map.hasControl(nav)) {
                         map.removeControl(nav);
@@ -696,8 +696,8 @@
             } else {
                 exploreActive.classList.add("active");
                 if (windowWidth < 1050) {
-                    // document.getElementById('explore').style.visibility = 'hidden';
-                    // exploreActive.style.visibility = 'visible';
+                    document.getElementById('explore').style.visibility = 'hidden';
+                    exploreActive.style.visibility = 'visible';
                 } else {
                     map.addControl(nav, 'top-left');
                 }
