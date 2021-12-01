@@ -354,7 +354,7 @@ var config = {
       alignment: 'left',
       title: 'How we did this?',
       image: '',
-      description: 'At Giga, we are leveraging geospatial data modelling, machine learning and new technologies to find innovative ways to support connecting every school to the internet. We worked with <a href="https://www.mapbox.com/community" target="_blank">Mapbox Community</a> to measure the internet accessibility of every school using the <a href="https://docs.mapbox.com/playground/isochrone/" target="_blank">Isochrone API</a>, and used them for comparison against population and wealth of the regions.',
+      description: 'At Giga, we are leveraging geospatial data modelling, machine learning and new technologies to find innovative ways to support connecting every school to the internet. We worked with <a href="https://www.mapbox.com/community" target="_blank">Mapbox Community</a> to measure the internet accessibility of every school using the <a href="https://docs.mapbox.com/playground/isochrone/" target="_blank">Isochrone API</a>, and used them for comparison against population and wealth of the regions. <a href="https://www.mapbox.com/blog/measuring-the-impact-of-school-connectivity-in-the-giga-initiative-how-we-built-it" target="_blank">Read more about how we built it</a>.',
       location: {
         center: [69.052, 47.437],
         zoom: 5,
